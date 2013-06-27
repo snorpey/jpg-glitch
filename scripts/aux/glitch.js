@@ -1,6 +1,7 @@
 /*global define*/
 define(
-	function()
+	[ 'aux/canvas' ],
+	function( canvas_helper )
 	{
 		var canvas = document.createElement( 'canvas' );
 		var ctx = canvas.getContext( '2d' );
@@ -17,7 +18,7 @@ define(
 		var iterations;
 		var quality;
 		var seed;
-		var offset;
+		var amount;
 		var base64;
 		var byte_array;
 		var jpg_header_length;
@@ -33,10 +34,11 @@ define(
 		{
 			seed = input.seed / 100;
 			quality = input.quality / 100;
-			offset = input.offset / 100;
+			amount = input.amount / 100;
 			iterations = input.iterations;
 
-			updateCanvasSize( image_data.width, image_data.height );
+			canvas_helper.resize( canvas, image_data );
+			canvas_helper.resize( tmp_canvas, image_data );
 
 			base64 = getBase64FromImageData( image_data, quality );
 			byte_array = base64ToByteArray( base64 );
@@ -44,7 +46,7 @@ define(
 
 			for ( i = 0; i < iterations; i++ )
 			{
-				glitchJpegBytes( byte_array, jpg_header_length, seed, offset, i );
+				glitchJpegBytes( byte_array, jpg_header_length, seed, amount, i, iterations );
 			}
 
 			img = new Image();
@@ -57,39 +59,23 @@ define(
 			img.src = byteArrayToBase64( byte_array );
 		}
 
-		function updateCanvasSize( width, height )
+		function glitchJpegBytes( byte_array, jpg_header_length, seed, amount, i, len )
 		{
-			var updated = false;
-
-			if ( canvas_size.width !== width ) { canvas_size.width = width; updated = true; }
-			if ( canvas_size.height !== height ) { canvas_size.height = height; updated = true; }
-
-			if ( updated )
-			{
-				resizeCanvas( tmp_canvas, canvas_size );
-				resizeCanvas( canvas, canvas_size );
-			}
-		}
-
-		function resizeCanvas( canvas, img )
-		{
-			canvas.width = img.width;
-			canvas.height = img.height;
-		}
-
-		function glitchJpegBytes( byte_array, jpg_header_length, seed, offset, iteration )
-		{
-			var it = ( iteration + 1 ) / 10;
 			var max_index = byte_array.length - jpg_header_length - 4;
-			var px_index = it * max_index + offset * 10;
+			var px_min = parseInt( max_index / len * i, 10 );
+			var px_max = parseInt( max_index / len * ( i + 1 ), 10 );
 
-			if ( px_index > max_index )
+			var delta = px_max - px_min;
+			var px_i = parseInt( px_min + delta * seed, 10 );
+
+			if ( px_i > max_index )
 			{
-				px_index = px_index;
+				px_i = max_index;
 			}
 
-			var index = Math.floor( jpg_header_length + px_index );
-			byte_array[index] = Math.floor( seed * 256 );
+			var index = Math.floor( jpg_header_length + px_i );
+
+			byte_array[index] = Math.floor( amount * 256 );
 		}
 
 		function getBase64FromImageData( image_data, quality )
