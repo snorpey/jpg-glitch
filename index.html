@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>image glitch experiment</title>
+		<link rel="stylesheet" href="styles/global.css" />
+	</head>
+	<body>
+		<article class="content">
+			<h1 class="headline">glitch images</h1>
+			<p>drop an image in the browser.</p>
+		</article>
+		<div class="content" id="controls">
+			<div class="control-wrapper">
+				<label class="control-label" for="seed">seed</label>
+				<input class="control-input" type="range" id="seed" min="0" max="100" value="50" />
+			</div>
+			<div class="control-wrapper">
+				<label class="control-label" for="quality">quality</label>
+				<input class="control-input" type="range" id="quality" min="0" max="100" value="50" />
+			</div>
+			<div class="control-wrapper">
+				<label class="control-label" for="offset">px offset</label>
+				<input class="control-input" type="range" id="offset" min="0" max="100" value="50" />
+			</div>
+			<div class="control-wrapper">
+				<label class="control-label" for="iterations">iterations</label>
+				<input class="control-input" type="range" id="iterations" min="1" max="20" value="5" />
+			</div>
+		</div>
+		<div class="export-wrapper">
+			<button id="save-button" class="button">export image</button>
+			<a id="png-button" download="triangulated-image.png" target="_blank" class="download-link">download bitmap file<span> (.png)</span></a>
+		</div>
+		<canvas id="canvas"></canvas>
+		<script src="scripts/lib/require-2.1.4.js" data-main="scripts/src/main"></script>
+	</body>
+</html>
