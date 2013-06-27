@@ -1,7 +1,7 @@
-/*global define*/
+/*global define, requestAnimationFrame*/
 define(
-	[ 'aux/glitch' ],
-	function( glitch )
+	[ 'aux/glitch', 'aux/canvas', 'lib/raf' ],
+	function( glitch, canvas_helper )
 	{
 		var tmp_canvas = document.createElement( 'canvas' );
 		var tmp_ctx = tmp_canvas.getContext( '2d' );
@@ -14,6 +14,7 @@ define(
 		var image;
 		var signals;
 		var image_data;
+		var canvas_size;
 
 		function init( shared )
 		{
@@ -40,11 +41,26 @@ define(
 			}
 		}
 
+		function requestTick()
+		{
+			if ( ! is_processing )
+			{
+				requestAnimationFrame( update );
+			}
+
+			is_processing = true;
+		}
+
 		function update()
 		{
-			if ( ! is_processing && image )
+			if ( image )
 			{
 				processImage( image );
+			}
+
+			else
+			{
+				is_processing = false;
 			}
 		}
 
@@ -52,11 +68,10 @@ define(
 		{
 			is_processing = true;
 
-			clearCanvas( tmp_canvas, tmp_ctx );
-			clearCanvas( canvas, ctx );
-
-			resizeCanvas( tmp_canvas, img );
-			resizeCanvas( canvas, img );
+			canvas_helper.clear( tmp_canvas, tmp_ctx );
+			canvas_helper.clear( canvas, ctx );
+			canvas_helper.resize( tmp_canvas, img );
+			canvas_helper.resize( canvas, img );
 
 			tmp_ctx.drawImage( img, 0, 0 );
 
@@ -67,22 +82,11 @@ define(
 
 		function draw( image_data )
 		{
-			resizeCanvas( canvas, image_data );
+			canvas_helper.resize( canvas, image_data );
 			ctx.putImageData( image_data, 0, 0 );
 
 			is_processing = false;
 			image_data = null;
-		}
-
-		function resizeCanvas( canvas, img )
-		{
-			canvas.width = img.width;
-			canvas.height = img.height;
-		}
-
-		function clearCanvas( canvas, ctx )
-		{
-			ctx.clearRect( ctx, 0, 0, canvas.width, canvas.height );
 		}
 
 		function exportData()

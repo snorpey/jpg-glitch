@@ -1,6 +1,7 @@
 /*global define*/
 define(
-	function()
+	[ 'aux/canvas' ],
+	function( canvas_helper )
 	{
 		var canvas = document.createElement( 'canvas' );
 		var ctx = canvas.getContext( '2d' );
@@ -36,7 +37,8 @@ define(
 			offset = input.offset / 100;
 			iterations = input.iterations;
 
-			updateCanvasSize( image_data.width, image_data.height );
+			canvas_helper.resize( canvas, image_data );
+			canvas_helper.resize( tmp_canvas, image_data );
 
 			base64 = getBase64FromImageData( image_data, quality );
 			byte_array = base64ToByteArray( base64 );
@@ -55,26 +57,6 @@ define(
 			};
 
 			img.src = byteArrayToBase64( byte_array );
-		}
-
-		function updateCanvasSize( width, height )
-		{
-			var updated = false;
-
-			if ( canvas_size.width !== width ) { canvas_size.width = width; updated = true; }
-			if ( canvas_size.height !== height ) { canvas_size.height = height; updated = true; }
-
-			if ( updated )
-			{
-				resizeCanvas( tmp_canvas, canvas_size );
-				resizeCanvas( canvas, canvas_size );
-			}
-		}
-
-		function resizeCanvas( canvas, img )
-		{
-			canvas.width = img.width;
-			canvas.height = img.height;
 		}
 
 		function glitchJpegBytes( byte_array, jpg_header_length, seed, offset, iteration )
