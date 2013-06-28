@@ -11,7 +11,6 @@ this experiment is very much based on the [smack my glitch up js](https://github
 
 third party code used in this experiment
 ---
-* some parts of the code code from [triangulation image generator](http://jsdo.it/akm2/xoYx) by [akm2](http://codepen.io/akm2), MIT license
 * [html5slider](http://frankyan.com/labs/html5slider/) by [fryn](https://github.com/fryn), MIT license
 * [js signals](http://millermedeiros.github.io/js-signals/) by [millermedeiros](https://github.com/millermedeiros), MIT license
 * [require js](http://requirejs.org/), by [jrburke](jrburke), BSD & MIT license
