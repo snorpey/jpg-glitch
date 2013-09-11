@@ -20,7 +20,7 @@ require(
 		'src/controls',
 		'src/export-png',
 		'src/save-button',
-		'aux/feature-test',
+		'util/feature-test',
 		'lib/signals-1.0.0',
 		'lib/html5slider'
 	],

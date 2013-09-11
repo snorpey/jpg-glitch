@@ -1,6 +1,6 @@
 /*global define*/
 define(
-	[ 'aux/canvas' ],
+	[ 'util/canvas' ],
 	function( canvas_helper )
 	{
 		var canvas = document.createElement( 'canvas' );
