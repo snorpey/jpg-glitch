@@ -9,6 +9,14 @@ this is an experiment for the web browser. it corrupts jpg images so that they a
 
 this experiment is very much based on the [smack my glitch up js](https://github.com/Hugosslade/smackmyglitchupjs) script.
 
+minification / build
+---
+the [requirejs optimizer](http://requirejs.org/docs/optimization.html) is used to minify both javascript and css files.
+
+to minify javascript, run ```r.js -o name=main out=main.min.js``` in the terminal from the ```scripts``` folder.
+
+to minify css, run ```r.js -o cssIn=global.css out=global.min.css optimizeCss=default``` from the ```styles``` folder.
+
 third party code used in this experiment
 ---
 * [html5slider](http://frankyan.com/labs/html5slider/) by [fryn](https://github.com/fryn), MIT license
