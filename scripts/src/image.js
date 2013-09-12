@@ -36,7 +36,7 @@ define(
 				image.naturalWidth !== 0
 			)
 			{
-				signals['image-loaded'].dispatch( image );
+				setTimeout( imageLoaded, 10 );
 			}
 		}
 
