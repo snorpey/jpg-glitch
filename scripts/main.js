@@ -20,6 +20,7 @@ require(
 		'src/controls',
 		'src/export-png',
 		'src/save-button',
+		'src/import-button',
 		'util/feature-test',
 		'lib/signals-1.0.0',
 		'lib/html5slider'
@@ -31,6 +32,7 @@ require(
 		controls,
 		png,
 		save_button,
+		import_button,
 		testFeatures,
 		Signal
 	)
@@ -55,6 +57,7 @@ require(
 			controls.init( shared );
 			png.init( shared );
 			save_button.init( shared );
+			import_button.init( shared );
 			image.init( shared );
 		}
 
