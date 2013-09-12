@@ -89,6 +89,11 @@ a:hover
 		width: 100px;
 	}
 
+#import-input
+{
+	display: none;
+}
+
 #canvas
 {
 	clear: both;
