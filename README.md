@@ -9,19 +9,19 @@ this is an experiment for the web browser. it corrupts jpg images so that they a
 
 this experiment is very much based on the [smack my glitch up js](https://github.com/Hugosslade/smackmyglitchupjs) script.
 
-minification / build
+build script
 ---
-the [requirejs optimizer](http://requirejs.org/docs/optimization.html) is used to minify both javascript and css files.
 
-to minify javascript, run ```r.js -o name=main out=main.min.js``` in the terminal from the ```scripts``` folder.
+the build script takes care of concatenating and minifying all scripts and styles. it uses [gruntjs](http://gruntjs.com/).
 
-to minify css, run ```r.js -o cssIn=global.css out=global.min.css optimizeCss=default``` from the ```styles``` folder.
+please make sure that both [nodejs](http://nodejs.org/) and grunt-cli are [set up properly](http://gruntjs.com/getting-started) on your machine. to build, run ```grunt production``` from within the ```build/``` folder. the optimized files will get copied to the ```production/``` folder.
 
 third party code used in this experiment
 ---
 * [html5slider](http://frankyan.com/labs/html5slider/) by [fryn](https://github.com/fryn), MIT license
 * [js signals](http://millermedeiros.github.io/js-signals/) by [millermedeiros](https://github.com/millermedeiros), MIT license
 * [require js](http://requirejs.org/), by [jrburke](jrburke), BSD & MIT license
+* [require js](https://github.com/jrburke/almond), by [jrburke](jrburke), BSD & MIT license
 * [raf js](https://gist.github.com/paulirish/1579671), by [paulirish](https://github.com/paulirish), MIT license
 
 license
