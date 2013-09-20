@@ -28,16 +28,35 @@ define(
 
 				is_initialized = true;
 
+				signals['control-set'].add( setControlValues );
 				signals['control-updated'].dispatch( values );
 			}
 		}
 
-		function controlUpdated( event )
+		function controlUpdated( element )
 		{
-			var target = event.target;
+			if ( element.target )
+			{
+				element = element.target;
+			}
 
-			updateValue( target.id, target.value );
-			updateValueInUI( target.id, target.value );
+			updateValue( element.id, element.value );
+			updateValueInUI( element.id, element.value );
+		}
+
+		function setControlValues( new_values )
+		{
+			var control;
+
+			for ( var id in new_values )
+			{
+				control = document.getElementById( id );
+				control.value = new_values[id];
+				controlUpdated( control );
+			}
+
+			values = new_values;
+			signals['control-updated'].dispatch( values );
 		}
 
 		function updateValue( key, value )
