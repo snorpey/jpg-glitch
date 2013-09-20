@@ -23,3 +23,9 @@ $RECYCLE.BIN/
 
 # SublimeText project files
 *.sublime-workspace
+
+# build script dependencies
+node_modules/
+
+# production folder
+production/
