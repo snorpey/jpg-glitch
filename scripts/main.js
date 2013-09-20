@@ -21,6 +21,7 @@ require(
 		'src/export-png',
 		'src/save-button',
 		'src/import-button',
+		'src/random-button',
 		'util/feature-test',
 		'lib/signals-1.0.0',
 		'lib/html5slider'
@@ -33,6 +34,7 @@ require(
 		png,
 		save_button,
 		import_button,
+		random_button,
 		testFeatures,
 		Signal
 	)
@@ -46,6 +48,7 @@ require(
 				signals: {
 					'image-loaded'    : new Signal(),
 					'set-new-src'     : new Signal(),
+					'control-set'     : new Signal(),
 					'control-updated' : new Signal(),
 					'export-png'      : new Signal(),
 					'saved'           : new Signal()
@@ -58,6 +61,7 @@ require(
 			png.init( shared );
 			save_button.init( shared );
 			import_button.init( shared );
+			random_button.init( shared );
 			image.init( shared );
 		}
 

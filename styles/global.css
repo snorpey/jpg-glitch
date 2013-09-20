@@ -24,6 +24,11 @@ a:hover
 	text-decoration: underline;
 }
 
+.is-hidden
+{
+	display: none;
+}
+
 .button
 {
 	background-color: #eaeaea;
@@ -43,6 +48,12 @@ a:hover
 {
 	background-color: #06f;
 	color: #fff;
+}
+
+#random-button
+{
+	position: relative;
+	top: 3px;
 }
 
 .headline
