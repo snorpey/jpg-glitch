@@ -23,6 +23,7 @@ define(
 
 					control.addEventListener( 'change', controlUpdated, false );
 					updateValue( control.id, control.value );
+					updateValueInUI( control.id, control.value );
 				}
 
 				is_initialized = true;
@@ -36,6 +37,7 @@ define(
 			var target = event.target;
 
 			updateValue( target.id, target.value );
+			updateValueInUI( target.id, target.value );
 		}
 
 		function updateValue( key, value )
@@ -46,6 +48,12 @@ define(
 			{
 				signals['control-updated'].dispatch( values );
 			}
+		}
+
+		function updateValueInUI( key, value )
+		{
+			var el = document.querySelectorAll( 'label[for="' + key  + '"] .control-slider-value' )[0];
+			el.innerHTML = value;
 		}
 
 		return { init: init };
