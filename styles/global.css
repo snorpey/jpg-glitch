@@ -83,11 +83,19 @@ a:hover
 		color: #666;
 	}
 
+	.control-slider-value
+	{
+		display: inline-block;
+		color: #333;
+		float: right;
+	}
+
 	.control-input
 	{
 		display: block;
 		width: 100px;
 	}
+
 
 #import-input
 {
