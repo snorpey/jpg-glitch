@@ -5,6 +5,7 @@ define(
 		var values = { };
 		var is_initialized = false;
 		var signals;
+		var controls;
 
 		function init( shared )
 		{
@@ -13,7 +14,7 @@ define(
 			if ( shared.feature['query-selector-all'] )
 			{
 				var wrapper = document.getElementById( 'controls' );
-				var controls = document.querySelectorAll( '.control-input' );
+				controls = wrapper.querySelectorAll( '.control-input' );
 
 				wrapper.className += ' is-active';
 
@@ -21,9 +22,10 @@ define(
 				{
 					var control = controls[i];
 
-					control.addEventListener( 'change', controlUpdated, false );
-					updateValue( control.id, control.value );
-					updateValueInUI( control.id, control.value );
+					control.addEventListener( 'input', controlUpdated, false );
+
+					updateValue( getInputKey( control.id ), control.value );
+					updateInput( getCorrespondingInput( control.id ), control.value );
 				}
 
 				is_initialized = true;
@@ -40,22 +42,24 @@ define(
 				element = element.target;
 			}
 
-			updateValue( element.id, element.value );
-			updateValueInUI( element.id, element.value );
+			updateValue( getInputKey( element.id ), element.value );
+			updateInput( getCorrespondingInput( element.id ), element.value );
 		}
 
 		function setControlValues( new_values )
 		{
 			var control;
+			var updated_values = { };
 
 			for ( var id in new_values )
 			{
-				control = document.getElementById( id );
+				control = getCorrespondingInput( id );
 				control.value = new_values[id];
 				controlUpdated( control );
+				updated_values[ getInputKey( id ) ] = new_values[id];
 			}
 
-			values = new_values;
+			values = updated_values;
 			signals['control-updated'].dispatch( values );
 		}
 
@@ -69,10 +73,40 @@ define(
 			}
 		}
 
-		function updateValueInUI( key, value )
+		function updateInput( input, value )
 		{
-			var el = document.querySelectorAll( 'label[for="' + key  + '"] .control-slider-value' )[0];
-			el.innerHTML = value;
+			if ( input.value !== value )
+			{
+				input.value = value;
+			}
+		}
+
+		function getCorrespondingInput( id )
+		{
+			var result;
+			var key = getInputKey( id );
+			var element_id;
+
+			for ( var i = 0, len = controls.length; i < len; i++ )
+			{
+				element_id = controls[i].id;
+
+				if (
+					element_id !== id &&
+					element_id.indexOf( key ) !== -1
+				)
+				{
+					result = controls[i];
+					break;
+				}
+			}
+
+			return result;
+		}
+
+		function getInputKey( id )
+		{
+			return id.replace( '-slider', '' ).replace( '-number', '' );
 		}
 
 		return { init: init };
