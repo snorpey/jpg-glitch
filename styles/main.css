@@ -63,8 +63,7 @@ a:hover
 	margin-bottom: 10px;
 }
 
-.content,
-.missing-feature
+.intro
 {
 	max-width: 650px;
 }
@@ -84,7 +83,7 @@ a:hover
 	.control-wrapper
 	{
 		float: left;
-		width: 100px;
+		width: 200px;
 		margin-right: 20px;
 	}
 
@@ -94,19 +93,29 @@ a:hover
 		color: #666;
 	}
 
-	.control-slider-value
-	{
-		display: inline-block;
-		color: #333;
-		float: right;
-	}
-
-	.control-input
+	.control-slider
 	{
 		display: block;
-		width: 100px;
+		float: left;
+		border: none;
+		width: 160px;
+		height: 1px;
+		margin-top: 6px;
+		background: #ddd;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
 	}
 
+	.control-number
+	{
+		display: block;
+		color: #333;
+		float: right;
+		border: none;
+		max-width: 30px;
+		font-family: sans-serif;
+	}
 
 #import-input
 {

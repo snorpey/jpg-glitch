@@ -13,14 +13,13 @@ define(
 
 			if ( shared.feature['query-selector-all'] )
 			{
-				controls = document.querySelectorAll( '.control-input' );
+				controls = document.querySelectorAll( '.control-slider' );
 				constraints = getConstraints( controls );
 				random_button = document.getElementById( 'random-button' );
 
 				random_button.addEventListener( 'click', buttonClicked, false );
 				random_button.classList.remove( 'is-hidden' );
 			}
-
 		}
 
 		function buttonClicked( event )
