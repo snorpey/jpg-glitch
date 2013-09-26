@@ -6,27 +6,31 @@
 		<link rel="stylesheet" href="styles/main.min.css" />
 	</head>
 	<body>
-		<article class="content">
+		<article class="content intro">
 			<h1 class="headline">glitch images</h1>
 			<p>drag an image into the browser window to modify it. this script corrupts some bytes in a jpg image. because of the way <a href="https://en.wikipedia.org/wiki/JPEG">jpg</a> encoding works, the corrupted file still shows something. inspired by <a href="http://github.com/soulwire">soulwire</a>s <a href="http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator">experiment</a> in flash. this experiment was created by <a href="http://fishnation.de/">georg</a>. you can follow him on <a href="https://twitter.com/snorpey">twitter</a> or explore the source code on <a href="https://github.com/snorpey/jpg-glitch">github</a>.</p>
 			<p>if you like this one, you can check out some of his other <a href="http://snorpey.github.io/experiments/">javascript experiments</a>.</p>
 		</article>
 		<div class="content" id="controls">
 			<div class="control-wrapper">
-				<label class="control-label" for="amount">glitch amount <span class="control-slider-value"></span></label>
-				<input class="control-input" type="range" id="amount" min="0" max="100" value="50" />
+				<label class="control-label" for="amount-slider">amount</label>
+				<input class="control-input control-number" id="amount-number" type="number" min="0" max="99" value="50" maxlength="2" />
+				<input class="control-input control-slider" id="amount-slider" type="range" min="0" max="99" value="50" step="1" maxlength="2" />
 			</div>
 			<div class="control-wrapper">
-				<label class="control-label" for="seed">seed <span class="control-slider-value"></span></label>
-				<input class="control-input" type="range" id="seed" min="0" max="100" value="50" />
+				<label class="control-label" for="seed-slider">seed</label>
+				<input class="control-input control-number" id="seed-number" type="number" min="0" max="100" value="50" maxlength="2" />
+				<input class="control-input control-slider" id="seed-slider" type="range" min="0" max="100" value="50" step="1" maxlength="2" />
 			</div>
 			<div class="control-wrapper">
-				<label class="control-label" for="iterations">iterations <span class="control-slider-value"></span></label>
-				<input class="control-input" type="range" id="iterations" min="1" max="50" value="5" />
+				<label class="control-label" for="iterations-slider">iterations</label>
+				<input class="control-input control-number" id="iterations-number" type="number" min="1" max="50" value="5" maxlength="2" />
+				<input class="control-input control-slider" id="iterations-slider" type="range" min="1" max="50" value="5" step="1" maxlength="2"/>
 			</div>
 			<div class="control-wrapper">
-				<label class="control-label" for="quality">jpg quality <span class="control-slider-value"></span></label>
-				<input class="control-input" type="range" id="quality" min="1" max="90" value="50" />
+				<label class="control-label" for="quality-slider">quality</label>
+				<input class="control-input control-number" id="quality-number" type="number" min="1" max="99" value="50" maxlength="2" />
+				<input class="control-input control-slider" id="quality-slider" type="range" min="1" max="99" value="50" step="1" maxlength="2" />
 			</div>
 			<button id="random-button" class="button is-hidden">randomize</button>
 		</div>
