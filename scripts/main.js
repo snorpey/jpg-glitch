@@ -16,6 +16,7 @@ require(
 	[
 		'src/process',
 		'src/image',
+		'src/file',
 		'src/dragdrop',
 		'src/controls',
 		'src/export-png',
@@ -28,6 +29,7 @@ require(
 	function(
 		process,
 		image,
+		file,
 		dragdrop,
 		controls,
 		png,
@@ -45,6 +47,7 @@ require(
 			var shared = {
 				feature: supported_features,
 				signals: {
+					'load-file'       : new Signal(),
 					'image-loaded'    : new Signal(),
 					'set-new-src'     : new Signal(),
 					'control-set'     : new Signal(),
@@ -62,6 +65,7 @@ require(
 			import_button.init( shared );
 			random_button.init( shared );
 			image.init( shared );
+			file.init( shared );
 		}
 
 		function showError( required_features )

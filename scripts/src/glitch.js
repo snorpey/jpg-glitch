@@ -91,7 +91,10 @@ define(
 
 			for ( var i = 0, l = data.length; i < l; i++ )
 			{
-				if ( data[i] === 0xFF && data[i + 1] === 0xDA )
+				if (
+					data[i] === 0xFF &&
+					data[i + 1] === 0xDA
+				)
 				{
 					result = i + 2;
 					break;
