@@ -37,6 +37,8 @@ define(
 			if ( ! is_processing )
 			{
 				image = img;
+				resetCanvas( image );
+				updateImageData( image );
 				processImage( image );
 			}
 		}
@@ -64,29 +66,34 @@ define(
 			}
 		}
 
+		function updateImageData( img )
+		{
+			tmp_ctx.drawImage( img, 0, 0 );
+
+			image_data = tmp_ctx.getImageData( 0, 0, tmp_canvas.width, tmp_canvas.height );
+		}
+
+		function resetCanvas( img )
+		{
+			canvas_helper.clear( tmp_canvas, tmp_ctx );
+			canvas_helper.resize( tmp_canvas, img );
+			canvas_helper.clear( canvas, ctx );
+			canvas_helper.resize( canvas, img );
+		}
+
 		function processImage( img )
 		{
 			is_processing = true;
 
-			canvas_helper.clear( tmp_canvas, tmp_ctx );
-			canvas_helper.clear( canvas, ctx );
-			canvas_helper.resize( tmp_canvas, img );
-			canvas_helper.resize( canvas, img );
-
-			tmp_ctx.drawImage( img, 0, 0 );
-
-			image_data = tmp_ctx.getImageData( 0, 0, tmp_canvas.width, tmp_canvas.height );
-
 			glitch( image_data, values, draw );
 		}
 
-		function draw( image_data )
+		function draw( glitched_image_data )
 		{
-			canvas_helper.resize( canvas, image_data );
-			ctx.putImageData( image_data, 0, 0 );
+			ctx.putImageData( glitched_image_data, 0, 0 );
 
 			is_processing = false;
-			image_data = null;
+			glitched_image_data = null;
 		}
 
 		function exportData()
