@@ -122,14 +122,6 @@ a:hover
 	display: none;
 }
 
-#canvas
-{
-	clear: both;
-	float: left;
-	margin-top: 30px;
-	display: block;
-}
-
 .export-wrapper
 {
 	clear: both;
@@ -156,8 +148,21 @@ a:hover
 		margin-left: 4px;
 	}
 
-
 .missing-feature
 {
 	clear: both;
 }
+
+.canvas-wrapper
+{
+	width: 100%;
+	clear: both;
+	float: left;
+	margin-top: 30px;
+
+}
+	#canvas
+	{
+		display: block;
+		max-width: 100%;
+	}
