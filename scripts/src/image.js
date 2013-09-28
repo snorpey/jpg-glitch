@@ -5,6 +5,9 @@ define(
 		var signals;
 		var image;
 		var initialized = false;
+		
+		// max 2k px per side, so 2000 * 2000
+		var max_image_area = 4000000;
 
 		function init( shared )
 		{
@@ -22,6 +25,8 @@ define(
 
 		function imageLoaded()
 		{
+			constrainImageSize( image );
+
 			signals['image-loaded'].dispatch( image );
 			initialized = true;
 		}
@@ -37,6 +42,25 @@ define(
 			)
 			{
 				setTimeout( imageLoaded, 10 );
+			}
+		}
+		
+		function constrainImageSize( img )
+		{
+			var ratio = 0;
+			var image_width = img.width;
+			var image_height = img.height;
+			var image_area = image_width * image_height;
+
+			if ( image_area > max_image_area )
+			{
+				ratio = max_image_area / image_area;
+				
+				image_width *= ratio;
+				image_height *= ratio;
+
+				img.naturalWidth = Math.floor( image_width );
+				img.naturalWidth = Math.floor( image_height );
 			}
 		}
 
