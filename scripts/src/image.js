@@ -48,8 +48,8 @@ define(
 		function constrainImageSize( img )
 		{
 			var ratio = 0;
-			var image_width = img.width;
-			var image_height = img.height;
+			var image_width = img.naturalWidth;
+			var image_height = img.naturalWidth;
 			var image_area = image_width * image_height;
 
 			if ( image_area > max_image_area )
