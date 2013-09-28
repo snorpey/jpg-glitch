@@ -10,7 +10,6 @@ define(
 		var file_reader;
 		var image;
 		var file_loading = false;
-		var allowed_file_types = [ 'image/png', 'image/jpg', 'image/jpeg' ];
 
 		function init( shared )
 		{
@@ -25,7 +24,6 @@ define(
 				import_button = document.getElementById( 'import-button' );
 				import_input = document.getElementById( 'import-input' );
 
-				file_reader.addEventListener( 'load', fileLoaded, false );
 				import_button.addEventListener( 'click', buttonClicked, false );
 				import_input.addEventListener( 'change', fileSelected, false );
 			}
@@ -46,18 +44,13 @@ define(
 			var files = event.target.files;
 
 			if (
-				files[0] &&
-				files[0].type &&
-				allowed_file_types.indexOf( files[0].type ) !== -1
+				event.target &&
+				event.target.files &&
+				event.target.files[0]
 			)
 			{
-				file_reader.readAsDataURL( files[0] );
+				signals['load-file'].dispatch( event.target.files[0] );
 			}
-		}
-
-		function fileLoaded( event )
-		{
-			signals['set-new-src'].dispatch( event.target.result );
 		}
 
 		return { init: init };

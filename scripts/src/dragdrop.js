@@ -3,7 +3,6 @@ define(
 	function()
 	{
 		var signals;
-		var reader;
 		var feature;
 
 		function init( shared )
@@ -11,14 +10,11 @@ define(
 			feature = shared.feature;
 			signals = shared.signals;
 
-			if ( feature['drag-drop' ] && feature['file-api' ] )
+			if ( feature['drag-drop' ] )
 			{
 				document.addEventListener( 'drop', dropped, false );
 				document.addEventListener( 'dragover', preventDefault, false );
 				document.addEventListener( 'dragleave', preventDefault, false );
-
-				reader = new FileReader();
-				reader.addEventListener( 'load', fileLoaded, false );
 			}
 		}
 
@@ -30,12 +26,15 @@ define(
 		function dropped( event )
 		{
 			event.preventDefault();
-			reader.readAsDataURL( event.dataTransfer.files[0] );
-		}
 
-		function fileLoaded( event )
-		{
-			signals['set-new-src'].dispatch( event.target.result );
+			if (
+				event.dataTransfer &&
+				event.dataTransfer.files &&
+				event.dataTransfer.files[0]
+			)
+			{
+				signals['load-file'].dispatch( event.dataTransfer.files[0] );
+			}
 		}
 
 		return { init: init };
