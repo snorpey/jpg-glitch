@@ -22,7 +22,7 @@ define(
 
 			signals['image-loaded'].add( generate );
 			signals['control-updated'].add( controlsUpdated );
-			signals['saved'].add( exportData );
+			signals['image-data-url-requested'].add( exportData );
 		}
 
 		function controlsUpdated( new_values )
@@ -96,9 +96,12 @@ define(
 			glitched_image_data = null;
 		}
 
-		function exportData()
+		function exportData( callback )
 		{
-			signals['export-png'].dispatch( canvas.toDataURL( 'image/png' ) );
+			if ( typeof callback === 'function' )
+			{
+				callback( canvas.toDataURL( 'image/png' ) );
+			}
 		}
 
 		function getAdjustedValues( new_values )
