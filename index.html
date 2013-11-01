@@ -35,10 +35,16 @@
 			<button id="random-button" class="button is-hidden">randomize</button>
 		</div>
 		<div class="export-wrapper">
-			<button id="import-button" class="button">import image</button>
+			<button id="import-button" class="button" title="open image from your computer">import image</button>
 			<input type="file" id="import-input" accept="image/*" />
-			<button id="save-button" class="button">export image</button>
+			<button id="export-button" class="button" title="save image to your computer">download image</button>
+			<button id="imgur-button" class="button" title="share image via imgur.com"><span>share image</span></button>
 			<a id="png-button" download="glitched-image.png" target="_blank" class="download-link">download bitmap file<span> (.png)</span></a>
+			<div id="imgur-url-container">
+				<input id="imgur-url-input" type="text" readonly="readonly" />
+				<a href id="imgur-url-link" class="button" href="http://imgur.com" target="_blank">open</a>
+				<span id="imgur-url-error">Sorry, something went wrong. Maybe try again?</span>
+			</div>
 		</div>
 		<div class="canvas-wrapper">
 			<canvas id="canvas" />
