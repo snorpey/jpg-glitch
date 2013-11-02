@@ -26,7 +26,7 @@ third party code used in this experiment
 * [require js](http://requirejs.org/), by [jrburke](jrburke), BSD & MIT license
 * [almond js](https://github.com/jrburke/almond), by [jrburke](jrburke), BSD & MIT license
 * [raf js](https://gist.github.com/paulirish/1579671), by [paulirish](https://github.com/paulirish), MIT license
-* [reqwest js](https://github.com/ded/reqwest/), by [ded](https://github.com/ded)
+* [reqwest js](https://github.com/ded/reqwest/), by [ded](https://github.com/ded), MIT license
 
 license
 ---
