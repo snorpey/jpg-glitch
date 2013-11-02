@@ -234,6 +234,16 @@ a:hover
 		display: inline-block;
 	}
 
+.social-link
+{
+	display: none;
+}
+
+	.upload-successful .social-link
+	{
+		display: inline-block;
+	}
+
 
 .missing-feature
 {
