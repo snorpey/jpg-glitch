@@ -129,6 +129,7 @@ a:hover {
 	background-color: transparent;
 	border: none;
 	color: #06f;
+	cursor: pointer;
 }
 
 .intro-button {
@@ -300,7 +301,6 @@ a:hover {
 
 .canvas-wrapper {
 	width: 100%;
-	margin-top: 30px;
 	position: relative;
 	background-color: rgba(255, 255, 255, 0.9);
 	line-height: 1.7;

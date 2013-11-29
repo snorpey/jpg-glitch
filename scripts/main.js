@@ -51,6 +51,7 @@ require(
 					'set-new-src'              : new Signal(),
 					'control-set'              : new Signal(),
 					'control-updated'          : new Signal(),
+					'close-intro'              : new Signal(),
 					'image-data-url-requested' : new Signal()
 				}
 			};

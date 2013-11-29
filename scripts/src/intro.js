@@ -13,6 +13,7 @@ define(
 			signals = shared.signals;
 			button.addEventListener( 'click', buttonClicked );
 			close_button.addEventListener( 'click', close );
+			signals['close-intro'].add( close );
 		}
 
 		function buttonClicked( event )
