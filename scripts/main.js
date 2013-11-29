@@ -20,6 +20,7 @@ require(
 		'src/import-button',
 		'src/random-button',
 		'src/upload-imgur',
+		'src/intro',
 		'util/feature-test',
 		'lib/signals-1.0.0'
 	],
@@ -33,6 +34,7 @@ require(
 		import_button,
 		random_button,
 		imgur,
+		intro,
 		testFeatures,
 		Signal
 	)
@@ -62,6 +64,7 @@ require(
 			image.init( shared );
 			file.init( shared );
 			imgur.init( shared );
+			intro.init( shared );
 		}
 
 		function showError( required_features )
