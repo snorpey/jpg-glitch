@@ -5,6 +5,7 @@ define(
 		var signals;
 		var image;
 		var initialized = false;
+		var defaultimage = document.body.getAttribute( 'data-defaultimage' );
 
 		function init( shared )
 		{
@@ -17,7 +18,7 @@ define(
 
 			// the image "Abraham Lincoln November 1863" is public domain:
 			// https://en.wikipedia.org/wiki/File:Abraham_Lincoln_November_1863.jpg
-			setSrc( 'lincoln.jpg' );
+			setSrc( defaultimage );
 		}
 
 		function imageLoaded()
