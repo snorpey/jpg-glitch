@@ -209,6 +209,8 @@ a:hover {
 
 #imgur-button {
 	width: 85px;
+	overflow: hidden;
+	padding-left: 0
 }
 
 #imgur-button.is-uploading,
@@ -219,14 +221,19 @@ a:hover {
 }
 
 #imgur-button span {
-	display: block;
+	display: inline-block;
 	width: 154px;
+	padding-left: 9px;
 	-webkit-transition: margin-left 0.5s ease-in;
 	transition: margin-left 0.5s ease-in;
 	-webkit-transition-property: margin-left top;
 	transition-property: margin-left top;
 	text-align: left;
-	overflow: hidden;
+	line-height: 10px;
+	font-size: 12px;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	position: relative;
 }
 
 #imgur-button.is-uploading span {
@@ -261,6 +268,7 @@ a:hover {
 	margin-right: 7px;
 	position: relative;
 	top: 1px;
+	max-width: 90px;
 }
 
 #imgur-url-error {
