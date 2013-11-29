@@ -34,6 +34,7 @@ define(
 			)
 			{
 				signals['load-file'].dispatch( event.dataTransfer.files[0] );
+				signals['close-intro'].dispatch();
 			}
 		}
 

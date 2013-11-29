@@ -50,6 +50,7 @@ define(
 			)
 			{
 				signals['load-file'].dispatch( event.target.files[0] );
+				signals['close-intro'].dispatch();
 			}
 		}
 
