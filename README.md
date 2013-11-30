@@ -3,7 +3,7 @@ image glitch experiment
 
 this is an experiment for the web browser. it corrupts jpg images so that they appear "glitched".
 
-[![triangulation experiment screen shot](http://dl.dropboxusercontent.com/u/1098704/Screenshots/github-glitch.png)](http://snorpey.github.io/jpg-glitch/)
+[![glitch experiment screen shot](http://dl.dropboxusercontent.com/u/1098704/Screenshots/github-glitch.png)](http://snorpey.github.io/jpg-glitch/)
 
 [online demo](http://snorpey.github.io/jpg-glitch/)
 
@@ -19,6 +19,10 @@ please make sure that both [nodejs](http://nodejs.org/) and grunt-cli are [set u
 run ```npm install``` from within the ```build/``` folder to install the dependencies of the build script.
 
 to build, run ```grunt production``` from within the ```build/``` folder. the optimized files will get copied to the ```production/``` folder.
+
+glitch code
+---
+if you're a developer and just interested in the code for the glitch effect, there's a separate repository for that: [glitch-canvas](https://github.com/snorpey/glitch-canvas).
 
 third party code used in this experiment
 ---
