@@ -1,9 +1,8 @@
-/*global require, requirejs, define, Modernizr, _basepath_ */
+/*global require, requirejs, define */
 // http://requirejs.org/docs/api.html#config 
-var path = typeof _basepath_ === 'string' ? _basepath_ + '/' : '';
 requirejs.config(
 	{
-		baseUrl: path + 'scripts/',
+		baseUrl: 'scripts/',
 		waitSeconds: 50,
 		urlArgs: 'bust=' +  ( new Date() ).getTime()
 	}
