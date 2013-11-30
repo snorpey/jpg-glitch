@@ -11,7 +11,6 @@ this experiment is very much based on the [smack my glitch up js](https://github
 
 build script
 ---
-
 the build script takes care of concatenating and minifying all scripts and styles. it uses [gruntjs](http://gruntjs.com/).
 
 please make sure that both [nodejs](http://nodejs.org/) and grunt-cli are [set up properly](http://gruntjs.com/getting-started) on your machine.
