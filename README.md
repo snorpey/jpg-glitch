@@ -3,7 +3,7 @@ image glitch experiment
 
 this is an experiment for the web browser. it corrupts jpg images so that they appear "glitched".
 
-[![triangulation experiment screen shot](http://dl.dropboxusercontent.com/u/1098704/Screenshots/github-glitch.png)](http://snorpey.github.io/jpg-glitch/)
+[![glitch experiment screen shot](http://dl.dropboxusercontent.com/u/1098704/Screenshots/github-glitch.png)](http://snorpey.github.io/jpg-glitch/)
 
 [online demo](http://snorpey.github.io/jpg-glitch/)
 
