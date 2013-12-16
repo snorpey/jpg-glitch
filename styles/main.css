@@ -106,8 +106,8 @@ a:hover {
 	top: -100%;
 	background-color: #fff;
 	background-color: rgba(255,255,255, 0.9);
-	-webkit-transition: all 0.5s ease-in;
-	transition: all 0.5s ease-in;
+	-webkit-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
 }
 
 .intro.is-active {

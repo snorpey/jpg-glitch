@@ -10,6 +10,7 @@ define(
 		var download_file_name;
 		var file_suffix = '.png';
 		var file_suffix_regex = /(\.)(jpg|jpeg|png|gif|bmp)/ig;
+		var parameters;
 
 		function init( shared )
 		{
@@ -24,6 +25,8 @@ define(
 			png_link.addEventListener( 'click', hidePNGLink, false );
 
 			signals['load-file'].add( updateFileName );
+			signals['load-file'].add( updateDownloadFileName );
+			signals['control-updated'].add( updateParameters );
 			signals['control-updated'].add( updateDownloadFileName );
 		}
 
@@ -45,9 +48,14 @@ define(
 			}
 		}
 
-		function updateDownloadFileName( options )
+		function updateParameters( new_parameters )
 		{
-			download_file_name = file_name + '-glitched-' + objToString( options ) + file_suffix;
+			parameters = new_parameters || parameters;
+		}
+
+		function updateDownloadFileName()
+		{
+			download_file_name = file_name + '-glitched-' + objToString( parameters ) + file_suffix;
 		}
 
 		function updatePNGLinkAddress( data_url )
