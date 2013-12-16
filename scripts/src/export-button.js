@@ -47,7 +47,7 @@ define(
 
 		function updateDownloadFileName( options )
 		{
-			download_file_name = file_name + '-' + objToString( options ) + file_suffix;
+			download_file_name = file_name + '-glitched-' + objToString( options ) + file_suffix;
 		}
 
 		function updatePNGLinkAddress( data_url )
