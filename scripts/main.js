@@ -57,8 +57,8 @@ require(
 
 			process.init( shared );
 			dragdrop.init( shared );
-			controls.init( shared );
 			export_button.init( shared );
+			controls.init( shared );
 			import_button.init( shared );
 			random_button.init( shared );
 			image.init( shared );
