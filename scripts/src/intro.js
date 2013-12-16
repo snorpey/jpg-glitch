@@ -33,6 +33,7 @@ define(
 		{
 			button.classList.add( 'is-active' );
 			element.classList.add( 'is-active' );
+			element.style.top = '0';
 			is_open = true;
 		}
 
@@ -40,7 +41,13 @@ define(
 		{
 			button.classList.remove( 'is-active' );
 			element.classList.remove( 'is-active' );
+			element.style.top = -getHeight() + 'px';
 			is_open = false;
+		}
+
+		function getHeight()
+		{
+			return element.clientHeight;
 		}
 
 		return { init: init };
