@@ -13,6 +13,7 @@ define(
 		var facebook_link;
 		var reddit_link;
 		var is_uploading = false;
+		var is_showing_links = false;
 
 		function init( shared )
 		{
@@ -28,6 +29,8 @@ define(
 
 			imgur_button.addEventListener( 'click', buttonClicked, false );
 			imgur_url_input.addEventListener( 'click', selectInput, false );
+
+			signals['control-updated'].add( controlsUpdated );
 		}
 
 		function buttonClicked( event )
@@ -101,6 +104,8 @@ define(
 				twitter_link.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent( twitter_share_url_text );
 				facebook_link.href = facebook_share_url;
 				reddit_link.href = 'http://www.reddit.com/submit?url=' + encodeURIComponent( response.data.link ) + '&title=Glitch!';
+
+				is_showing_links = true;
 			}
 			
 			else
@@ -114,6 +119,19 @@ define(
 			is_uploading = false;
 			imgur_button.classList.remove( 'is-uploading' );
 			imgur_url_container.classList.add( 'is-active', 'upload-failed' );
+		}
+
+		function controlsUpdated()
+		{
+			if ( is_showing_links )
+			{
+				imgur_url_container.classList.remove( 'is-active' );
+				imgur_url_container.classList.remove( 'upload-failed' );
+				imgur_url_container.classList.remove( 'upload-successful' );
+				imgur_button.classList.remove( 'is-uploading' );
+
+				is_showing_links = false;
+			}
 		}
 
 		return { init: init };
