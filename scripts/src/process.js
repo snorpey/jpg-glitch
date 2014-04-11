@@ -1,6 +1,6 @@
 /*global define, requestAnimationFrame*/
 define(
-	[ 'src/glitch', 'util/canvas', 'lib/raf' ],
+	[ 'lib/glitch-canvas', 'util/canvas', 'lib/raf' ],
 	function( glitch, canvas_helper )
 	{
 		var tmp_canvas = document.createElement( 'canvas' );
