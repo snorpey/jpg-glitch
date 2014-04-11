@@ -30,6 +30,7 @@ third party code used in this experiment
 * [almond js](https://github.com/jrburke/almond), by [jrburke](jrburke), BSD & MIT license
 * [raf js](https://gist.github.com/paulirish/1579671), by [paulirish](https://github.com/paulirish), MIT license
 * [reqwest js](https://github.com/ded/reqwest/), by [ded](https://github.com/ded), MIT license
+* [glitch-canvas js](https://github.com/snorpey/glitch-canvas/), by [snorpey](snorpey), MIT license
 
 license
 ---
