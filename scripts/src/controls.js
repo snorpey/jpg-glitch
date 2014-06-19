@@ -6,6 +6,7 @@ define(
 		var is_initialized = false;
 		var signals;
 		var controls;
+		var is_ie = document.querySelector( 'html' ).classList.contains( 'somewhatokie' );
 
 		function init( shared )
 		{
@@ -23,6 +24,11 @@ define(
 					var control = controls[i];
 
 					control.addEventListener( 'input', controlUpdated, false );
+
+					if ( is_ie )
+					{
+						control.addEventListener( 'change', controlUpdated, false );
+					}
 
 					updateValue( getInputKey( control.id ), control.value );
 					updateInput( getCorrespondingInput( control.id ), control.value );

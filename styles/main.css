@@ -164,6 +164,10 @@ a:hover {
 	max-width: 120px;
 }
 
+.oldie .control-label {
+	max-width: 100%;
+}
+
 .control-slider {
 	display: block;
 	float: left;
@@ -177,6 +181,14 @@ a:hover {
 	appearance: none;
 }
 
+.oldie .control-slider {
+	display: none;
+}
+
+.somewhatokie .control-slider {
+	height: 10px;
+}
+
 .control-number {
 	display: block;
 	color: #333;
@@ -185,6 +197,13 @@ a:hover {
 	max-width: 30px;
 	font-family: sans-serif;
 	background-color: transparent;
+}
+
+.oldie .control-number {
+	float: none;
+	width: 20px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #import-input {
