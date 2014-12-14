@@ -24,6 +24,11 @@ define(
 		function imageLoaded()
 		{
 			signals['image-loaded'].dispatch( image );
+
+			if ( initialized ) {
+				signals['close-intro'].dispatch();
+			}
+
 			initialized = true;
 		}
 

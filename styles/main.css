@@ -337,6 +337,42 @@ a:hover {
 	max-width: 100%;
 }
 
+.cam-wrapper {
+	width: 100%;
+	height: 0;
+	background-color: rgba(255, 255, 255, 0.5);
+	position: absolute;
+	z-index: 3;
+	transition: all 0.4s;
+	top: 60px;
+	overflow: hidden;
+	opacity: 0;
+}
+
+.cam-wrapper.is-active {
+	height: 100%;
+	opacity: 1;
+}
+
+.take-picture {
+	position: absolute;
+	top: 450px;
+	left: 50%;
+	margin-left: -43px;
+	cursor: pointer;
+	z-index: 3;
+}
+
+.cam {
+	display: block;
+	width: 100%;
+	max-width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 68px;
+	transform: scalex(-1);
+}
+
 @media all and (max-width: 860px) {
 	.nav-wrapper {
 		text-align: center;
