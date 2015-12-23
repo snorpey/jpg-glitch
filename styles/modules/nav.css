@@ -1,0 +1,284 @@
+.nav {
+	position: absolute;
+	width: 15%;
+	height: 100%;
+	width: 300px;
+	left: 0;
+	top: 0;
+	z-index: 11;
+	color: rgba(255, 255, 255, 0.6);
+	overflow: hidden;
+	transform: translateX(-300px);
+	transition: transform 300ms ease-out;
+	max-width: 100%;
+}
+
+.nav.is-swiping {
+	transition: none;
+}
+
+.nav.is-active {
+	transform: translateX(0);
+}
+
+.nav-button {
+	background-color: transparent;
+	display: block;
+	color: #fff;
+	border: none;
+	line-height: 22px;
+	font-size: 15px;
+	cursor: pointer;
+	transition: all 0.2s;
+	outline: none;
+	width: 100%;
+	text-align: left;
+	padding-left: 50px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	position: relative;
+}
+
+.has-touch .nav-button {
+	padding-top: 0;
+	padding-bottom: 0;
+	height: 48px;
+	line-height: 48px;
+}
+
+.nav-button:hover,
+.nav-button.is-active,
+.nav-button:focus {
+	color: #fff;
+	background-color: hsla(0,0%,30%,1);
+}
+
+.nav-button::before {
+	width: 18px;
+	height: 18px;
+	content: '';
+	display: block;
+	position: absolute;
+	left: 20px;
+	top: 12px;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.has-touch .nav-button::before {
+	top: 16px;
+}
+
+.has-touch .nav-button::after {
+	top: 15px;
+	transform: scale(1.5);
+}
+
+.open-button::before {
+	background-image: url(../../images/icon/open-in-app.svg);
+}
+
+.save-view-button::before {
+	background-image: url(../../images/icon/content-save.svg);
+}
+
+.photo-button::before {
+	background-image: url(../../images/icon/camera.svg);
+}
+
+.share-toggle-button::before {
+	background-image: url(../../images/icon/share-variant.svg);
+}
+
+.info-button::before {
+	background-image: url(../../images/icon/information-outline.svg);
+}
+
+.settings-button::before {
+	background-image: url(../../images/icon/settings.svg);
+}
+
+.nav-button::after {
+	content: '';
+	display: block;
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	right: 20px;
+	top: 13px;
+	background-image: url(../../images/icon/chevron-down.svg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	transition: all 0.3s;
+}
+
+.nav-button.is-active::after {
+	transform: rotate(-180deg);
+}
+
+.has-touch .nav-button.is-active::after {
+	transform: rotate(-180deg) scale(1.5);
+}
+
+.nav-headline {
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	font-weight: normal;
+	padding-left: 20px;
+	font-size: 15px;
+	text-transform: uppercase;
+}
+
+.nav-toggle-button {
+	display: block;
+	width: 90px;
+	height: 30px;
+	position: absolute;
+	top: 10px;
+	left: 15px;
+	border: none;
+	text-indent: -5000px;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	outline: 0;
+	z-index: 11;
+	transition: all 0.3s ease-out;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.nav-toggle-button.is-active {
+	border-color: transparent;
+	width: 30px;
+	transform: translateX(242px);
+}
+
+.nav-toggle-button.is-swiping {
+	transition: none;
+}
+   
+.nav-toggle-button-text {
+    position: absolute;
+    height: 100%;
+    width: 50px;
+    text-indent: 0;
+    text-align: left;
+    left: 40px;
+    top: 0;
+    line-height: 30px;
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: all 0.3s ease-out;
+}
+
+.nav-toggle-button.is-active .nav-toggle-button-text {
+	width: 0;
+	opacity: 0;
+}
+
+.nav-toggle-button.is-swiping .nav-toggle-button-text  {
+	transition: none;
+}
+
+.nav-toggle-button .svg-wrapper {
+	width: 30px;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.nav-toggle-button #svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.nav-toggle-button rect,
+.nav-toggle-button #menu {
+	transition: all 0.4s ease-out;
+}
+
+.nav-toggle-button #menu {
+	transform-origin: 12px 12px;
+	transform: rotateZ(0);
+}
+
+.nav-toggle-button rect {
+	transform-origin: 12px 12px;
+}
+
+.nav-toggle-button.is-swiping rect,
+.nav-toggle-button.is-swiping #menu {
+	transition: none;
+}
+
+.nav-toggle-button.is-active rect {
+	fill: #fff;
+}
+
+.nav-toggle-button.is-active #menu {
+	transform: rotateZ(-90deg);
+}
+
+.nav-toggle-button.is-active #rect-1 {
+	transform: rotateZ(45deg) translateX(0) translateY(5.1px);
+}
+
+.nav-toggle-button.is-active #rect-3 {
+	transform: rotateZ(-45deg) translateX(0) translateY(-5.1px);
+}
+
+.nav-toggle-button.is-active #rect-2 {
+	transform: scaleX(0);
+}
+
+@media screen and (max-width: 300px) {
+	.nav-toggle-button.is-active {
+		left: calc(100% - 41px);
+	}
+}
+
+@media screen and (max-width: 600px) {
+	body {
+		overflow: hidden;
+	}
+}
+
+@media screen and (max-height: 600px) {
+	.nav {
+		overflow: auto;
+	}
+
+	.nav .dialog.is-active {
+		max-height: none !important;
+		overflow: visible;
+	}
+
+	.nav .dialog-list:not(.is-empty),
+	.nav .shared-list:not(.is-empty),
+	.nav .about-content {
+		max-height: none !important;
+		overflow: visible;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.nav {
+		transform: translateX(0);
+	}
+
+	.nav-toggle-button {
+		display: none;
+	}
+}

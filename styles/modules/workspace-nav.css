@@ -1,0 +1,311 @@
+.workspace-nav {
+	z-index: 10;
+	width: 100%;
+	position: relative;
+}
+
+.workspace-controls {
+	position: absolute;
+	top: 0;
+	background-color: rgba(255, 255, 255, 0.4);
+	padding: 10px;
+	transform: translateY(-100%);
+	width: 100%;
+	display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+.workspace-controls .scale-to-original-button {
+	display: inline-block;
+}
+
+input.scale-slider {
+	width: calc(100% - 230px);
+	float: right;
+	position: relative;
+	top: 6px;
+	height: 20px;
+	display: none;
+	margin-right: 0;
+	margin-left: 0;
+	z-index: 14;
+}
+
+	.has-touch .workspace-controls .scale-slider {
+		min-height: 45px;
+		width: calc(100% - 260px);
+		top: 0;
+	}
+
+.workspace-controls .button {
+	margin-right: 10px;
+	float: left;
+	color: #333;
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
+	.workspace-controls .button:hover,
+	.workspace-controls .button:active {
+		border-color: rgba(0, 0, 0, 0.9);
+	}
+
+	.has-touch .workspace-controls .button,
+	.workspace-controls .button[disabled],
+	.workspace-controls .button[disabled]:hover,
+	.workspace-controls .button[disabled]:active,
+	.workspace-controls .button[disabled]:focus {
+		border-color: rgba(0, 0, 0, 0.5);
+	}
+
+.workspace-controls .scale-label {
+	color: #333;
+	margin-left: 20px;
+	display: none;
+	height: 30px;
+	line-height: 30px;
+}
+
+	.has-touch .workspace-controls .scale-label {
+		font-size: 14px;
+		line-height: 45px;
+		text-align: right;
+		height: 45px;
+	}
+
+.workspace-controls .button {
+	float: right;
+	margin-right: 10px
+}
+
+.workspace-controls .controls-toggle-button {
+	float: left;
+}
+
+.fullscreen-button {
+	display: block;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 20px;
+	overflow: hidden;
+	text-indent: -5000px;
+	width: 30px;
+	height: 30px;
+	background-image: url(../../images/icon/fullscreen.svg);
+	background-color: transparent;
+	background-size: cover;
+	background-position: center;
+	border: none;
+	cursor: pointer;
+	transition: all 0.3s ease-out;
+	opacity: 1;
+}
+
+html:not(.has-touch) .fullscreen-button {
+	opacity: 0.7;
+}
+
+html:not(.has-touch) .fullscreen-button:hover {
+	opacity: 1;
+}
+
+.is-fullscreen .fullscreen-button {
+	background-image: url(../../images/icon/fullscreen-exit.svg);
+}
+
+.workspace-controls input[type=range]::-webkit-slider-runnable-track::before,
+.has-touch .workspace-controls input[type=range]::-webkit-slider-thumb {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.workspace-controls input[type=range]:focus::-webkit-slider-thumb,
+.workspace-controls input[type=range]:active::-webkit-slider-thumb,
+.workspace-controls input[type=range]:focus::-webkit-slider-runnable-track::before,
+.workspace-controls input[type=range]:active::-webkit-slider-runnable-track::before,
+.has-touch .workspace-controls input[type=range]:focus::-webkit-slider-thumb,
+.has-touch .workspace-controls input[type=range]:active::-webkit-slider-thumb {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.workspace-controls input[type=range]::-webkit-slider-thumb::before,
+.workspace-controls input[type=range]::-webkit-slider-thumb::after {
+	background-color: rgba(0, 0, 0, 0.9);
+}
+
+.workspace-controls input[type=range]::-moz-range-track {
+	background: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0) 41.9%,
+		rgba(0, 0, 0, 0.2) 42%,
+		rgba(0, 0, 0, 0.2) 58%,
+		rgba(0, 0, 0, 0) 58.1%,
+		rgba(0, 0, 0, 0) 100%
+	);
+}
+
+.workspace-controls .has-touch input[type=range]::-moz-range-track {
+	background: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0) 49.9%,
+		rgba(0, 0, 0, 0.2) 50%,
+		rgba(0, 0, 0, 0.2) 55%,
+		rgba(0, 0, 0, 0) 55.1%,
+		rgba(0, 0, 0, 0) 100%
+	);
+}
+
+.workspace-controls input[type=range]::-moz-range-thumb {
+	background: radial-gradient(
+		ellipse at center,
+		rgba(0, 0, 0 ,1) 0%,
+		rgba(0, 0, 0 ,1) 30%,
+		rgba(0, 0, 0 ,0) 30.1%,
+		rgba(0, 0, 0 ,0) 100%
+	);
+}
+
+.workspace-controls input[type=range]::-moz-range-thumb:hover,
+.has-touch .workspace-controls input[type=range]::-moz-range-thumb {
+	background: radial-gradient(
+		ellipse at center,
+		rgba(0, 0, 0, 1) 0%,
+		rgba(0, 0, 0, 1) 30%,
+		rgba(0, 0, 0, 0.2) 30.1%,
+		rgba(0, 0, 0, 0.2) 100%
+	);
+}
+
+.workspace-controls input[type=range]:focus::-moz-range-thumb,
+.workspace-controls input[type=range]:active::-moz-range-thumb,
+.has-touch .workspace-controls input[type=range]:focus::-moz-range-thumb,
+.has-touch .workspace-controls input[type=range]:active::-moz-range-thumb {
+	background: radial-gradient(
+		ellipse at center,
+		rgba(0, 0, 0, 1) 0%,
+		rgba(0, 0, 0, 1) 30%,
+		rgba(0, 0, 0, 0.5) 30.1%,
+		rgba(0, 0, 0, 0.5) 100%
+	);
+}
+
+.workspace-controls input[type=range]::-ms-track {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.workspace-controls input[type=range]::-ms-fill-lower,
+.workspace-controls input[type=range]::-ms-thumb {
+	background: #000;
+}
+
+.has-touch .workspace-controls input[type=range]::-ms-thumb {
+	border-color: rgba(0, 0, 0, 0.5);
+}
+
+.has-touch .workspace-controls input[type=range]:active::-ms-thumb,
+.has-touch .workspace-controls input[type=range]:focus::-ms-thumb {
+	border-color: rgba(0, 0, 0, 1);
+}
+
+/*workspace ui*/
+@media screen and (min-width: 300px) {
+	html:not(.has-touch) .workspace-controls .scale-slider {
+		display: inline-block;
+	}
+}
+
+@media screen and (min-width: 400px) {
+	html:not(.has-touch) .nav:not(.is-active) ~ .workspace .scale-label {
+		display: inline-block;
+	}
+
+	html:not(.has-touch) .nav:not(.is-active) ~ .workspace .scale-slider {
+		width: calc(100% - 300px);
+	}
+
+	.has-touch .nav:not(.is-active) ~ .workspace .scale-slider {
+		display: inline-block;
+	}
+}
+
+@media screen and (min-width: 700px) {
+	html:not(.has-touch) .nav ~ .workspace .scale-label {
+		display: inline-block;
+	}
+
+	html:not(.has-touch) .nav ~ .workspace .scale-slider {
+		width: calc(100% - 300px);
+	}
+
+	.has-touch .nav ~ .workspace .scale-slider {
+		display: inline-block;
+	}
+}
+
+@media screen and (min-width: 440px) {
+	.nav:not(.is-active) ~ .workspace .scale-slider {
+		width: calc(100% - 320px);
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+
+	.has-touch .nav:not(.is-active) ~ .workspace .scale-slider {
+		width: calc(100% - 360px);
+	}
+
+	.has-touch .nav:not(.is-active) ~ .workspace .scale-label {
+		display: inline-block;
+	}
+}
+
+@media screen and (min-width: 740px) {
+	.nav ~ .workspace .scale-slider {
+		width: calc(100% - 320px);
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+
+	.has-touch .nav ~ .workspace .scale-slider {
+		width: calc(100% - 360px);
+	}
+
+	.has-touch .nav ~ .workspace .scale-label {
+		display: inline-block;
+	}
+}
+
+@media screen and (min-width: 700px) {
+	.workspace-controls .controls-toggle-button {
+		padding-left: 20px;
+		position: relative;
+	}
+
+	.has-touch .workspace-controls .controls-toggle-button {
+		text-indent: 10px;
+	}
+
+	.workspace-controls .controls-toggle-button::before {
+		content: '';
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		background-image: url(../../images/icon/chevron-down-black.svg);
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat;
+		top: 50%;
+		left: 0;
+		transform: translateY(-50%) rotate(-180deg);
+		transition: all 0.3s ease-out;
+	}
+
+	.workspace-controls .controls-toggle-button.is-active::before {
+		transform: translateY(-50%) rotate(0deg);
+	}
+
+	.has-touch .workspace-controls .controls-toggle-button::before {
+		left: 5px;
+	}
+}

@@ -1,0 +1,23 @@
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+button {
+	font-family: -apple-system, Roboto, 'Lucida Grande', sans-serif;
+	font-size: 11px;
+}
+
+label,
+time {
+	font-family: -apple-system, Roboto, 'Lucida Grande', sans-serif;
+	font-size: 11px;
+}
+
+input {
+	font-family: 'Menlo', 'Lucida Grande', sans-serif;
+	font-size: 11px;
+}

@@ -1,17 +1,39 @@
+/*!
+  * Reqwest! A general purpose XHR connection manager
+  * license MIT (c) Dustin Diaz 2015
+  * https://github.com/ded/reqwest
+  */
+
 !function (name, context, definition) {
   if (typeof module != 'undefined' && module.exports) module.exports = definition()
   else if (typeof define == 'function' && define.amd) define(definition)
   else context[name] = definition()
 }('reqwest', this, function () {
 
-  var win = window
-    , doc = document
-    , twoHundo = /^20\d$/
-    , byTag = 'getElementsByTagName'
+  var context = this
+
+  if ('window' in context) {
+    var doc = document
+      , byTag = 'getElementsByTagName'
+      , head = doc[byTag]('head')[0]
+  } else {
+    var XHR2
+    try {
+      // prevent browserify including xhr2
+      var xhr2 = 'xhr2'
+      XHR2 = require(xhr2)
+    } catch (ex) {
+      throw new Error('Peer dependency `xhr2` required! Please npm install xhr2')
+    }
+  }
+
+
+  var httpsRe = /^http/
+    , protocolRe = /(^\w+):\/\//
+    , twoHundo = /^(20\d|1223)$/ //http://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
     , readyState = 'readyState'
     , contentType = 'Content-Type'
     , requestedWith = 'X-Requested-With'
-    , head = doc[byTag]('head')[0]
     , uniqid = 0
     , callbackPrefix = 'reqwest_' + (+new Date())
     , lastValue // data stored by the most recent JSONP callback
@@ -26,31 +48,33 @@
           }
 
     , defaultHeaders = {
-          contentType: 'application/x-www-form-urlencoded'
-        , requestedWith: xmlHttpRequest
-        , accept: {
+          'contentType': 'application/x-www-form-urlencoded'
+        , 'requestedWith': xmlHttpRequest
+        , 'accept': {
               '*':  'text/javascript, text/html, application/xml, text/xml, */*'
-            , xml:  'application/xml, text/xml'
-            , html: 'text/html'
-            , text: 'text/plain'
-            , json: 'application/json, text/javascript'
-            , js:   'application/javascript, text/javascript'
+            , 'xml':  'application/xml, text/xml'
+            , 'html': 'text/html'
+            , 'text': 'text/plain'
+            , 'json': 'application/json, text/javascript'
+            , 'js':   'application/javascript, text/javascript'
           }
       }
 
     , xhr = function(o) {
         // is it x-domain
-        if (o.crossOrigin === true) {
-          var xhr = win[xmlHttpRequest] ? new XMLHttpRequest() : null
+        if (o['crossOrigin'] === true) {
+          var xhr = context[xmlHttpRequest] ? new XMLHttpRequest() : null
           if (xhr && 'withCredentials' in xhr) {
             return xhr
-          } else if (win[xDomainRequest]) {
+          } else if (context[xDomainRequest]) {
             return new XDomainRequest()
           } else {
             throw new Error('Browser does not support cross-origin requests')
           }
-        } else if (win[xmlHttpRequest]) {
+        } else if (context[xmlHttpRequest]) {
           return new XMLHttpRequest()
+        } else if (XHR2) {
+          return new XHR2()
         } else {
           return new ActiveXObject('Microsoft.XMLHTTP')
         }
@@ -61,15 +85,21 @@
         }
       }
 
+  function succeed(r) {
+    var protocol = protocolRe.exec(r.url)
+    protocol = (protocol && protocol[1]) || context.location.protocol
+    return httpsRe.test(protocol) ? twoHundo.test(r.request.status) : !!r.request.response
+  }
+
   function handleReadyState(r, success, error) {
     return function () {
       // use _aborted to mitigate against IE err c00c023f
       // (can't read props on aborted request objects)
       if (r._aborted) return error(r.request)
+      if (r._timedOut) return error(r.request, 'Request is aborted: timeout')
       if (r.request && r.request[readyState] == 4) {
         r.request.onreadystatechange = noop
-        if (twoHundo.test(r.request.status))
-          success(r.request)
+        if (succeed(r)) success(r.request)
         else
           error(r.request)
       }
@@ -77,23 +107,24 @@
   }
 
   function setHeaders(http, o) {
-    var headers = o.headers || {}
+    var headers = o['headers'] || {}
       , h
 
-    headers.Accept = headers.Accept
-      || defaultHeaders.accept[o.type]
-      || defaultHeaders.accept['*']
+    headers['Accept'] = headers['Accept']
+      || defaultHeaders['accept'][o['type']]
+      || defaultHeaders['accept']['*']
 
+    var isAFormData = typeof FormData === 'function' && (o['data'] instanceof FormData);
     // breaks cross-origin requests with legacy browsers
-    if (!o.crossOrigin && !headers[requestedWith]) headers[requestedWith] = defaultHeaders.requestedWith
-    if (!headers[contentType]) headers[contentType] = o.contentType || defaultHeaders.contentType
+    if (!o['crossOrigin'] && !headers[requestedWith]) headers[requestedWith] = defaultHeaders['requestedWith']
+    if (!headers[contentType] && !isAFormData) headers[contentType] = o['contentType'] || defaultHeaders['contentType']
     for (h in headers)
       headers.hasOwnProperty(h) && 'setRequestHeader' in http && http.setRequestHeader(h, headers[h])
   }
 
   function setCredentials(http, o) {
-    if (typeof o.withCredentials !== 'undefined' && typeof http.withCredentials !== 'undefined') {
-      http.withCredentials = !!o.withCredentials
+    if (typeof o['withCredentials'] !== 'undefined' && typeof http.withCredentials !== 'undefined') {
+      http.withCredentials = !!o['withCredentials']
     }
   }
 
@@ -107,9 +138,8 @@
 
   function handleJsonp(o, fn, err, url) {
     var reqId = uniqid++
-      , cbkey = o.jsonpCallback || 'callback' // the 'callback' key
-      , cbval = o.jsonpCallbackName || reqwest.getcallbackPrefix(reqId)
-      // , cbval = o.jsonpCallbackName || ('reqwest_' + reqId) // the 'callback' value
+      , cbkey = o['jsonpCallback'] || 'callback' // the 'callback' key
+      , cbval = o['jsonpCallbackName'] || reqwest.getcallbackPrefix(reqId)
       , cbreg = new RegExp('((^|\\?|&)' + cbkey + ')=([^&]+)')
       , match = url.match(cbreg)
       , script = doc.createElement('script')
@@ -126,7 +156,7 @@
       url = urlappend(url, cbkey + '=' + cbval) // no callback details, add 'em
     }
 
-    win[cbval] = generalCallback
+    context[cbval] = generalCallback
 
     script.type = 'text/javascript'
     script.src = url
@@ -135,9 +165,6 @@
       // need this for IE due to out-of-order onreadystatechange(), binding script
       // execution to an event listener gives us control over when the script
       // is executed. See http://jaubourg.net/2010/07/loading-script-as-onclick-handler-of.html
-      //
-      // if this hack is used in IE10 jsonp callback are never called
-      script.event = 'onclick'
       script.htmlFor = script.id = '_reqwest_' + reqId
     }
 
@@ -171,29 +198,32 @@
 
   function getRequest(fn, err) {
     var o = this.o
-      , method = (o.method || 'GET').toUpperCase()
-      , url = typeof o === 'string' ? o : o.url
-      // convert non-string objects to query-string form unless o.processData is false
-      , data = (o.processData !== false && o.data && typeof o.data !== 'string')
-        ? reqwest.toQueryString(o.data)
-        : (o.data || null)
+      , method = (o['method'] || 'GET').toUpperCase()
+      , url = typeof o === 'string' ? o : o['url']
+      // convert non-string objects to query-string form unless o['processData'] is false
+      , data = (o['processData'] !== false && o['data'] && typeof o['data'] !== 'string')
+        ? reqwest.toQueryString(o['data'])
+        : (o['data'] || null)
       , http
       , sendWait = false
 
     // if we're working on a GET request and we have data then we should append
     // query string to end of URL and not post data
-    if ((o.type == 'jsonp' || method == 'GET') && data) {
+    if ((o['type'] == 'jsonp' || method == 'GET') && data) {
       url = urlappend(url, data)
       data = null
     }
 
-    if (o.type == 'jsonp') return handleJsonp(o, fn, err, url)
+    if (o['type'] == 'jsonp') return handleJsonp(o, fn, err, url)
 
-    http = xhr(o)
-    http.open(method, url, o.async === false ? false : true)
+    // get the xhr from the factory if passed
+    // if the factory returns null, fall-back to ours
+    http = (o.xhr && o.xhr(o)) || xhr(o)
+
+    http.open(method, url, o['async'] === false ? false : true)
     setHeaders(http, o)
     setCredentials(http, o)
-    if (win[xDomainRequest] && http instanceof win[xDomainRequest]) {
+    if (context[xDomainRequest] && http instanceof context[xDomainRequest]) {
         http.onload = fn
         http.onerror = err
         // NOTE: see
@@ -203,7 +233,7 @@
     } else {
       http.onreadystatechange = handleReadyState(this, fn, err)
     }
-    o.before && o.before(http)
+    o['before'] && o['before'](http)
     if (sendWait) {
       setTimeout(function () {
         http.send(data)
@@ -221,14 +251,18 @@
     init.apply(this, arguments)
   }
 
-  function setType(url) {
-    var m = url.match(/\.(json|jsonp|html|xml)(\?|$)/)
-    return m ? m[1] : 'js'
+  function setType(header) {
+    // json, javascript, text/plain, text/html, xml
+    if (header === null) return undefined; //In case of no content-type.
+    if (header.match('json')) return 'json'
+    if (header.match('javascript')) return 'js'
+    if (header.match('text')) return 'html'
+    if (header.match('xml')) return 'xml'
   }
 
   function init(o, fn) {
 
-    this.url = typeof o == 'string' ? o : o.url
+    this.url = typeof o == 'string' ? o : o['url']
     this.timeout = null
 
     // whether request has been fulfilled for purpose
@@ -245,36 +279,35 @@
     this._responseArgs = {}
 
     var self = this
-      , type = o.type || setType(this.url)
 
     fn = fn || function () {}
 
-    if (o.timeout) {
+    if (o['timeout']) {
       this.timeout = setTimeout(function () {
-        self.abort()
-      }, o.timeout)
+        timedOut()
+      }, o['timeout'])
     }
 
-    if (o.success) {
+    if (o['success']) {
       this._successHandler = function () {
-        o.success.apply(o, arguments)
+        o['success'].apply(o, arguments)
       }
     }
 
-    if (o.error) {
+    if (o['error']) {
       this._errorHandlers.push(function () {
-        o.error.apply(o, arguments)
+        o['error'].apply(o, arguments)
       })
     }
 
-    if (o.complete) {
+    if (o['complete']) {
       this._completeHandlers.push(function () {
-        o.complete.apply(o, arguments)
+        o['complete'].apply(o, arguments)
       })
     }
 
     function complete (resp) {
-      o.timeout && clearTimeout(self.timeout)
+      o['timeout'] && clearTimeout(self.timeout)
       self.timeout = null
       while (self._completeHandlers.length > 0) {
         self._completeHandlers.shift()(resp)
@@ -282,6 +315,7 @@
     }
 
     function success (resp) {
+      var type = o['type'] || resp && setType(resp.getResponseHeader('Content-Type')) // resp can be undefined in IE
       resp = (type !== 'jsonp') ? self.request : resp
       // use global data filter on response text
       var filteredResponse = globalSetupOptions.dataFilter(resp.responseText, type)
@@ -295,7 +329,7 @@
         switch (type) {
         case 'json':
           try {
-            resp = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
+            resp = context.JSON ? context.JSON.parse(r) : eval('(' + r + ')')
           } catch (err) {
             return error(resp, 'Could not parse JSON in response', err)
           }
@@ -326,6 +360,11 @@
       }
 
       complete(resp)
+    }
+
+    function timedOut() {
+      self._timedOut = true
+      self.request.abort()
     }
 
     function error(resp, msg, t) {
@@ -398,6 +437,9 @@
       }
       return this
     }
+  , 'catch': function (fn) {
+      return this.fail(fn)
+    }
   }
 
   function reqwest(o, fn) {
@@ -415,8 +457,8 @@
       , optCb = function (o) {
           // IE gives value="" even where there is no value attribute
           // 'specified' ref: http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-862529273
-          if (o && !o.disabled)
-            cb(n, normalize(o.attributes.value && o.attributes.value.specified ? o.value : o.text))
+          if (o && !o['disabled'])
+            cb(n, normalize(o['attributes']['value'] && o['attributes']['value']['specified'] ? o['value'] : o['text']))
         }
       , ch, ra, val, i
 
@@ -523,12 +565,12 @@
         }
     // If an array was passed in, assume that it is an array of form elements.
     if (isArray(o)) {
-      for (i = 0; o && i < o.length; i++) add(o[i].name, o[i].value)
+      for (i = 0; o && i < o.length; i++) add(o[i]['name'], o[i]['value'])
     } else {
       // If traditional, encode the "old" way (the way 1.3.2 or older
       // did it), otherwise encode params recursively.
       for (prefix in o) {
-        buildParams(prefix, o[prefix], traditional, add)
+        if (o.hasOwnProperty(prefix)) buildParams(prefix, o[prefix], traditional, add)
       }
     }
 
@@ -569,22 +611,22 @@
 
   // jQuery and Zepto compatibility, differences can be remapped here so you can call
   // .ajax.compat(options, callback)
-  reqwest.compat = function (o, fn) {
-    if (o) {
-      o.type && (o.method = o.type) && delete o.type
-      o.dataType && (o.type = o.dataType)
-      o.jsonpCallback && (o.jsonpCallbackName = o.jsonpCallback) && delete o.jsonpCallback
-      o.jsonp && (o.jsonpCallback = o.jsonp)
-    }
-    return new Reqwest(o, fn)
-  }
+  // reqwest.compat = function (o, fn) {
+  //   if (o) {
+  //     o['type'] && (o['method'] = o['type']) && delete o['type']
+  //     o['dataType'] && (o['type'] = o['dataType'])
+  //     o['jsonpCallback'] && (o['jsonpCallbackName'] = o['jsonpCallback']) && delete o['jsonpCallback']
+  //     o['jsonp'] && (o['jsonpCallback'] = o['jsonp'])
+  //   }
+  //   return new Reqwest(o, fn)
+  // }
 
-  reqwest.ajaxSetup = function (options) {
-    options = options || {}
-    for (var k in options) {
-      globalSetupOptions[k] = options[k]
-    }
-  }
+  // reqwest.ajaxSetup = function (options) {
+  //   options = options || {}
+  //   for (var k in options) {
+  //     globalSetupOptions[k] = options[k]
+  //   }
+  // }
 
   return reqwest
 });

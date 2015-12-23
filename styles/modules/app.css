@@ -1,0 +1,18 @@
+.app {
+	transition: opacity 0.3s ease-out;
+	opacity: 0;
+}
+
+.is-loaded .app {
+	opacity: 1;
+}
+
+html:not(.is-online) .is-online-only {
+	display: none;
+}
+
+@media screen and (min-width: 600px) {
+	.app {
+		display: flex;
+	}
+}
