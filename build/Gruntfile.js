@@ -90,6 +90,8 @@ module.exports = function( grunt ) {
 				files: [
 					{ src: '../index.html', dest: '../production/index.html' },
 					{ src: '../manifest.json', dest: '../production/manifest.json' },
+					{ src: '../.gitignore', dest: '../production/.gitignore' },
+					{ src: '../LICENSE', dest: '../production/LICENSE' },
 					{
 						expand: true,
 						cwd: '../',
