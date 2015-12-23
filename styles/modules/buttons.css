@@ -1,0 +1,87 @@
+.button {
+	background-color: transparent;
+	padding: 4px 6px;
+	border-radius: 3px;
+	border: none;
+	color: #fff;
+	font-size: 11px;
+	display: inline-block;
+	cursor: pointer;
+	transition: all 0.2s;
+	outline: none;
+	text-decoration: none;
+	font-weight: 500;
+	text-transform: uppercase;
+	border: 2px solid rgba(255, 255, 255, 0.1);
+	height: 30px;
+	line-height: 22px;
+}
+
+.has-touch .button {
+	border: 2px solid rgba(255, 255, 255, 0.5);
+	height: 45px;
+	line-height: 40px;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.button:focus {
+	color: #fff;
+	border-color: #fff;
+}
+
+.button:hover,
+.button:active {
+	color: #333;
+	background-color: #fff;
+	text-decoration: none;
+	border-color: #fff;
+}
+
+.button[disabled],
+.button[disabled]:hover,
+.button[disabled]:active,
+.button[disabled]:focus {
+	color: rgba(255, 255, 255, 0.5);
+	border-color: transparent;
+	background-color: transparent;
+	cursor: default;
+}
+
+.button + .button {
+	margin-left: 10px;
+}
+
+.save-dialog.is-active {
+	max-height: 40px;
+}
+
+.webcam-dialog.is-active {
+	max-height: 225px;
+}
+
+.webcam-dialog.is-active {
+	max-height: 225px;
+}
+
+.open-file-dialog.is-active,
+.share-dialog .is-active {
+	max-height: 550px;
+}
+
+.about-dialog.is-active {
+	max-height: 442px;
+}
+
+/*.dialog-list .button {
+	border-radius: 1px;
+}
+
+.dialog-list .button:hover,
+.dialog-list .button:active,
+.dialog-list .button:focus {
+	color: #e91e63;
+	background-color: #fff;
+}*/

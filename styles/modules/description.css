@@ -1,0 +1,7 @@
+.is-good-enough .description .min-requirements {
+	display: none;
+}
+
+.has-js .description .js-required {
+	display: none;
+}

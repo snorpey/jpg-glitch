@@ -1,0 +1,134 @@
+{
+	"lang": "en-us",
+	"index": {
+		"title": "Image Glitch Werkzeug",
+		"description": "Mit diesem Programm kannst du ein Bild so bearbeiten, dass es kaputt aussieht. Ziehe ein Bild in das Browserfenster um loszulegen.\n\nDas Programm verändert einige Bytes in der Bilddatei. Aufgrund der Art und Weise wie der [JPEG Logarithmus](https://de.wikipedia.org/wiki/JPEG) funktioniert, wird trotz eigenlich unlesbarer Rohdaten weiterhin ein Bild erzeugt. Dieses Programm ist angelehnt an ein ähnliches Experiment von [experiment](http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator) von [soulwire](http://github.com/soulwire) in Flash.\n\nDieses Programm wurde von [Georg](http://snorpey.com/) entwickelt. Er freut sich übrigens immer, von den Nutzern seiner Programme zu hören wie sie die Programme einsetzen. Du kannst Georg bei [Twitter](https://twitter.com/snorpey) folgen oder dir den Quellcode dieses Programms bei [GitHub](https://github.com/snorpey/jpg-glitch) ansehen.\n\nFalls dir dieses Programm gefallen hat, gefallen dir vielleicht auch Georgs andere [Experimente](http://snorpey.github.io/experiments/)."
+	},
+	"settings": {
+		"settings": "Einstellungen",
+		"settingstitle": "Ändere die Einstellungen des Programms",
+		"canzoomwithpointer": "Erlaube Zoomen mit Mausrad und Gesten",
+		"resizeuploadedimages": "Große Bilder verkleinen, um Fehler zu vermeiden",
+		"language": "Sprache (Language)",
+		"languageoptions": {
+			"de-de": "Deutsch DE",
+			"en-us": "Englisch (English US)"
+		},
+		"error": {
+			"save": "Konnte die Einstellungen nicht im Browser speichern.",
+			"load": "Konnte die Einstellungen nicht vom Browser laden."
+		}
+	},
+	"about": {
+		"info": "Über",
+		"infotitle": "Weitere Informationen über dieses Programm"
+	},
+	"controls": {
+		"controls": "Regler",
+		"controlstitle": "Regler ein- und ausblenden",
+		"randomize": "Zufall",
+		"randomizetitle": "Zufällige Reglerwerte wählen",
+		"center": "Mittig",
+		"centertitle": "Zentriere das Bild auf dem Bildschirm",
+		"original": "100%",
+		"originaltitle": "Zoome zur Originalgröße des Bildes",
+		"zoom": "Zoom",
+		"amount": "Betrag",
+		"seed": "Startwert",
+		"iterations": "Wiederholungen",
+		"quality": "Qualität",
+		"fullscreen": "Vollbild",
+		"fullscreentitle": "Vollbild ein- und ausschalten"
+	},
+	"nav": {
+		"menu": "Menü",
+		"menutitle": "Hauptmenü ein- und ausschalten"
+	},
+	"file": {
+		"open": "Öffnen",
+		"opentitle": "Eine Datei von deinem Gerät öffnen",
+		"import": "Importieren",
+		"importtitle": "Öffne ein Bild von deiner Festplatte",
+		"recent": "Bilder aus vorherigen Sitzungen",
+		"norecent": "Noch keine Bilder vorhanden",
+		"untitled": "Ohne Titel",
+		"del": "Löschen",
+		"deltitle": "Dieses Bild aus dem Speicher deines Browsers löschen",
+		"openimage": "Öffnen",
+		"openimagetitle": "Dieses Bild laden",
+		"offline": "Offline nehmen",
+		"offlinetitle": "Dieses Bild von Imgur löschen und vom Netz nehmen",
+		"openlink": "Link öffnen",
+		"openlinktitle": "Das Bild in einen neuen Browsertab öffnen",
+		"save": "Speichern",
+		"savetitle": "Aktuelles Bild für spätere Sitzungen speichern",
+		"download": "Herunterladen",
+		"downloadtitle": "Lade das bearbeitete Bild auf herunter",
+		"saveinbrowser": "Speichern",
+		"saveinbrowsertitle": "Speichere das Bild im Speicher deines Browsers",
+		"error": {
+			"load": "Konnte vorherige Sitzung nicht laden.",
+			"save": "Konnte aktuelle Sitzung nicht speichern.",
+			"openimage": "Kann das Bild nicht öffnen.",
+			"openfile": "Kann die Datei nicht öffnen."
+		},
+		"message": {
+			"before": "Das gleiche Bild wurde vorher schonmal gespeichert.",
+			"save": "Die Datei wurde in deinem Browser gespeichert.",
+			"del": "Eine Datei wurde aus dem Speicher deines Browsers gelöscht.",
+			"resize": "Dein Bild wurde etwas verkleinert, um Programmfehler zu vermeiden."
+		}
+	},
+	"share": {
+		"share": "Teilen",
+		"sharetitle": "Teile das Bild im Internet",
+		"info": "Du kannst das Bild auf [Imgur](https://imgur.com) hochladen, um es mit anderen zu teilen. Bitte beachte dass das Bild dann öffentlich einsehbar ist und die [Terms of Service](https://imgur.com/tos) von Imgur gelten.",
+		"openon": "Das Bild auf {$1} öffnen",
+		"openontitle": "Das Bild öffnen, dass auf {$1} geteilt wurde",
+		"shareon": "Auf {$1} teilen",
+		"shareontitle": "Das Bild auf {$1} teilen",
+		"upload": "Bild auf Imgur Hochladen",
+		"uploadtitle": "Lade das Bild auf Imgur hoch, um es mit anderen zu teilen",
+		"uploading": "Lade Bild hoch…",
+		"imagelink": "Online Link zum Bild",
+		"imagelinktitle": "Du kannst diesen Link nehmen um das Bild auf anderen Seiten zu teilen oder hochzuladen",
+		"opennewtabtitle": "Öffne das Bild in einem neuen Browsertab",
+		"imgur": "Imgur",
+		"reddit": "Reddit",
+		"twitter": "Twitter",
+		"facebook": "Facebook",
+		"pinterest": "Pinterest",
+		"recentlyshared": "Kürzlich geteilte Bilder",
+		"untitled": "Ohne Titel",
+		"openlink": "Öffne Link",
+		"openlinktitle": "Das Bild in einen neuen Browsertab öffnen",
+		"offline": "Offline nehmen",
+		"offlinetitle": "Dieses Bild von Imgur löschen und vom Netz nehmen",
+		"error": {
+			"base64": "Es gibt keine Base64-Adresse zum hochladen",
+			"upload": "Konnte das Bild nicht auf Imgur hochladen."
+		},
+		"message": {
+			"upload": "Das Bild wurde zu Imgur hochgeladen. [Bild öffnen.]({$1})",
+			"del": "Das Bild wurde von Imgur gelöscht."
+		}
+	},
+	"webcam": {
+		"webcam": "Webcam",
+		"webcamtitle": "Mache ein Bild mit deiner Webcam",
+		"webcamlabel": "Foto",
+		"trigger": "Ein Foto machen",
+		"triggertitle": "Klicken, um ein Foto mit deiner Webcam zu machen",
+		"picture": "Webcam Foto von {$1}",
+		"error": {
+			"access": "Der Zugriff auf deine Webcam wurde leider verweigert."
+		}
+	},
+	"welcome": {
+		"firstvisit": [
+			"Hallo! Es scheint als wärst du zum ersten Mal hier.",
+			"Um loszulegen, ziehe an den Reglern am unteren Fensterrand um das Bild zu bearbeiten.",
+			"Du kannst auch ein Bild importieren. Klicke dazu einfach im Menü auf ÖFFNEN."
+		]
+	}
+}

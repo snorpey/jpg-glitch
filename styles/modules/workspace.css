@@ -1,0 +1,22 @@
+.workspace {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transition: all 0.3s ease-out;
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+@media screen and (min-width: 600px) {
+	.nav.is-active ~ .workspace {
+		width: calc(100% - 300px);
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.nav ~ .workspace {
+		width: calc(100% - 300px);
+	}
+}
