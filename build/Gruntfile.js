@@ -120,7 +120,7 @@ module.exports = function( grunt ) {
 					src: [ 'images/logos/*.png' ],
 					dest: '../production/'
 				},
-				{ src: '../images/favicon.ico', dest: '../production/images/favicon.ico' } ]
+				{ src: '../favicon.ico', dest: '../production/favicon.ico' } ]
 			}
 		},
 
