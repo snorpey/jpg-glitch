@@ -1,0 +1,35 @@
+.about-content {
+	max-width: 300px;
+	max-height: calc(100vh - 270px);
+	overflow: auto;
+	padding-bottom: 15px;
+}
+
+.about-content .text {
+	opacity: 1;
+	margin-top: 0;
+	margin-bottom: 0;
+	width: 100%;
+}
+
+.abount-content .description {
+
+}
+
+.has-touch .about-content {
+	max-height: calc(100vh - 290px);
+}
+
+/*.about-content p {
+	font-size: 13px;
+	line-height: 22px;
+}
+
+.about-content p + p {
+	margin-top: 10px;
+}*/
+
+
+.about-dialog .dialog-item {
+	padding-bottom: 0;
+}

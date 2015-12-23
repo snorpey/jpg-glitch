@@ -1,0 +1,388 @@
+.dialog {
+	transition: all 0.5s;
+	max-height: 0;
+	overflow: hidden;
+	position: relative;
+}
+
+.dialog.is-active {
+	max-height: calc(100vh - 220px);
+}
+
+.has-touch .dialog.is-active {
+	max-height: calc(100vh - 290px);
+}
+
+.dialog.is-visible {
+	display: block;
+}
+
+.dialog-close-button {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	border: none;
+	cursor: pointer;
+	border-radius: 34px;
+	width: 34px;
+	height: 34px;
+	outline: none;
+	background-color: transparent;
+}
+
+.dialog-close-button:hover,
+.dialog-close-button:focus,
+.dialog-close-button:active {
+	color: #f50057;
+}
+
+.dialog-close-button .close-text {
+	font-size: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	text-align: center;
+}
+
+.dialog > h1,
+.dialog-title {
+	font-size: 17px;
+	font-weight: normal;
+	/*color: #fff;*/
+	padding: 10px 20px 0 20px;
+}
+
+.dialog-item {
+	display: block;
+	width: 100%;
+	padding-top: 15px;
+	padding-left: 20px;
+	padding-bottom: 15px;
+	padding-right: 20px;
+}
+
+.dialog-item + .dialog-item,
+.dialog-item:first-child {
+	padding-top: 0;	
+}
+
+.dialog-item p {
+	font-size: 13px;
+	line-height: 22px;
+}
+
+.dialog-item p + p {
+	margin-top: 10px;
+}
+
+.dialog-item .label {
+	display: block;
+	width: 100%;
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.7);
+	margin-bottom: 3px;
+	padding: 10px 0;
+}
+
+.dialog-item input[type="text"],
+.dialog-item input[type="url"],
+.dialog-item input[type="email"] {
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px #666 solid;
+	margin-bottom: 5px;
+	max-width: calc(100% - 45px);
+	width: 100%;
+	transition: all 0.2s;
+}
+
+.dialog-item input[type="text"]:focus,
+.dialog-item input[type="url"]:focus,
+.dialog-item input[type="email"]:focus {
+	border-bottom-color: #999;
+	color: #fff;
+}
+
+.dialog-item input[type="text"]:last-child,
+.dialog-item input[type="url"]:last-child,
+.dialog-item input[type="email"]:last-child {
+	max-width: 100%;
+}
+
+.dialog-item input[type="text"] + .button,
+.dialog-item input[type="url"] + .button,
+.dialog-item input[type="email"] + .button {
+	margin-left: 5px;
+	float: right;
+}
+
+.dialog-item input[type="file"] {
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.dialog-item video {
+	max-height: 200px;
+	max-width: 300px;
+	width: 100%;
+	background-color: #000;
+	overflow: hidden;
+	object-fit: cover;
+	display: block;
+	cursor: pointer;
+	opacity: 0.8;
+}
+
+.dialog-item video:hover {
+	opacity: 1;
+}
+
+.dialog-item .video-wrapper.is-taking-picture {
+	background-color: #fff;
+}
+
+.dialog-item .video-wrapper.is-taking-picture video {
+	opacity: 0;
+	transition-duration: 0;
+}
+
+.dialog-item a:not(.button) {
+	color: #fff;
+	border-bottom: 1px #999 solid;
+}
+
+.dialog-item a:not(.button):hover {
+	border-bottom: 1px #ccc solid;
+	text-decoration: none;
+}
+
+.dialog-list {
+	overflow: scroll;
+	margin-left: -20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	width: calc(100% + 40px);
+	max-height: calc(100vh - 355px);
+}
+
+.has-touch .dialog-list {
+	max-height: calc(100vh - 445px);
+}
+
+	.dialog-list-item {
+		position: relative;
+		margin-bottom: 10px;
+		display: block;
+	}
+		.has-touch .dialog-list-item {
+			margin-bottom: 30px;
+		}
+
+	.dialog-list img {
+		transition: all 0.2s;
+		cursor: pointer;
+		display: block;
+		float: left;
+		margin-bottom: 10px;
+	}
+
+	.has-touch .dialog-list img {
+		float: none;
+	}
+
+	.dialog-list .entry-text {
+		position: absolute;
+		left: 60px;
+		top: 0;
+		line-height: 16px;
+		max-width: calc(100% - 60px);
+	}
+
+		.has-touch .dialog-list .entry-text {
+			width: 100%;
+		}
+
+	.dialog-list .entry-name {
+		font-size: 11px;
+		color: #fff;
+		display: block;
+		overflow: hidden;
+		width: 80px;
+		text-overflow: ellipsis;
+	}
+
+		html:not(.has-touch) .dialog-list .entry-name {
+			white-space: nowrap;
+		}
+
+		.has-touch .dialog-list .entry-name {
+			width: 100%;
+		}
+
+	.dialog-list .entry-datetime span {
+		display: block;
+		max-width: 90px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-height: 40px
+	}
+
+		.has-touch .dialog-list .entry-datetime span {
+			max-width: 100%;
+			display: inline-block;
+		}
+
+		.has-touch .dialog-list .entry-datetime span + span {
+			margin-left: 10px;
+		}
+
+	.dialog-list .entry-button-wrapper {
+		position: absolute;
+		top: 15px;
+		right: 0;
+		text-align: right;
+	}
+
+		.has-touch .dialog-list .entry-button-wrapper {
+			position: static;
+			text-align: left;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			display: inline-block;
+		}
+
+	.dialog-list .entry-shared-button-wrapper {
+		margin-top: 10px;
+		clear: both;
+	}
+
+		.has-touch .dialog-list .entry-shared-button-wrapper {
+			display: inline;
+		}
+
+		.has-touch .shared-list .entry-button-wrapper {
+			width: 100%;
+		}
+
+		html:not(.has-touch) .dialog-list .entry-shared-button-wrapper .button {
+			border-color: transparent;
+		}
+
+	html:not(.has-touch) .dialog-list .item-delete-button {
+		border-color: transparent;
+	}
+
+	.dialog-list .no-items {
+		font-size: 12px;
+		margin-left: 15px;
+	}
+
+.has-touch .share-dialog.is-active {
+	max-height: calc(100vh - 270px);
+    overflow: auto;
+}
+
+/*pulse keyframe animation is inlined in html*/
+
+.dialog .loader {
+	font-size: 14px;
+	overflow: hidden;
+	position: relative;
+	transition: all 0.3s;
+	max-height: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-width: 0;
+}
+
+.dialog.is-loading:not(.was-loaded) .loader {
+	padding-left: 50px;
+	padding-bottom: 10px;
+	padding-top: 13px;
+	max-height: 40px;
+	border-width: 1;
+	color: #fff;
+}
+
+.dialog .loader ~ .dialog-item {
+	transition: all 0.3s;
+	overflow: hidden;
+}
+
+.dialog .loader + .dialog-item {
+	border-top: none;
+}
+
+.dialog:not(.was-loaded) .loader ~ .dialog-item:not(.has-list) {
+	max-height: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-width: 0;
+}
+
+.save-dialog .dialog-item {
+	display: flex;
+	justify-content: space-between;
+}
+
+.save-dialog .button {
+	display: block;
+}
+
+.webcam-dialog .button {
+	margin-top: 10px;
+}
+
+.shared-list {
+	max-height: calc(100vh - 345px);
+	transition: max-height 0.2s;
+}
+
+.shared-list.is-empty {
+	max-height: 0;
+	overflow: hidden;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-width: 0;
+}
+
+.shared-list .entry-button-wrapper {
+	position: static;
+	width: 120px;
+	float: right;
+}
+
+.shared-list .item-offline-button {
+	margin-top: 5px;
+}
+
+html:not(.has-touch) .shared-list .item-offline-button {
+	border-color: transparent;
+}
+
+.setting {
+	display: flex;
+}
+
+.setting-label {
+	font-size: 14px;
+    display: block;
+    width: calc(100% - 16px);
+    padding-right: 30px;
+    cursor: pointer;
+    line-height: 21px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.setting-checkbox {
+	margin-top: 3px;
+}

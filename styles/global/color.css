@@ -1,0 +1,19 @@
+body {
+	color: #333;
+}
+
+input {
+	color: #ccc;
+}
+
+a {
+	color: #06f;
+}
+
+.color-bg {
+	background-color: hsla(0, 0%, 20%, 1);
+}
+
+.color-bg-light {
+	background-color: hsla(0, 0%, 30%, 1);
+}

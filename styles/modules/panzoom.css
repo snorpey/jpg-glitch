@@ -1,0 +1,33 @@
+.panzoom {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	transition: all 0.2s;
+}
+
+.panzoom canvas {
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -webkit-crisp-edges;
+	image-rendering: crisp-edges;
+	image-rendering: pixelated;
+	opacity: 0;
+}
+
+.panzoom.is-visible:not(.drag-over) canvas {
+	opacity: 1;
+	transition: opacity 0.2s;
+}
+
+.panzoom.drag-over {
+	background-color: #444;
+}
+
+.panzoom.drag-over canvas {
+	opacity: 0;
+}
+
+@media screen and (max-width: 800px) {
+	.has-touch .controls.is-active ~ .panzoom {
+		height: calc(100vh - 280px)
+	}
+}

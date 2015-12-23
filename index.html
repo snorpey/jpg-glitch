@@ -1,69 +1,89 @@
 <!doctype html>
-<!--[if lt IE 10 ]> <html class="oldie"> <![endif]-->
-<!--[if gt IE 9 ]> <html class="somewhatokie"> <![endif]-->
-<!--[if gt IE 11]><!--> <html> <!--<![endif]-->
-<head>
+<html>
+	<head>
 		<meta charset="utf-8" />
-		<title>image glitch experiment</title>
-		<link rel="stylesheet" href="styles/main.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="manifest" href="manifest.json" />
+		<link rel="icon" type="image/png" href="images/logos/glitch-48x48.png" sizes="48x48" />
+		<link rel="icon" type="image/png" href="images/logos/glitch-96x96.png" sizes="96x96" />
+		<link rel="icon" type="image/png" href="images/logos/glitch-144x144.png" sizes="144x144" />
+		<link rel="apple-touch-icon" sizes="96x96" href="images/logos/glitch-96x96.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="images/logos/glitch-144x144.png" />
+		<title>Image Glitch Tool</title>
+		<style>
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body { font-family: -apple-system, Roboto, 'Lucida Grande', sans-serif; }
+		body > p, .description { margin: 50px auto; max-width: 500px; width: 90%; }
+		.is-good-enough .min-requirements, .has-js .js-required { display: none; }
+		.text { opacity: 1; }
+		.has-js .text { opacity: 0; transition: opacity 0.8s ease-in; }
+		.text p + p, .text p + div { margin-top: 1em; }
+		.is-too-old .text { opacity: 1 }
+		.is-loading .text { opacity: 0 }
+		.app-loader { display: inline-block; position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%); line-height: 90px; transition: opacity 0.1s; }
+		.loader { opacity: 0; }
+		.is-loading .loader { opacity: 1; }
+		.loader::before, .loader::after { content: ''; display: block; position: absolute; top: 8px; left: 18px; width: 20px; height: 20px; border-radius: 40px; border: 2px currentColor solid; z-index: 1; transform: scale(0.5); opacity: 0; }
+		.is-loading .loader::before { animation: pulse 2s infinite; }
+		.is-loading .loader::after { animation: pulse 2s infinite; animation-delay: 1s; }
+		@keyframes pulse { 0% { transform: scale(1); opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; transform: scale(0.5); } }
+		</style>
+		<script>document.documentElement.setAttribute( 'class', 'has-js' );</script>
 	</head>
-	<body data-defaultimage="lincoln.jpg">
-		<div class="nav-wrapper dark-bg">
-			<div class="export-wrapper center">
-				<h1 class="headline">glitch images</h1>
-				<button id="cam-button" class="button" title="take photo with you web cam">take photo</button>
-				<button id="import-button" class="button" title="open image from your computer">open image</button>
-				<input type="file" id="import-input" accept="image/*" />
-				<button id="export-button" class="button" title="save image to your computer">download image</button>
-				<button id="imgur-button" class="button" title="share image via imgur.com"><span>share image</span></button>
-				<a id="png-button" download="abrahamlincoln.png" target="_blank" class="download-link">download bitmap file<span> (.png)</span></a>
-				<div id="imgur-url-container">
-					<input id="imgur-url-input" type="text" readonly="readonly" />
-					<a id="imgur-url-link" class="button social-link" href="https://imgur.com/" target="_blank">open</a>
-					<a id="twitter-link" class="button social-link" href="https://twitter.com/" target="_blank" title="post your image on twitter">twitter</a>
-					<a id="facebook-link" class="button social-link" href="https://www.facebook.com/" target="_blank" title="post your image on facebook">facebook</a>
-					<a id="reddit-link" class="button social-link" href="https://www.reddit.com/" target="_blank" title="post your image on reddit">reddit</a>
-					<span id="imgur-url-error">sorry, something went wrong. maybe try again?</span>
-				</div>
-				<button class="intro-button button is-active">?</button>
-			</div>
-		</div>
-		<div class="nav-wrapper light-bg">
-			<div class="content center" id="controls">
-				<div class="control-wrapper">
-					<label class="control-label" for="amount-slider">amount</label>
-					<input class="control-input control-number" id="amount-number" type="number" min="0" max="99" value="50" maxlength="2" />
-					<input class="control-input control-slider" id="amount-slider" type="range" min="0" max="99" value="50" step="1" maxlength="2" />
-				</div>
-				<div class="control-wrapper">
-					<label class="control-label" for="seed-slider">seed</label>
-					<input class="control-input control-number" id="seed-number" type="number" min="0" max="100" value="50" maxlength="2" />
-					<input class="control-input control-slider" id="seed-slider" type="range" min="0" max="100" value="50" step="1" maxlength="2" />
-				</div>
-				<div class="control-wrapper">
-					<label class="control-label" for="iterations-slider">iterations</label>
-					<input class="control-input control-number" id="iterations-number" type="number" min="1" max="50" value="5" maxlength="2" />
-					<input class="control-input control-slider" id="iterations-slider" type="range" min="1" max="50" value="5" step="1" maxlength="2"/>
-				</div>
-				<div class="control-wrapper">
-					<label class="control-label" for="quality-slider">quality</label>
-					<input class="control-input control-number" id="quality-number" type="number" min="1" max="99" value="50" maxlength="2" />
-					<input class="control-input control-slider" id="quality-slider" type="range" min="1" max="99" value="50" step="1" maxlength="2" />
-				</div>
-				<button id="random-button" class="button is-hidden">randomise</button>
-			</div>
-		</div>
-		<div class="canvas-wrapper">
-			<canvas id="canvas"></canvas>
-			<article class="content intro is-active">
-				<div class="center">
-					<p>drag an image into the browser window to modify it.</p>
-					<p>this script corrupts some bytes in a jpg image. because of the way <a href="https://en.wikipedia.org/wiki/JPEG">jpg</a> encoding works, the corrupted file still shows something. inspired by <a href="http://github.com/soulwire">soulwire</a>s <a href="http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator">experiment</a> in flash. this experiment was created by <a href="http://fishnation.de/">georg</a>. you can follow him on <a href="https://twitter.com/snorpey">twitter</a> or explore the source code on <a href="https://github.com/snorpey/jpg-glitch">github</a>.</p>
-					<p>if you like this one, you can check out some of his other <a href="http://snorpey.github.io/experiments/">javascript experiments</a>.</p>
-					<button class="close">✕</button>
-				</div>
-			</article>
-		</div>
-		<script src="scripts/lib/require-2.1.4.js" data-main="scripts/main"></script>
+	<body>
+		<article class="description text">
+			<p>With this app, you can glitch your own images by dragging an image into the browser window. Use the sliders in the control panel to alter the glitched parameters. The image updates in real time.</p>
+			<p>This app corrupts some bytes in an image. Because of the way <a href="https://en.wikipedia.org/wiki/JPEG">JPEG encoding</a> works, the corrupted file still shows a corrupted image. It was inspired by <a href="http://github.com/soulwire">soulwire</a>’s <a href="http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator">experiment</a> in Flash.</p>
+			<p>This tool was created by <a href="http://snorpey.com/">Georg</a>. He is always happy to learn about the things that people are creating with his tools. You can follow him on <a href="https://twitter.com/snorpey">Twitter</a> or explore the source code of this app on <a href="https://github.com/snorpey/jpg-glitch">GitHub</a>.</p>
+			<p>If you like the glitcher, you can check out some of Georg’s other <a href="http://snorpey.github.io/experiments/">JavaScript experiments</a>.</p>
+			<p class="min-requirements text">
+				<strong>Please note</strong>: <span class="js-required">javascript and </span><a href="http://caniuse.com/#feat=addeventlistener,canvas,classlist,es5,json,queryselector">modern browsers</a> are required for this app to work.
+			</p>
+		</article>
+		<svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
+		<script>
+		var testCanvas = document.createElement( 'canvas' );
+
+		if (
+			'querySelector' in document &&
+			'addEventListener' in window &&
+			Array.prototype.forEach &&
+			document.createElement( 'a' ).classList &&
+			( testCanvas.getContext && testCanvas.getContext( '2d' ) )
+		) {
+			if ( 'serviceWorker' in navigator ) {
+				if ( location.protocol !== 'https:' && location.host !== 'localhost' ) {
+					location.protocol = 'https:';
+				} else {
+					navigator.serviceWorker.register( 'serviceworker.js' );
+				}
+			}
+
+			var loaderEl = document.createElement( 'div' );
+			loaderEl.classList.add( 'loader' );
+			loaderEl.classList.add( 'app-loader' );
+			loaderEl.textContent = 'Loading…';
+			document.body.appendChild( loaderEl );
+
+			var scriptEl = document.createElement( 'script' );
+			scriptEl.setAttribute( 'data-main', 'scripts/glitcher.js' );
+			scriptEl.async = true;
+			scriptEl.src = 'scripts/lib/require.js';
+			document.documentElement.classList.add( 'is-loading' );
+			document.documentElement.classList.add( 'is-good-enough' );
+			document.body.appendChild( scriptEl );
+			testCanvas = null;
+
+			var linkEl = document.createElement( 'link' );
+			linkEl.href = 'styles/glitcher.css';
+			linkEl.rel = 'stylesheet';
+			document.head.appendChild( linkEl );
+		} else {
+			setTimeout( function () {
+				document.documentElement.setAttribute( 'class', 'has-js is-too-old' );
+			}, 20 );
+		}
+
+		</script>
 	</body>
 </html>

@@ -1,0 +1,442 @@
+.controls {
+	width: 100%;
+	max-height: 0;
+	transition: 0.3s all ease-out;
+	overflow: hidden;
+}
+
+.controls.is-visible {
+	z-index: 10;
+}
+
+.controls.is-active {
+	opacity: 1;
+	max-height: 200px;
+}
+
+	.has-touch .controls.is-active {
+		max-height: 300px;
+	}
+
+.controls-wrapper {
+	width: 100%;
+	background-color: #333;
+	padding: 10px;
+	color: #ccc;	
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	align-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.control {
+	display: block;
+	position: relative;
+	min-width: 160px;
+	margin-top: 10px;
+	width: 100%;
+}
+
+.has-touch .control {
+	height: 45px;
+	margin-bottom: 10px;
+}
+
+.controls .button {
+	line-height: 18px;
+	margin-left: 10px;
+}
+
+.control-label {
+	display: block;
+	float: left;
+	width: 100%;
+	max-width: 60px;
+	height: 100%;
+	font-size: 11px;
+	margin-right: 10px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.has-touch .control-label {
+	font-size: 14px;
+	max-width: 80px;
+	line-height: 45px;
+	text-align: right;
+}
+
+.control-input {
+	display: block;
+	width: 100%;
+	height: 100%;
+	min-height: 10px;
+	max-width: calc(100% - 105px);
+	background-color: transparent;
+	margin-top: 0;
+	margin-bottom: 0;
+	float: left;
+}
+
+.has-touch .control-input {
+	max-width: calc(100% - 130px);
+}
+
+.control-value {
+	display: block;
+	float: right;
+	width: 35px;
+    height: 100%;
+	background-color: transparent;
+	border: none;
+    text-align: right;
+    float: left;
+}
+
+.controls .random-button {
+	display: none;
+}
+
+/*two columns*/
+@media screen and (min-width: 660px) {
+	html:not(.has-touch) .nav ~ .workspace .control {
+		width: calc(50% - 5px);
+	}
+
+	html:not(.has-touch) .nav ~ .workspace .control {
+		max-width: 320px;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	.has-touch .nav ~ .workspace .control {
+		width: calc(50% - 5px);
+	}
+
+	html:not(.has-touch) .nav ~ .workspace .control {
+		max-width: 320px;
+	}
+
+	.has-touch .nav ~ .workspace .controls-wrapper {
+		min-height: 164px;
+	}
+}
+
+/*four columns*/
+@media screen and (min-width: 721px) {
+	html:not(.has-touch) .nav:not(.is-active) ~ .workspace .controls-wrapper {
+		justify-content: flex-start;
+	}
+	
+	html:not(.has-touch) .nav:not(.is-active) ~ .workspace .control {
+		min-width: 160px;
+		max-width: 320px;
+		width: calc(25% - 15px);
+	}
+
+	html:not(.has-touch) .nav:not(.is-active) ~ .workspace .control + .control {
+		margin-left: 20px;
+	}
+}
+
+@media screen and (min-width: 1021px) {	
+	html:not(.has-touch) .nav ~ .workspace .controls-wrapper {
+		justify-content: flex-start;
+	}
+	
+	html:not(.has-touch) .nav ~ .workspace .control {
+		min-width: 160px;
+		max-width: 320px;
+		width: calc(25% - 15px);
+	}
+
+	html:not(.has-touch) .nav ~ .workspace .control + .control {
+		margin-left: 20px;
+	}
+}
+
+/*four columns*/
+@media screen and (min-width: 815px) {
+	html:not(.has-touch) .nav:not(.is-active) ~ .workspace .control {
+		width: calc(25% - 40px);
+	}
+
+	html:not(.has-touch) .nav:not(.is-active) ~ .workspace .random-button {
+		display: inline-block;
+	}
+}
+
+@media screen and (min-width: 1215px) {
+	html:not(.has-touch) .nav ~ .workspace .control {
+		width: calc(25% - 40px);
+	}
+
+	html:not(.has-touch) .nav ~ .workspace .random-button {
+		display: inline-block;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.has-touch .nav:not(.is-active) ~ .workspace .control {
+		width: calc(25% - 40px);
+	}
+
+	.has-touch .nav:not(.is-active) ~ .workspace .random-button {
+		display: inline-block;
+	}
+
+	.has-touch .nav:not(.is-active) ~ .workspace .controls-wrapper {
+		min-height: 0;
+	}
+}
+
+@media screen and (min-width: 1500px) {
+	.has-touch .nav ~ .workspace .control {
+		width: calc(25% - 40px);
+	}
+
+	.has-touch .nav ~ .workspace .random-button {
+		display: inline-block;
+	}
+
+	.has-touch .nav ~ .workspace .controls-wrapper {
+		min-height: 0;
+	}
+}
+
+input[type=range] {
+	-webkit-appearance: none;
+	width: 100%;
+}
+
+input[type=range]:focus {
+	outline: none;
+}
+
+/*input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 4px;
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.95);
+	border-radius: 3px;
+	border: 1px solid #333333;
+}
+
+input[type=range]::-webkit-slider-thumb {
+	border: 0.1px solid rgba(102, 102, 102, 0.5);
+	height: 10px;
+	width: 10px;
+	border-radius: 10px;
+	margin-top: -4px;
+	background: #999999;
+	cursor: pointer;
+	-webkit-appearance: none;
+}*/
+
+input[type='range']:not(*:root) {
+	overflow: hidden;
+	background-color: transparent;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+	height: 100%;
+	border: none;
+	background-color: transparent;
+	position: relative;
+}
+
+/*track background line, full width*/
+input[type=range]::-webkit-slider-runnable-track::before {
+	content: '';
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 4px;
+	background-color: rgba(255, 255, 255, 0.2);
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: background-color 0.2s;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track::before,
+input[type=range]:active::-webkit-slider-runnable-track::before {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+/*slider thumb clickable area*/
+input[type=range]::-webkit-slider-thumb {
+	height: 20px;
+	width: 20px;
+	border-radius: 45px;
+	margin-top: 0;
+	transition: background-color 0.2s;
+	background-color: transparent;
+	position: relative;
+	cursor: pointer;
+	-webkit-appearance: none;
+}
+
+input[type=range]:focus::-webkit-slider-thumb,
+input[type=range]:active::-webkit-slider-thumb,
+.has-touch input[type=range]:focus::-webkit-slider-thumb,
+.has-touch input[type=range]:active::-webkit-slider-thumb {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.has-touch input[type=range]::-webkit-slider-thumb {
+	height: 38px;
+	width: 38px;
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+/*slider thumb point*/
+input[type=range]::-webkit-slider-thumb::before {
+	content: '';
+	display: block;
+	position: absolute;
+	background-color: #fff;
+	width: 10px;
+	height: 10px;
+	border-radius: 14px;
+	z-index: 2;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	transition: background-color 0.2s;
+}
+
+.has-touch input[type=range]::-webkit-slider-thumb::before {
+	width: 14px;
+	height: 14px;
+}
+
+/*slider current value track*/
+input[type=range]::-webkit-slider-thumb::after {
+	content: '';
+	display: block;
+	position: absolute;
+	width: 100vw;
+	height: 3px;
+	top: 50%;
+	right: 50%;
+	transform: translateY(-50%);
+	background-color: #fff;
+}
+
+input[type=range]::-moz-range-track {
+	height: 100%;
+	border: none;
+	background-color: transparent;
+	position: relative;
+	background: linear-gradient(
+		to bottom,
+		rgba(255,255,255,0) 0%,
+		rgba(255,255,255,0) 41.9%,
+		rgba(255,255,255,0.2) 42%,
+		rgba(255,255,255,0.2) 58%,
+		rgba(255,255,255,0) 58.1%,
+		rgba(255,255,255,0) 100%
+	);
+}
+
+.has-touch input[type=range]::-moz-range-track {
+	background: linear-gradient(
+		to bottom,
+		rgba(255,255,255,0) 0%,
+		rgba(255,255,255,0) 49.9%,
+		rgba(255,255,255,0.2) 50%,
+		rgba(255,255,255,0.2) 55%,
+		rgba(255,255,255,0) 55.1%,
+		rgba(255,255,255,0) 100%
+	);
+}
+
+input[type=range]::-moz-range-thumb {
+	height: 20px;
+	width: 20px;
+	border-radius: 45px;
+	margin-top: 3px;
+	transition: background-color 0.2s;
+	position: relative;
+	cursor: pointer;
+	appearance: none;
+	border: none;
+	background: radial-gradient(
+		ellipse at center,
+		rgba(255,255,255,1) 0%,
+		rgba(255,255,255,1) 30%,
+		rgba(255,255,255,0) 30.1%,
+		rgba(255,255,255,0) 100%
+	);
+}
+
+input[type=range]::-moz-range-thumb:hover,
+.has-touch input[type=range]::-moz-range-thumb {
+	background: radial-gradient(
+		ellipse at center,
+		rgba(255,255,255,1) 0%,
+		rgba(255,255,255,1) 30%,
+		rgba(255,255,255,0.2) 30.1%,
+		rgba(255,255,255,0.2) 100%
+	);
+}
+
+input[type=range]:focus::-moz-range-thumb,
+input[type=range]:active::-moz-range-thumb,
+.has-touch input[type=range]:focus::-moz-range-thumb,
+.has-touch input[type=range]:active::-moz-range-thumb {
+	background: radial-gradient(
+		ellipse at center,
+		rgba(255,255,255,1) 0%,
+		rgba(255,255,255,1) 30%,
+		rgba(255,255,255,0.5) 30.1%,
+		rgba(255,255,255,0.5) 100%
+	);
+}
+
+.has-touch input[type=range]::-moz-range-thumb {
+	height: 38px;
+	width: 38px;
+}
+
+input[type=range]::-ms-track {
+	width: 100%;
+	height: 3px;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	color: transparent;
+	overflow: visible;
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+input[type=range]::-ms-fill-lower {
+	background: #fff;
+	border: none;
+	box-shadow: none;
+}
+
+input[type=range]::-ms-thumb {
+	box-shadow: none;
+	border: none;
+	height: 10px;
+	width: 10px;
+	border-radius: 14px;
+	border: none;
+	background: #fff;
+	cursor: pointer;
+}
+
+.has-touch input[type=range]::-ms-thumb {
+	width: 15px;
+	height: 15px;
+	border-radius: 45px;
+	border: 10px rgba(255, 255, 255, 0.5) solid;
+}
+
+.has-touch input[type=range]:focus::-ms-thumb,
+.has-touch input[type=range]:active::-ms-thumb {
+	border-color: rgba(255, 255, 255, 1);
+}
