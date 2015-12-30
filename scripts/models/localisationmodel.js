@@ -1,7 +1,7 @@
 /*global define*/
 define(
-	[ 'config', 'util/dom', 'util/object', 'util/string', 'util/addpublishers', 'lib/reqwest' ],
-	function ( config, domHelper, objectHelper, stringHelper, addPublishers, reqwest ) {
+	[ 'config', 'util/dom', 'util/object', 'util/string', 'util/addpublishers', 'lib/reqwest', 'lib/localforage.nopromises' ],
+	function ( config, domHelper, objectHelper, stringHelper, addPublishers, reqwest, localforage ) {
 		function LocalisationModel () {
 			if ( ! ( this instanceof LocalisationModel ) ) {
 				return new LocalisationModel();
@@ -20,15 +20,17 @@ define(
 			
 			var linkOptions = { links: { newTab: true } };
 
-			function setLanguage ( newLanguage ) {
-				if ( newLanguage !== currentLanguage && newLanguage in config.availableLanguages ) {
-					loadLanguage( newLanguage );
+			loadLanguageFromStorage();
+
+			function setLanguage ( newLanguageName ) {
+				if ( newLanguageName !== currentLanguage && config.settings.language.options.indexOf( newLanguageName ) !== -1 ) {
+					loadLanguageFile( newLanguageName );
 				}
 			}
 
 			function settingUpdated ( name, value ) {
 				if ( name === 'language' && value !== currentLanguage ) {
-					loadLanguage( value );
+					setLanguage( value );
 				}
 			}
 
@@ -44,7 +46,7 @@ define(
 				updateAllTexts();
 			}
 
-			function loadLanguage ( languageName ) {
+			function loadLanguageFile ( languageName ) {
 				languageWasLoaded = false;
 
 				reqwest( {
@@ -57,17 +59,32 @@ define(
 						publishers.error.dispatch( 'I\'m really sorry. I failed to load the language file for ' + languageName + '. This is a serious error that makes the app very hard to use. Maybe you can try reloading?' );
 					},
 					success: function ( res ) {
-						languageLoaded( languageName, res );
+						languageLoaded( res.lang, res );
 					}
 				} );
 			}
 
-			function languageLoaded ( newLanguageName, newTexts ) {
+			function loadLanguageFromStorage () {
+				localforage.getItem( config.keys.language, function ( err, loadedLanguage ) {
+					if ( ! err ) {
+						if ( loadedLanguage && loadedLanguage.lang ) {
+							languageLoaded( loadedLanguage.lang, loadedLanguage );
+						}
+					}
+				} )
+			}
+
+			function languageLoaded ( newLanguageName, newLanguage ) {
 				currentLanguage = newLanguageName;
 				languageWasLoaded = true;
-				texts = newTexts;
+				texts = newLanguage;
+				saveLanguage( newLanguage );
 				resetAllTexts();
 				updateAllTexts();
+			}
+
+			function saveLanguage ( newLanguage ) {
+				localforage.setItem( config.keys.language, newLanguage );
 			}
 
 			function updateAllTexts () {
