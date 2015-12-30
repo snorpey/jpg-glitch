@@ -9,7 +9,7 @@ define(
 
 			var self = this;
 
-			var publishers = addPublishers( self, 'error' );
+			var publishers = addPublishers( self, 'update', 'error' );
 			
 			var textElData = [ ];
 			var texts = '';
@@ -37,7 +37,6 @@ define(
 						// if this is the first language to load, that's really bad.
 						languageWasLoaded = true;
 						publishers.error.dispatch( 'I\'m really sorry. I failed to load the language file for ' + languageName + '. This is a serious error that makes the app very hard to use. Maybe you can try reloading?' );
-
 					},
 					success: function ( res ) {
 						languageLoaded( languageName, res );
@@ -74,11 +73,12 @@ define(
 									
 									item.wasUpdated = true;
 								}
-							}
-							else {
+							} else {
 								textElData.splice( i, 1 );
 							}
 						}
+
+						publishers.update.dispatch();
 					} );
 				}
 			}
