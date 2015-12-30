@@ -64,6 +64,8 @@ require( [
 	LocalisationModel,
 	localforage
 ) {
+	var wasAppLoadCompleted = false;
+
 	var imageModel = ImageModel();
 	var glitchModel = GlitchModel();
 	var shareModel = ShareModel();
@@ -107,12 +109,6 @@ require( [
 			controlsView.loadInitialValues();
 			loadInitialItem();
 		}
-
-		document.documentElement.classList.add( 'is-loaded' );
-		
-		setTimeout( function () {
-			document.documentElement.classList.remove( 'is-loading' );
-		}, 10 );
 	}
 
 	// hooks up all messaging between items
@@ -218,7 +214,9 @@ require( [
 			.on( 'error', indicatorView.showError );
 
 		localisationModel
-			.on( 'error', indicatorView.showError );
+			.on( 'error', indicatorView.showError )
+			.on( 'error', hideAppLoader )
+			.on( 'update', hideAppLoader );
 	}
 
 	function addCSSClasses () {
@@ -324,6 +322,19 @@ require( [
 			downloadLinkTimeoutId = setTimeout( function () {
 				glitchModel.getImageGenerationFn( saveView.updateDownloadLink, 'original' )( imageModel.getLastFileName() )
 			}, 200 );				
+		}
+	}
+
+	function hideAppLoader () {
+		if ( ! wasAppLoadCompleted ) {
+			requestAnimationFrame ( function () {
+				wasAppLoadCompleted = true;
+				document.documentElement.classList.add( 'is-loaded' );
+				
+				setTimeout( function () {
+					document.documentElement.classList.remove( 'is-loading' );
+				}, 10 );
+			} );
 		}
 	}
 

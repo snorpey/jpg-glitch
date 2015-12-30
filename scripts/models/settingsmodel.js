@@ -2,9 +2,9 @@
 define(
 	[ 'config', 'util/browser', 'util/object', 'util/addpublishers', 'lib/localforage.nopromises' ],
 	function ( config, browser, objectHelper, addPublishers, localforage ) {
-		function SettingsModel ( storageKey ) {
+		function SettingsModel () {
 			if ( ! ( this instanceof SettingsModel ) ) {
-				return new SettingsModel( storageKey );
+				return new SettingsModel();
 			}
 
 			var self = this;
@@ -21,12 +21,10 @@ define(
 
 			var settings = { };
 
-			storageKey = storageKey || 'settings';
-
 			if ( useLocalForage && browser.test( 'webworker' ) && browser.test( 'browserdb' ) && ! browser.test( 'safari' ) ) {
 				worker = new Worker( config.workers.settings );
 				worker.addEventListener( 'message', workerResponded, false );
-				sendMessageToWorker( 'setStorageKey', storageKey );
+				sendMessageToWorker( 'setStorageKey', config.keys.settings );
 				sendMessageToWorker( 'setDefaultSettings', defaultSettings );
 			} else {
 				settingsUpdated( defaultSettings );
@@ -79,7 +77,7 @@ define(
 					if ( worker ) {
 						sendMessageToWorker( 'save', newSettings );
 					} else {
-						localforage.setItem( storageKey, newSettings, function ( err, savedSettings ) {
+						localforage.setItem( config.keys.settings, newSettings, function ( err, savedSettings ) {
 							if ( err ) {
 								sendError( 'settings.error.save' );
 								console && console.log( 'localforage error', err );
@@ -100,7 +98,7 @@ define(
 					if ( worker ) {
 						sendMessageToWorker( 'load' );
 					} else {
-						localforage.getItem( storageKey, function ( err, loadedSettings ) {
+						localforage.getItem( config.keys.settings, function ( err, loadedSettings ) {
 							if ( err ) {
 								sendError( 'settings.error.load' );
 								console && console.log( 'localforage error', err );
