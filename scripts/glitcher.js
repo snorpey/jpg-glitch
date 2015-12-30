@@ -64,7 +64,7 @@ require( [
 	LocalisationModel,
 	localforage
 ) {
-	var wasAppLoadComplete = false;
+	var wasAppLoadCompleted = false;
 
 	var imageModel = ImageModel();
 	var glitchModel = GlitchModel();
@@ -326,9 +326,9 @@ require( [
 	}
 
 	function hideAppLoader () {
-		if ( ! wasAppLoadComplete ) {
+		if ( ! wasAppLoadCompleted ) {
 			requestAnimationFrame ( function () {
-				wasAppLoadComplete = true;
+				wasAppLoadCompleted = true;
 				document.documentElement.classList.add( 'is-loaded' );
 				
 				setTimeout( function () {
