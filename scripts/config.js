@@ -8,7 +8,10 @@ define(
 				// https://api.imgur.com/oauth2/addclient
 				// thank you.
 				imgur:   'a4c24380d884932',
-				storage: 'glitch-items'
+				
+				storage: 'glitch-items',
+				settings: 'settings',
+				language: 'language'
 			},
 			defaultControlParams: {
 				amount: {     min: 0, max: 99,  value: 24 },
