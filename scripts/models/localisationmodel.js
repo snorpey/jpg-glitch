@@ -26,6 +26,24 @@ define(
 				}
 			}
 
+			function settingUpdated ( name, value ) {
+				if ( name === 'language' && value !== currentLanguage ) {
+					loadLanguage( value );
+				}
+			}
+
+			function localizeText ( el, attribute, key ) {
+				if ( el && attribute && key ) {
+					textElData.push( { el: el, attribute: attribute, key: key, wasUpdated: false, args: getArgs( arguments ) } );
+				} else {
+					if ( typeof el === 'string' ) {
+						return getTextForKey( el, getArgs( arguments, 1 ) );
+					}
+				}
+
+				updateAllTexts();
+			}
+
 			function loadLanguage ( languageName ) {
 				languageWasLoaded = false;
 
@@ -126,24 +144,6 @@ define(
 				}
 
 				return result;
-			}
-
-			function settingUpdated ( name, value ) {
-				if ( name === 'language' && value !== currentLanguage ) {
-					loadLanguage( value );
-				}
-			}
-
-			function localizeText ( el, attribute, key ) {
-				if ( el && attribute && key ) {
-					textElData.push( { el: el, attribute: attribute, key: key, wasUpdated: false, args: getArgs( arguments ) } );
-				} else {
-					if ( typeof el === 'string' ) {
-						return getTextForKey( el, getArgs( arguments, 1 ) );
-					}
-				}
-
-				updateAllTexts();
 			}
 
 			self.setLanguage = setLanguage;
