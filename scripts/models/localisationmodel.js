@@ -149,7 +149,6 @@ define(
 			self.setLanguage = setLanguage;
 			self.localizeText = localizeText;
 			self.settingUpdated = settingUpdated;
-			self.randomNumber = ~~( Math.random() * 1000 );
 		}
 
 		LocalisationModel.sharedInstance = LocalisationModel();
