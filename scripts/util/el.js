@@ -1,6 +1,6 @@
 /*global define*/
 define(
-	[ 'util/dom', 'util/localizeText' ],
+	[ 'util/dom', 'util/localizetext' ],
 	function ( domHelper, loc ) {
 		var svgEls = [ 'g', 'svg', 'rect' ];
 		var svgNameSpace = 'http://www.w3.org/2000/svg';
