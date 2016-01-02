@@ -30,7 +30,8 @@ define(
 			},
 			language: {
 				dir: 'lang',
-				preset: 'en-us'
+				preset: 'en-us',
+				debug: window.location.hash.indexOf( 'languagedebug' ) !== -1
 			},
 			settings: {
 				canZoomWithPointer: { value: true },
@@ -40,7 +41,8 @@ define(
 			localForage: {
 				name      : 'glitchtool',
 				storeName : 'keyvaluepairs'
-			}
+			},
+			origin: location.protocol + '//' + location.host + ( location.port !== '' ? ':' + location.port : '' )
 		};
 	}
 );

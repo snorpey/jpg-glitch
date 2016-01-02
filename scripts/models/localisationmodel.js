@@ -22,6 +22,12 @@ define(
 
 			loadLanguageFromStorage();
 
+			// receive message from the translation tool and
+			// show the new language
+			if ( config.language.debug ) {
+				addEventListener( 'message', windowMessageReceived, false );
+			}
+
 			function setLanguage ( newLanguageName ) {
 				if ( newLanguageName !== currentLanguage && config.settings.language.options.indexOf( newLanguageName ) !== -1 ) {
 					loadLanguageFile( newLanguageName );
@@ -31,6 +37,15 @@ define(
 			function settingUpdated ( name, value ) {
 				if ( name === 'language' && value !== currentLanguage ) {
 					setLanguage( value );
+				}
+			}
+
+			function windowMessageReceived ( event ) {
+				if ( event.origin === config.origin && event.data.language ) {
+					languageWasLoaded = true;
+					texts = event.data.language;
+					resetAllTexts();
+					updateAllTexts( event.data.language );
 				}
 			}
 
@@ -53,13 +68,13 @@ define(
 					url: config.language.dir + '/' + languageName + '.json',
 					type: 'json',
 					method: 'get',
-					error: function ( err, one, two ) {
+					error: function ( err ) {
 						// if this is the first language to load, that's really bad.
 						languageWasLoaded = true;
 						publishers.error.dispatch( 'I\'m really sorry. I failed to load the language file for ' + languageName + '. This is a serious error that makes the app very hard to use. Maybe you can try reloading?' );
 					},
 					success: function ( res ) {
-						languageLoaded( res.lang, res );
+						languageLoaded( res.lang.toLowerCase(), res );
 					}
 				} );
 			}
@@ -71,23 +86,28 @@ define(
 							languageLoaded( loadedLanguage.lang, loadedLanguage );
 						}
 					}
-				} )
+				} );
 			}
 
 			function languageLoaded ( newLanguageName, newLanguage ) {
 				currentLanguage = newLanguageName;
 				languageWasLoaded = true;
 				texts = newLanguage;
+				
 				saveLanguage( newLanguage );
 				resetAllTexts();
 				updateAllTexts();
+
+				if ( config.language.debug ) {
+					postMessage( { loaded: true }, config.origin );
+				}
 			}
 
 			function saveLanguage ( newLanguage ) {
 				localforage.setItem( config.keys.language, newLanguage );
 			}
 
-			function updateAllTexts () {
+			function updateAllTexts ( languageData ) {
 				if ( languageWasLoaded ) {
 					cancelAnimationFrame( animationFrameId );
 
@@ -101,9 +121,9 @@ define(
 							if ( domHelper.isElement( item.el ) ) {
 								if ( ! item.wasUpdated ) {
 									if ( item.attribute === 'innerHTML' ) {
-										item.el.innerHTML = stringHelper.markdownToHtml( getTextForKey( item.key, item.args ), linkOptions );
+										item.el.innerHTML = stringHelper.markdownToHtml( getTextForKey( item.key, item.args, languageData ), linkOptions );
 									} else {
-										item.el[item.attribute] = getTextForKey( item.key, item.args );
+										item.el[item.attribute] = getTextForKey( item.key, item.args, languageData );
 									}
 									
 									item.wasUpdated = true;
@@ -124,11 +144,13 @@ define(
 				} );
 			}
 
-			function getTextForKey ( key, args ) {
+			function getTextForKey ( key, args, languageData ) {
 				var result = '';
 
+				languageData = languageData || texts;
+
 				try {
-					result = objectHelper.getObjectByString( key, texts );
+					result = objectHelper.getObjectByString( key, languageData );
 				} catch ( e ) {
 					if ( languageWasLoaded ) {
 						result = key

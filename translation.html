@@ -1,0 +1,311 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>App Translation Tool</title>
+		<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: sans-serif; color: #666; font-size: 14px; }
+.button { padding: 5px 15px; border: 2px #000 solid; border-radius: 3px; text-transform: uppercase; color: #000; background-color: rgba(255, 255, 255, 0.8); cursor: pointer; transition: all 0.4s; text-decoration: none; text-align: center; font-size: 12px; font-family: sans-serif; font-weight: bold; }
+.button:hover { background-color: rgba(0, 0, 0, 0.9); color: #fff; }
+h1, h2, label { display: block; font-size: 12px; font-weight: normal; color: #333; margin-bottom: 5px; }
+code { font-family: Menlo, monospace; color: #333; }
+#container { display: flex; width: 100%; height: 100%; }
+.appframe { width: 100%; height: calc(100vh); border: none; }
+.translation-ui { max-width: 350px; min-width: 350px; height: calc(100vh); padding: 20px; overflow: auto; }
+.translation-item { margin-bottom: 50px; }
+.translation-item-path { font-family: Menlo, monospace; font-size: 10px; color: #ccc; margin-bottom: 10px; display: block; }
+.translation-ui input, .translation-ui textarea { font-family: sans-serif; color: #666; font-size: 14px; line-height: 1.5; width: 100%; display: block; padding: 3px; }
+.translation-ui textarea { min-height: 200px };
+.translation-item-original { margin-bottom: 15px; }
+.translation-item-original p { margin-bottom: 15px; line-height: 1.5; }
+.translation-ui-button-wrapper { position: fixed; width: 350px; position: fixed; bottom: 0; right: 0; padding: 10px; }
+.translation-ui-button-wrapper .button { display: block; margin-top: 10px; width: calc(100% - 20px); }
+.translation-ui-button-wrapper .button.is-hidden { display: none; }
+.translation-item-hint { font-size: 12px; color: #666; margin-top: 10px; line-height: 1.5; }
+		</style>
+	</head>
+	<div id="container"></div>
+	<body>
+		<script>
+var author = {
+	name: 'Georg',
+	address: 'snorpey@gmail.com'
+};
+
+var app = {
+	name: 'glitch tool',
+	url: './#languagedebug',
+	jsonTemplate: 'lang/en-US.json'
+};
+
+var localStorageKey = 'app-translator-language';
+
+var itemsToHide = [ 'settings.languageoptions' ];
+
+var emailText = 'Hey ' + author.name + ',\n I created a new translation for your "' + app.name + '" app. I attached the JSON data below. Please let me know what you think.\n\nYour Name\n\n';
+
+var containerEl = document.getElementById( 'container' );
+
+var translationUIWrapperEl;
+var translationUICompleteEl;
+var jsonData;
+var iframeEl;
+var iframeWasLoaded = false;
+var messageQueue;
+
+function init () {
+	addAppIframe( app.url );
+	loadJSON( app.jsonTemplate, addTranslationUI );
+}
+
+function addAppIframe ( url ) {
+	iframeEl = document.createElement( 'iframe' );
+	iframeEl.classList.add( 'appframe' );
+	iframeEl.src = url;
+	containerEl.appendChild( iframeEl );
+
+	iframeEl.contentWindow.addEventListener( 'message', iframeLoaded, false );
+}
+
+function iframeLoaded ( event ) {
+	if ( event && event.data && event.data.loaded === true ) {
+		iframeWasLoaded = true;
+					
+		if ( messageQueue ) {
+			sendMessageToIframe( messageQueue );
+			messageQueue = null;
+		}
+	}
+}
+
+function loadJSON ( url, callback ) {
+	var req = new XMLHttpRequest();
+	
+	req.onreadystatechange = function() {
+		if ( req.readyState === 4 && req.status === 200 ) {
+			var data = JSON.parse( req.responseText );
+				
+			if ( typeof callback === 'function' ) {
+				callback( data );
+			}
+		}
+	};
+
+	req.open( 'GET', url );
+	req.send(); 
+}
+
+function saveToBrowserStorage ( languageData ) {
+	if ( localStorage ) {
+		var str;
+
+		try {
+			str = JSON.stringify( languageData );
+		} catch ( err ) {
+			console && console.log( err.message || err );
+		}
+		
+		if ( str ) {
+			localStorage.setItem( localStorageKey, str );
+		}
+	}
+}
+
+function loadFromBrowserStorage () {
+	if ( localStorage ) {
+		var str = localStorage.getItem( localStorageKey );
+		var data;
+		
+		try {
+			data = JSON.parse( str );
+		} catch ( err ) {
+			console && console.log( err.message || err );
+		}
+
+		if ( data && typeof data === 'object' ) {
+			setData( data );
+
+			requestAnimationFrame( updateTranslation );
+		} else {
+			setData( jsonData );
+			sendMessageToIframe( { language: jsonData } );
+		}
+	}
+}
+
+function addTranslationUI ( data ) {
+	jsonData = data;
+	translationUIWrapperEl = document.createElement( 'div' );
+	translationUIWrapperEl.classList.add( 'translation-ui' );
+	traverse( data, addTranslationInput );
+
+	var buttonWrapperEl = document.createElement( 'div' );
+	buttonWrapperEl.classList.add( 'translation-ui-button-wrapper' );
+	translationUIWrapperEl.appendChild( buttonWrapperEl );
+
+	var updateButtonEl = document.createElement( 'button' );
+	updateButtonEl.classList.add( 'button' );
+	updateButtonEl.classList.add( 'update-button' );
+	updateButtonEl.textContent = 'Preview Translation';
+	updateButtonEl.addEventListener( 'click', updateTranslation );
+	buttonWrapperEl.appendChild( updateButtonEl );
+
+	translationUICompleteEl = document.createElement( 'a' );
+	translationUICompleteEl.classList.add( 'button' );
+	translationUICompleteEl.classList.add( 'complete-button' );
+	translationUICompleteEl.classList.add( 'is-hidden' );
+	translationUICompleteEl.textContent = 'Translation Complete. Send data via Email';
+	buttonWrapperEl.appendChild( translationUICompleteEl );
+
+	containerEl.appendChild( translationUIWrapperEl );
+
+	requestAnimationFrame( loadFromBrowserStorage );
+}
+
+function traverse ( obj, fn, path ) {
+	path = path || '';
+	var itemPath;
+
+	for ( var i in obj ) {
+		itemPath = path === '' ? i : path + '.' + i;
+		fn.apply( this, [ i, obj[i], obj, itemPath ] );  
+		
+		if ( obj[i] !== null && typeof obj[i] === 'object' ) {
+			traverse( obj[i], fn, itemPath );
+		}
+	}
+}
+
+function addTranslationInput ( key, value, parent, itemPath ) {
+	if ( typeof value === 'string' && translationUIWrapperEl && canShowItem( itemPath ) ) {
+		var itemEl = document.createElement( 'div' );
+		itemEl.classList.add( 'translation-item' );
+
+		var pathEl = document.createElement( 'a' );
+		pathEl.textContent = itemPath;
+		pathEl.href = '#' + itemPath;
+		pathEl.classList.add( 'translation-item-path' );
+		itemEl.appendChild( pathEl );
+
+		var originalTextEl = document.createElement( 'div' );
+		originalTextEl.classList.add( 'translation-item-original' );
+		originalTextEl.innerHTML = '<h1>Original Text</h1><p>' + value + '</p>';
+		itemEl.appendChild( originalTextEl );
+		
+		var labelEl = document.createElement( 'label' );
+		labelEl.classList.add( 'translation-item-label' );
+		labelEl.for = itemPath;
+		labelEl.textContent = 'Translation';
+		itemEl.appendChild( labelEl );
+
+		var inputEl;
+
+		if ( value.indexOf( '\n' ) !== -1 || value.length > 60 ) {
+			inputEl = document.createElement( 'textarea' );
+		} else {
+			inputEl = document.createElement( 'input' );
+			inputEl.type = 'text';
+		}
+
+		inputEl.classList.add( 'translation-item-value' );
+		inputEl.id = itemPath;
+		itemEl.appendChild( inputEl );
+
+		if ( key === 'lang' ) {
+			var hintEl = document.createElement( 'p' );
+			hintEl.innerHTML = 'The <code>lang</code> field contains a two-letter or four-letter code of the language, e.g: <code>en</code> for English or <code>en-GB</code> for British English (see <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank">Wikipedia</a> for a list of ISO 639-1 language codes). If you\'re not sure which code to put here, just put the language name in English, e.g: <code>German</code>.';
+			hintEl.classList.add( 'translation-item-hint' );
+			itemEl.appendChild( hintEl );
+		}
+
+		translationUIWrapperEl.appendChild( itemEl );
+	}
+}
+
+function updateTranslation ( event ) {
+	var newLanguageData = getUpdatedData();
+	
+	if ( !! event ) {
+		saveToBrowserStorage( newLanguageData );
+	}
+
+	var linkUrl = 'mailto:' + author.address;
+	linkUrl += '?subject=' + encodeURIComponent( 'New translation for "' + app.name + '" app: ' + newLanguageData.lang );
+	linkUrl += '&body=' + encodeURIComponent( emailText );
+	linkUrl += encodeURIComponent( JSON.stringify( newLanguageData, null, '\t' ) );
+
+	translationUICompleteEl.href = linkUrl;
+
+	sendMessageToIframe( { language: newLanguageData } );
+
+	if ( jsonData && jsonData.lang !== newLanguageData.lang ) {
+		translationUICompleteEl.classList.remove( 'is-hidden' );
+	} else {
+		translationUICompleteEl.classList.add( 'is-hidden' );
+	}
+}
+
+function sendMessageToIframe ( data ) {
+	if ( iframeWasLoaded ) {
+		// send message to app iframe
+		var messageOrigin = location.protocol + '//' + location.host;
+
+		if ( location.port !== '' ) {
+			messageOrigin += ':' + location.port;
+		}
+
+		iframeEl.contentWindow.postMessage( data, messageOrigin );
+	} else {
+		messageQueue = data;
+	}
+}
+
+function canShowItem ( itemPath ) {
+	if ( itemsToHide.indexOf( itemPath ) !== -1 ) {
+		return false;
+	}
+
+	var show = true;
+	
+	itemsToHide.forEach( function ( item ) {
+		if ( itemPath.indexOf( item ) !== -1 ) {
+			show = false;
+		}
+	} );
+
+	return show;
+}
+
+function getUpdatedData () {
+	var result = JSON.parse( JSON.stringify( jsonData ) );
+	var inputEl;
+
+	traverse( result, function ( key, value, parent, itemPath ) {
+		inputEl = document.getElementById( itemPath );
+
+		if ( inputEl && inputEl.value !== '' ) {
+			parent[key] = inputEl.value;
+		}
+	} );
+
+	return result;
+}
+
+function setData ( data ) {
+	var inputEl;
+
+	traverse( data, function ( key, value, parent, itemPath ) {
+		inputEl = document.getElementById( itemPath );
+
+		if ( inputEl ) {
+			inputEl.value = value;
+		}
+	} );
+}
+
+init();
+
+		</script>
+	</body>
+</html>
