@@ -15,8 +15,18 @@ define(
 			var defaultSettings = config.settings;
 			var userLanguage = ( navigator.language || navigator.userLanguage || '' ).toLowerCase();
 
-			if ( userLanguage !== '' && defaultSettings.language.options.indexOf( userLanguage ) > -1 ) {
-				defaultSettings.language.value = userLanguage;
+			// set initial user language
+			if ( userLanguage !== '' ) {
+				if ( defaultSettings.language.options.indexOf( userLanguage ) > -1 ) {
+					defaultSettings.language.value = userLanguage;
+				} else {
+					// en-au -> en-us
+					defaultSettings.language.options.forEach( function ( languageOption ) {
+						if ( userLanguage.substr( 0, 2 ) === languageOption.substr( 0, 2 ) ) {
+							defaultSettings.language.value = languageOption;
+						}
+					} );
+				}
 			}
 
 			var settings = { };
