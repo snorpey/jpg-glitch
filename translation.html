@@ -5,76 +5,146 @@
 		<title>App Translation Tool</title>
 		<style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow: hidden; }
 body { font-family: sans-serif; color: #666; font-size: 14px; }
-.button { padding: 5px 15px; border: 2px #000 solid; border-radius: 3px; text-transform: uppercase; color: #000; background-color: rgba(255, 255, 255, 0.8); cursor: pointer; transition: all 0.4s; text-decoration: none; text-align: center; font-size: 12px; font-family: sans-serif; font-weight: bold; }
-.button:hover { background-color: rgba(0, 0, 0, 0.9); color: #fff; }
+.button { padding: 5px 15px; border: 2px #06f solid; border-radius: 3px; text-transform: uppercase; color: #06f; background-color: #fff; cursor: pointer; transition: all 0.4s; text-decoration: none; text-align: center; font-size: 10px; font-family: Roboto, 'Lucida Grande', sans-serif; font-weight: bold; display: inline-block; margin-bottom: 5px; }
+.button:hover { background-color: #06f; color: #fff; }
 h1, h2, label { display: block; font-size: 12px; font-weight: normal; color: #333; margin-bottom: 5px; }
 code { font-family: Menlo, monospace; color: #333; }
 #container { display: flex; width: 100%; height: 100%; }
-.appframe { width: 100%; height: calc(100vh); border: none; }
-.translation-ui { max-width: 350px; min-width: 350px; height: calc(100vh); padding: 20px; overflow: auto; }
-.translation-item { margin-bottom: 50px; }
+#app-container { width: 100%; height: calc(100vh); }
+#app-container iframe { width: 100%; height: 100%; border: none; }
+#ui-container { max-width: 350px; min-width: 350px; height: calc(100vh); padding: 20px; overflow: auto; }
+#ui-nav { position: fixed; top: 0; right: 0; width: 330px; padding-top: 20px; background-color: rgba( 255, 255, 255, 0.9 ); }
+#ui-nav h1 { font-size: 14px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
+#ui-nav select { max-width: 310px; }
+#ui-info { margin-bottom: 20px; margin-top: 120px; }
+#ui-info.hide-info{ display: none; }
+#ui-info p { line-height: 19px; }
+#ui-info p + p { margin-top: 5px; }
+#ui-info a { color: #06f; text-decoration: none; border-bottom: 1px #efefef solid;}
+#ui-info a:hover { border-bottom-color: #ccc; }
+.translation-item { margin-bottom: 50px; display: block; }
 .translation-item-path { font-family: Menlo, monospace; font-size: 10px; color: #ccc; margin-bottom: 10px; display: block; }
-.translation-ui input, .translation-ui textarea { font-family: sans-serif; color: #666; font-size: 14px; line-height: 1.5; width: 100%; display: block; padding: 3px; }
-.translation-ui textarea { min-height: 200px };
+.translation-item input, .translation-item textarea { font-family: sans-serif; color: #666; font-size: 14px; line-height: 1.5; width: 100%; display: block; padding: 3px; }
+.translation-item textarea { min-height: 200px };
 .translation-item-original { margin-bottom: 15px; }
 .translation-item-original p { margin-bottom: 15px; line-height: 1.5; }
-.translation-ui-button-wrapper { position: fixed; width: 350px; position: fixed; bottom: 0; right: 0; padding: 10px; }
-.translation-ui-button-wrapper .button { display: block; margin-top: 10px; width: calc(100% - 20px); }
-.translation-ui-button-wrapper .button.is-hidden { display: none; }
+.translation-ui-button-wrapper { position: fixed; width: 350px; top: 0; right: 0; padding: 10px; background-color: #ccc; }
+.button.is-hidden { display: none; }
 .translation-item-hint { font-size: 12px; color: #666; margin-top: 10px; line-height: 1.5; }
+.select-wrapper { margin-top: 10px; }
 		</style>
 	</head>
-	<div id="container"></div>
 	<body>
+		<div id="container">
+			<div id="app-container"></div>
+			<div id="ui-container">
+				<nav id="ui-nav">
+					<h1>App Translator</h1>
+				</nav>
+				<article id="ui-info">
+					<p>You can translate the app on the left side by updating by entering text in the fields below.
+					<p>Use the preview button to get a live preview of what your translation looks like.</p>
+					<p>Your translations are automatically saved as drafts in the bowser. You can select them using the dropdown menu below.</p>
+					<p>When you're done and your translation is complete, you can send the translation data to <span id="author-span">the author</span> via e-mail by clicking the complete button.</p>
+					<p>If you have questions or suggestions, please consider opening an issue on <span id="github-span">GitHub</span>.</p>
+				</article>
+				<ul id="ui-items"></ul>
+			</div>
+		</div>
 		<script>
-var author = {
-	name: 'Georg',
-	address: 'snorpey@gmail.com'
+var config = {
+	author: {
+		name: 'Georg',
+		address: 'snorpey@gmail.com'
+	},
+	app: {
+		name: 'glitch tool',
+		url: './#languagedebug',
+		github: 'snorpey/jpg-glitch'
+	},
+	language: {
+		path: 'lang/{$lang}.json'
+	},
+	storage: {
+		key: 'app-translator-language'
+	},
+	translator: {}
 };
 
-var app = {
-	name: 'glitch tool',
-	url: './#languagedebug',
-	jsonTemplate: 'lang/en-US.json'
-};
-
-var localStorageKey = 'app-translator-language';
-
-var itemsToHide = [ 'settings.languageoptions' ];
-
-var emailText = 'Hey ' + author.name + ',\n I created a new translation for your "' + app.name + '" app. I attached the JSON data below. Please let me know what you think.\n\nYour Name\n\n';
+var emailText = 'Hey ' + config.author.name + ',\n I created a new translation for your "' + config.app.name + '" app. I attached the JSON data below. Please let me know what you think.\n\nYour Name\n\n';
 
 var containerEl = document.getElementById( 'container' );
 
-var translationUIWrapperEl;
-var translationUICompleteEl;
-var jsonData;
+var appContainerEl = document.getElementById( 'app-container' );
+var uiContainerEl = document.getElementById( 'ui-container' );
+var uiNavEl = document.getElementById( 'ui-nav' );
+var uiInfoEl = document.getElementById( 'ui-info' );
+var uiItemsEl = document.getElementById( 'ui-items' );
+var authorSpanEl = document.getElementById( 'author-span' );
+var githubSpanEl = document.getElementById( 'github-span' );
+
+var completeButtonEl;
+var previewButtonEl;
 var iframeEl;
-var iframeWasLoaded = false;
+
 var messageQueue;
+var presetLanguageData;
+var draftLanguageData;
+var currentLanguageData;
+var drafts;
+
+var iframeWasLoaded = false;
+var availablePresetLanguages = [ 'en-us' ];
 
 function init () {
-	addAppIframe( app.url );
-	loadJSON( app.jsonTemplate, addTranslationUI );
+	addAppIframe( config.app.url );
+	initLanguage();
+	loadFromBrowserStorage();
+
+	addEventListener( 'hashchange', hashChanged );
+}
+
+function initLanguage () {
+	var languageFilePath = config.language.path.replace( '{$lang}', getLanguageInHash() || availablePresetLanguages[ 0 ] );
+	loadJSON( languageFilePath, jsonLoaded );
 }
 
 function addAppIframe ( url ) {
 	iframeEl = document.createElement( 'iframe' );
 	iframeEl.classList.add( 'appframe' );
 	iframeEl.src = url;
-	containerEl.appendChild( iframeEl );
+	appContainerEl.appendChild( iframeEl );
 
-	iframeEl.contentWindow.addEventListener( 'message', iframeLoaded, false );
+	iframeEl.contentWindow.addEventListener( 'message', iframeMessageReceived, false );
 }
 
-function iframeLoaded ( event ) {
-	if ( event && event.data && event.data.loaded === true ) {
-		iframeWasLoaded = true;
-					
-		if ( messageQueue ) {
-			sendMessageToIframe( messageQueue );
-			messageQueue = null;
+function hashChanged () {
+	if ( getLanguageInHash() ) {
+		initLanguage();
+	}
+}
+
+function iframeMessageReceived ( event ) {
+	if ( event && event.data ) {
+		if ( event.data.loaded === true ) {
+			iframeWasLoaded = true;
+						
+			if ( messageQueue ) {
+				sendMessageToIframe( messageQueue );
+				messageQueue = null;
+			}
+		}
+
+		if ( event.data && event.data.availableLanguages && event.data.availableLanguages.length ) {
+			event.data.availableLanguages.forEach( function ( languageName ) {
+				if ( availablePresetLanguages.indexOf( languageName ) === -1 ) {
+					availablePresetLanguages.push( languageName );
+				}
+			} );
+
+			updateSelect();
 		}
 	}
 }
@@ -96,27 +166,61 @@ function loadJSON ( url, callback ) {
 	req.send(); 
 }
 
-function saveToBrowserStorage ( languageData ) {
-	if ( localStorage ) {
-		var str;
+function jsonLoaded ( languageData ) {
+	presetLanguageData = languageData;
+	currentLanguageData = languageData;
+	sendMessageToIframe( { language: presetLanguageData } );
+	addUI( currentLanguageData );
+}
 
-		try {
-			str = JSON.stringify( languageData );
-		} catch ( err ) {
-			console && console.log( err.message || err );
+function saveToBrowserStorage ( languageData ) {
+	if (
+		languageData.lang &&
+		drafts
+	) {
+		if ( ! drafts[languageData.lang] ) {
+			drafts[languageData.lang] = { };
 		}
-		
-		if ( str ) {
-			localStorage.setItem( localStorageKey, str );
+
+		if (
+			drafts[languageData.lang].data &&
+			JSON.stringify( drafts[languageData.lang].data ) === JSON.stringify( languageData )
+		) {
+			return;
+		}
+
+		if ( languageData.isDraft ) {
+			delete languageData.isDraft;
+		}
+
+		drafts[languageData.lang].data = languageData;
+		drafts[languageData.lang].date = Date.now();
+
+		currentLanguageData = languageData;
+				
+		if ( localStorage ) {
+			var str;
+
+			try {
+				str = JSON.stringify( drafts );
+			} catch ( err ) {
+				console && console.log( err.message || err );
+			}
+			
+			if ( str ) {
+				localStorage.setItem( config.storage.key, str );
+
+				currentLanguageData.isDraft = true;
+			}
 		}
 	}
 }
 
 function loadFromBrowserStorage () {
 	if ( localStorage ) {
-		var str = localStorage.getItem( localStorageKey );
+		var str = localStorage.getItem( config.storage.key );
 		var data;
-		
+
 		try {
 			data = JSON.parse( str );
 		} catch ( err ) {
@@ -124,78 +228,187 @@ function loadFromBrowserStorage () {
 		}
 
 		if ( data && typeof data === 'object' ) {
-			setData( data );
+			for ( var lang in data ) {
+				data[lang].isDraft = true;
+			}
 
-			requestAnimationFrame( updateTranslation );
+			drafts = data;
 		} else {
-			setData( jsonData );
-			sendMessageToIframe( { language: jsonData } );
+			drafts = { };
 		}
 	}
 }
 
-function addTranslationUI ( data ) {
-	jsonData = data;
-	translationUIWrapperEl = document.createElement( 'div' );
-	translationUIWrapperEl.classList.add( 'translation-ui' );
-	traverse( data, addTranslationInput );
+function addUI () {
+	traverse( presetLanguageData, addInput );
+	
+	if ( ! previewButtonEl ) {
+		previewButtonEl = document.createElement( 'button' );
+		previewButtonEl.classList.add( 'button' );
+		previewButtonEl.classList.add( 'update-button' );
+		previewButtonEl.textContent = 'Preview Translation in App';
+		previewButtonEl.addEventListener( 'click', previewTranslation );
+		uiNavEl.appendChild( previewButtonEl );
+	}
 
-	var buttonWrapperEl = document.createElement( 'div' );
-	buttonWrapperEl.classList.add( 'translation-ui-button-wrapper' );
-	translationUIWrapperEl.appendChild( buttonWrapperEl );
+	if ( ! completeButtonEl ) {
+		completeButtonEl = document.createElement( 'a' );
+		completeButtonEl.classList.add( 'button' );
+		completeButtonEl.classList.add( 'complete-button' );
+		completeButtonEl.classList.add( 'is-hidden' );
+		completeButtonEl.textContent = 'Translation Complete. Send data via Email';
+		uiNavEl.appendChild( completeButtonEl );
+	}
 
-	var updateButtonEl = document.createElement( 'button' );
-	updateButtonEl.classList.add( 'button' );
-	updateButtonEl.classList.add( 'update-button' );
-	updateButtonEl.textContent = 'Preview Translation';
-	updateButtonEl.addEventListener( 'click', updateTranslation );
-	buttonWrapperEl.appendChild( updateButtonEl );
+	authorSpanEl.innerHTML = '<a href="mailto:' + config.author.address + '">' + config.author.name + '</a>';
+	githubSpanEl.innerHTML = '<a href="https://github.com/' + config.app.github + '">GitHub</a>';
 
-	translationUICompleteEl = document.createElement( 'a' );
-	translationUICompleteEl.classList.add( 'button' );
-	translationUICompleteEl.classList.add( 'complete-button' );
-	translationUICompleteEl.classList.add( 'is-hidden' );
-	translationUICompleteEl.textContent = 'Translation Complete. Send data via Email';
-	buttonWrapperEl.appendChild( translationUICompleteEl );
-
-	containerEl.appendChild( translationUIWrapperEl );
-
-	requestAnimationFrame( loadFromBrowserStorage );
+	updateSelect();
+	updateInputs();
 }
 
-function traverse ( obj, fn, path ) {
-	path = path || '';
-	var itemPath;
+function updateInputs () {
+	var inputEl;
+	var originalTextEl;
 
-	for ( var i in obj ) {
-		itemPath = path === '' ? i : path + '.' + i;
-		fn.apply( this, [ i, obj[i], obj, itemPath ] );  
-		
-		if ( obj[i] !== null && typeof obj[i] === 'object' ) {
-			traverse( obj[i], fn, itemPath );
+	traverse( presetLanguageData, function ( key, value, parent, itemPath ) {
+		var itemPathId = itemPath.replace( /\./g, '-' );
+		inputEl = document.getElementById( itemPathId + '-input' );
+		originalTextEl = document.querySelector( '#' + itemPathId + ' .original' );
+
+		if ( originalTextEl ) {
+			originalTextEl.textContent = value;
+		}
+
+		if ( inputEl ) {
+			inputEl.value = '';
+		}
+	} );
+
+	if ( currentLanguageData.isDraft ) {
+		traverse( currentLanguageData, function ( key, value, parent, itemPath ) {
+			inputEl = document.getElementById( itemPath + '-input' );
+
+			if ( inputEl ) {
+				inputEl.value = currentLanguageData.isDraft ? value : '';
+			}
+		} );
+	}
+}
+
+function updateCompleteButton () {
+	if ( isLanguageDataComplete( currentLanguageData ) ) {
+		completeButtonEl.classList.remove( 'is-hidden' );
+	} else {
+		completeButtonEl.classList.add( 'is-hidden' );
+	}
+}
+
+function updateSelect () {
+	var selectWrapperEl = document.querySelector( '.select-wrapper' );
+	
+	if ( selectWrapperEl ) {
+		uiNavEl.removeChild( selectWrapperEl );
+	}
+	
+	selectWrapperEl = document.createElement( 'div' );
+	selectWrapperEl.classList.add( 'select-wrapper' );
+	uiNavEl.appendChild( selectWrapperEl );
+
+	var labelEl = document.createElement( 'label' );
+	labelEl.classList.add( 'select-label' );
+	labelEl.for = 'drafts';
+	labelEl.textContent = 'Select Language File or Draft to Start Your Translation';
+	selectWrapperEl.appendChild( labelEl );
+
+	var selectEl = document.createElement( 'select' );
+	selectEl.id = 'drafts';
+	selectEl.addEventListener( 'change', selectChanged );
+	selectWrapperEl.appendChild( selectEl );
+			
+	if ( availablePresetLanguages.length > 1 ) {
+		var groupEl = document.createElement( 'optgroup' );
+		groupEl.label = 'Default Language Files';
+		selectEl.appendChild( groupEl );
+
+		availablePresetLanguages.forEach( function ( languageName ) {
+			var optionEl = document.createElement( 'option' );
+			optionEl.value = languageName;
+			optionEl.textContent = languageName;
+			groupEl.appendChild( optionEl );
+
+			if ( currentLanguageData.lang && currentLanguageData.lang.toLowerCase() === optionEl.value && ! currentLanguageData.isDraft ) {
+				optionEl.selected = 'selected';
+			}
+		} );
+	}
+
+	if ( drafts && Object.keys( drafts ).length > 0 ) {
+		var groupEl = document.createElement( 'optgroup' );
+		groupEl.label = 'Language File Drafts';
+		selectEl.appendChild( groupEl );
+
+		for ( var lang in drafts ) {
+			var optionEl = document.createElement( 'option' );
+			optionEl.value = 'draft-' + lang;
+			optionEl.textContent = 'Draft for ' + lang.toLowerCase() + ' (last modified on ' + timestampToStr( drafts[lang].date ) + ')';
+			groupEl.appendChild( optionEl );
+
+			if ( currentLanguageData.lang && currentLanguageData.lang.toLowerCase() === lang.toLowerCase() && currentLanguageData.isDraft ) {
+				optionEl.selected = 'selected';
+			}
 		}
 	}
 }
 
-function addTranslationInput ( key, value, parent, itemPath ) {
-	if ( typeof value === 'string' && translationUIWrapperEl && canShowItem( itemPath ) ) {
-		var itemEl = document.createElement( 'div' );
+function selectChanged ( event ) {
+	if ( event.target && event.target.value ) {
+		var languageName = event.target.value;
+
+		if ( languageName.indexOf( 'draft-' ) === 0 ) {
+			currentLanguageData = drafts[languageName.replace( 'draft-', '' )].data;
+			currentLanguageData.isDraft = true;
+			
+			updateInputs();
+			sendMessageToIframe( { language: getLanguageDataFromInput( true ) } );
+			
+			updateSelect();
+			updateEmail();
+			updateCompleteButton();
+		} else {
+			var languageFilePath = config.language.path.replace( '{$lang}', languageName.toLowerCase() );
+			loadJSON( languageFilePath, jsonLoaded );
+		}
+	}
+}
+
+function addInput ( key, value, parent, itemPath ) {
+	if ( typeof value === 'string' ) {
+		var itemPathId = itemPath.replace( /\./g, '-' );
+		var itemEl = document.getElementById( itemPathId );
+
+		if ( itemEl ) {
+			uiItemsEl.removeChild( itemEl );
+		}
+
+		itemEl = document.createElement( 'li' );
 		itemEl.classList.add( 'translation-item' );
+		itemEl.id = itemPathId;
 
 		var pathEl = document.createElement( 'a' );
 		pathEl.textContent = itemPath;
-		pathEl.href = '#' + itemPath;
+		pathEl.href = '#' + itemPathId;
 		pathEl.classList.add( 'translation-item-path' );
 		itemEl.appendChild( pathEl );
 
 		var originalTextEl = document.createElement( 'div' );
 		originalTextEl.classList.add( 'translation-item-original' );
-		originalTextEl.innerHTML = '<h1>Original Text</h1><p>' + value + '</p>';
+		originalTextEl.innerHTML = '<h1>Original Text</h1><p class="original">' + value + '</p>';
 		itemEl.appendChild( originalTextEl );
 		
 		var labelEl = document.createElement( 'label' );
 		labelEl.classList.add( 'translation-item-label' );
-		labelEl.for = itemPath;
+		labelEl.for = itemPathId + '-input';
 		labelEl.textContent = 'Translation';
 		itemEl.appendChild( labelEl );
 
@@ -209,7 +422,7 @@ function addTranslationInput ( key, value, parent, itemPath ) {
 		}
 
 		inputEl.classList.add( 'translation-item-value' );
-		inputEl.id = itemPath;
+		inputEl.id = itemPathId + '-input';
 		itemEl.appendChild( inputEl );
 
 		if ( key === 'lang' ) {
@@ -219,31 +432,29 @@ function addTranslationInput ( key, value, parent, itemPath ) {
 			itemEl.appendChild( hintEl );
 		}
 
-		translationUIWrapperEl.appendChild( itemEl );
+		uiItemsEl.appendChild( itemEl );
 	}
 }
 
-function updateTranslation ( event ) {
-	var newLanguageData = getUpdatedData();
-	
-	if ( !! event ) {
-		saveToBrowserStorage( newLanguageData );
-	}
+function previewTranslation ( event ) {
+	currentLanguageData = getLanguageDataFromInput();
+	sendMessageToIframe( { language: getLanguageDataFromInput( true ) } );
+	saveToBrowserStorage( currentLanguageData );
+	updateEmail();
+	updateSelect();
+	updateCompleteButton();
+	currentLanguageData.isDraft = true;
 
-	var linkUrl = 'mailto:' + author.address;
-	linkUrl += '?subject=' + encodeURIComponent( 'New translation for "' + app.name + '" app: ' + newLanguageData.lang );
+	uiInfoEl.classList.add( 'hide-info' );
+}
+
+function updateEmail () {
+	var linkUrl = 'mailto:' + config.author.address;
+	linkUrl += '?subject=' + encodeURIComponent( 'New translation for "' + config.app.name + '" app: ' + currentLanguageData.lang );
 	linkUrl += '&body=' + encodeURIComponent( emailText );
-	linkUrl += encodeURIComponent( JSON.stringify( newLanguageData, null, '\t' ) );
+	linkUrl += encodeURIComponent( JSON.stringify( currentLanguageData, null, '\t' ) );
 
-	translationUICompleteEl.href = linkUrl;
-
-	sendMessageToIframe( { language: newLanguageData } );
-
-	if ( jsonData && jsonData.lang !== newLanguageData.lang ) {
-		translationUICompleteEl.classList.remove( 'is-hidden' );
-	} else {
-		translationUICompleteEl.classList.add( 'is-hidden' );
-	}
+	completeButtonEl.href = linkUrl;
 }
 
 function sendMessageToIframe ( data ) {
@@ -261,47 +472,123 @@ function sendMessageToIframe ( data ) {
 	}
 }
 
-function canShowItem ( itemPath ) {
-	if ( itemsToHide.indexOf( itemPath ) !== -1 ) {
-		return false;
-	}
+function isLanguageDataComplete ( languageData ) {
+	var result = true;
 
-	var show = true;
-	
-	itemsToHide.forEach( function ( item ) {
-		if ( itemPath.indexOf( item ) !== -1 ) {
-			show = false;
-		}
-	} );
-
-	return show;
-}
-
-function getUpdatedData () {
-	var result = JSON.parse( JSON.stringify( jsonData ) );
-	var inputEl;
-
-	traverse( result, function ( key, value, parent, itemPath ) {
-		inputEl = document.getElementById( itemPath );
-
-		if ( inputEl && inputEl.value !== '' ) {
-			parent[key] = inputEl.value;
+	traverse( presetLanguageData, function ( key, value, parent, itemPath ) {
+		if ( ! getObjectByString( itemPath, languageData ) ) {
+			result = false;
 		}
 	} );
 
 	return result;
 }
 
-function setData ( data ) {
+function timestampToStr ( timestamp ) {
+	var d = new Date( timestamp );
+	var year = d.getFullYear();
+	var month = addLeadingZero( d.getMonth() + 1 );
+	var day = addLeadingZero( d.getDate() );
+
+	return [ year, month, day ].join( '-' );
+}
+
+function traverse ( obj, fn, path ) {
+	path = path || '';
+	var itemPath;
+
+	for ( var i in obj ) {
+		itemPath = path === '' ? i : path + '.' + i;
+		fn.apply( this, [ i, obj[i], obj, itemPath ] );  
+		
+		if ( obj[i] !== null && typeof obj[i] === 'object' ) {
+			traverse( obj[i], fn, itemPath );
+		}
+	}
+}
+
+function addLeadingZero ( int ) {
+	if ( int < 10 ) {
+		return '0' + int;
+	} else {
+		return '' + int;
+	}
+}
+
+function getLanguageDataFromInput ( merge ) {
+	var result = { };
 	var inputEl;
 
-	traverse( data, function ( key, value, parent, itemPath ) {
-		inputEl = document.getElementById( itemPath );
+	traverse( presetLanguageData, function ( key, value, parent, itemPath ) {
+		var itemPathId = itemPath.replace( /\./g, '-' );
 
-		if ( inputEl ) {
-			inputEl.value = value;
+		if ( typeof value === 'string' && itemPathId ) {
+			inputEl = document.getElementById( itemPathId + '-input' );
+
+			if ( inputEl && inputEl.value ) {
+				setObjectValueByKey( itemPath, inputEl.value, result );
+			}
 		}
 	} );
+
+	if ( merge ) {
+		traverse( presetLanguageData, function ( key, value, parent, itemPath ) {
+			if ( ! getObjectByString( itemPath, result ) ) {
+				setObjectValueByKey( itemPath, JSON.parse( JSON.stringify( value ) ), result );
+			}
+		} );
+	}
+
+	return result;
+}
+
+function getLanguageInHash () {
+	var hash = location.hash.toLowerCase();
+
+	if ( hash.match( /#?language:([a-z]{2}-[a-z]{2})$/ ) ) {
+		return hash.toLowerCase().replace( /#?language:([a-z]{2}-[a-z]{2})$/, '$1' );
+	} else {
+		return '';
+	}
+}
+
+// http://stackoverflow.com/a/6491621/229189
+function getObjectByString ( str, obj ) {
+	if ( typeof str === 'string' ) {
+		str = str.replace( /\[(\w+)\]/g, '.$1' ); // convert indexes to properties
+		str = str.replace( /^\./, '' );           // strip a leading dot
+
+		var keys = str.split( '.' );
+
+		for ( var i = 0, len = keys.length; i < len; ++i ) {
+			var key = keys[i];
+			
+			if ( key in obj ) {
+				obj = obj[key];
+			} else {
+				return;
+			}
+		}
+	}
+
+	return obj;
+}
+
+function setObjectValueByKey ( key, value, obj ) {
+	var keys = key.split( '.' );
+	var keyPart;
+	
+	while ( ( keyPart = keys.shift() ) && keys.length ) {
+		if ( ! obj[keyPart] ) {
+			obj[keyPart] = { };
+		}
+		
+		obj = obj[keyPart];
+	}
+
+	obj[keyPart] = value;
+
+	return obj;
 }
 
 init();

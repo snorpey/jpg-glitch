@@ -99,6 +99,7 @@ define(
 				updateAllTexts();
 
 				if ( config.language.debug ) {
+					postMessage( { availableLanguages: config.settings.language.options }, config.origin );
 					postMessage( { loaded: true }, config.origin );
 				}
 			}
