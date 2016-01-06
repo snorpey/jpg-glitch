@@ -209,7 +209,6 @@ function saveToBrowserStorage ( languageData ) {
 			
 			if ( str ) {
 				localStorage.setItem( config.storage.key, str );
-
 				currentLanguageData.isDraft = true;
 			}
 		}
@@ -270,9 +269,10 @@ function addUI () {
 function updateInputs () {
 	var inputEl;
 	var originalTextEl;
+	var itemPathId;
 
 	traverse( presetLanguageData, function ( key, value, parent, itemPath ) {
-		var itemPathId = itemPath.replace( /\./g, '-' );
+		itemPathId = itemPath.replace( /\./g, '-' );
 		inputEl = document.getElementById( itemPathId + '-input' );
 		originalTextEl = document.querySelector( '#' + itemPathId + ' .original' );
 
@@ -287,7 +287,8 @@ function updateInputs () {
 
 	if ( currentLanguageData.isDraft ) {
 		traverse( currentLanguageData, function ( key, value, parent, itemPath ) {
-			inputEl = document.getElementById( itemPath + '-input' );
+			itemPathId = itemPath.replace( /\./g, '-' );
+			inputEl = document.getElementById( itemPathId + '-input' );
 
 			if ( inputEl ) {
 				inputEl.value = currentLanguageData.isDraft ? value : '';
@@ -449,10 +450,16 @@ function previewTranslation ( event ) {
 }
 
 function updateEmail () {
+	var emailLanguageData = JSON.parse( JSON.stringify( currentLanguageData ) );
+	
+	if ( emailLanguageData.isDraft ) {
+		delete emailLanguageData.isDraft;
+	}
+
 	var linkUrl = 'mailto:' + config.author.address;
-	linkUrl += '?subject=' + encodeURIComponent( 'New translation for "' + config.app.name + '" app: ' + currentLanguageData.lang );
+	linkUrl += '?subject=' + encodeURIComponent( 'New translation for "' + config.app.name + '" app: ' + emailLanguageData.lang );
 	linkUrl += '&body=' + encodeURIComponent( emailText );
-	linkUrl += encodeURIComponent( JSON.stringify( currentLanguageData, null, '\t' ) );
+	linkUrl += encodeURIComponent( JSON.stringify( emailLanguageData, null, '\t' ) );
 
 	completeButtonEl.href = linkUrl;
 }
