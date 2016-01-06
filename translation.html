@@ -19,11 +19,11 @@ code { font-family: Menlo, monospace; color: #333; }
 #ui-nav h1 { font-size: 14px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
 #ui-nav select { max-width: 310px; }
 #ui-info { margin-bottom: 20px; margin-top: 120px; }
-#ui-info.hide-info{ display: none; }
+#ui-info.hide-info { display: none; }
 #ui-info p { line-height: 19px; }
 #ui-info p + p { margin-top: 5px; }
-a { color: #06f; text-decoration: none; border-bottom: 1px #efefef solid;}
-a:hover { border-bottom-color: #ccc; }
+a:not(.button) { color: #06f; text-decoration: none; border-bottom: 1px #efefef solid;}
+a:not(.button):hover { border-bottom-color: #ccc; }
 .translation-item { margin-bottom: 50px; display: block; }
 .translation-item-path { font-family: Menlo, monospace; font-size: 10px; color: #ccc; margin-bottom: 10px; display: block; border: none; }
 .translation-item input, .translation-item textarea { font-family: sans-serif; color: #666; font-size: 14px; line-height: 1.5; width: 100%; display: block; padding: 3px; }
@@ -31,7 +31,8 @@ a:hover { border-bottom-color: #ccc; }
 .translation-item-original { margin-bottom: 15px; }
 .translation-item-original p { margin-bottom: 15px; line-height: 1.5; }
 .translation-ui-button-wrapper { position: fixed; width: 350px; top: 0; right: 0; padding: 10px; background-color: #ccc; }
-.button.is-hidden { display: none; }
+.button.is-inactive { color: #ccc; border-color: #ccc; }
+.button.is-inactive:hover { color: #fff; background-color: #ccc; border-color: #ccc; }
 .translation-item-hint { font-size: 12px; color: #666; margin-top: 10px; line-height: 1.5; }
 .select-wrapper { margin-top: 10px; }
 		</style>
@@ -254,7 +255,7 @@ function addUI () {
 		completeButtonEl = document.createElement( 'a' );
 		completeButtonEl.classList.add( 'button' );
 		completeButtonEl.classList.add( 'complete-button' );
-		completeButtonEl.classList.add( 'is-hidden' );
+		completeButtonEl.classList.add( 'is-inactive' );
 		completeButtonEl.textContent = 'Translation Complete. Send data via Email';
 		uiNavEl.appendChild( completeButtonEl );
 	}
@@ -299,9 +300,9 @@ function updateInputs () {
 
 function updateCompleteButton () {
 	if ( isLanguageDataComplete( currentLanguageData ) ) {
-		completeButtonEl.classList.remove( 'is-hidden' );
+		completeButtonEl.classList.remove( 'is-inactive' );
 	} else {
-		completeButtonEl.classList.add( 'is-hidden' );
+		completeButtonEl.classList.add( 'is-inactive' );
 	}
 }
 
