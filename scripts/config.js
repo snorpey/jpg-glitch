@@ -36,7 +36,7 @@ define(
 			settings: {
 				canZoomWithPointer: { value: true },
 				resizeUploadedImages: { value: true },
-				language: { value: 'en-us', options: [ 'en-us', 'de-de' ] }
+				language: { value: 'en-us', options: [ 'en-us', 'en-gb', 'de-de' ] }
 			},
 			localForage: {
 				name      : 'glitchtool',
