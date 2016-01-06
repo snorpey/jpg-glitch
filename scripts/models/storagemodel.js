@@ -16,6 +16,7 @@ define(
 
 			var self = this;
 			var isFirstVisit = false;
+			var visitCount = 0;
 			var entries = { };
 			var useLocalForage = browser.test( 'localforage' ) && localforage;
 			var worker;
@@ -23,7 +24,7 @@ define(
 			var publisherNames = [
 				'update', 'save', 'loaditem',
 				'removeall', 'removelocaldata', 'removeimgurdata',
-				'firstvisit', 'error', 'statusmessage'
+				'visits', 'firstvisit', 'error', 'statusmessage'
 			];
 
 			var publishers = addPublishers( self, publisherNames );
@@ -164,11 +165,17 @@ define(
 								entries = loadedData && loadedData.entries ? loadedData.entries : { };
 								publishers.update.dispatch( entries );
 
+								visitCount = ( loadedData && loadedData.visitCount ) ? loadedData.visitCount : 1;
 								isFirstVisit = ( loadedData && loadedData.lastVisit ) ? false : true;
 								
 								if ( isFirstVisit ) {
 									publishers.firstvisit.dispatch();
-									save();
+								}
+								
+								save();
+
+								if ( visitCount ) {
+									publishers.visitCount.dispatch( visitCount );
 								}
 
 								if ( typeof callback === 'function' ) {
@@ -187,7 +194,7 @@ define(
 					if ( worker ) {
 						sendMessageToWorker( 'save' );
 					} else {
-						localforage.setItem( storageKey, { entries: entries, lastVisit: Date.now() }, function ( err, savedData ) {
+						localforage.setItem( storageKey, { entries: entries, lastVisit: Date.now(), visitCount: visitCount + 1 }, function ( err, savedData ) {
 							if ( err ) {
 								publishers.error.dispatch( 'file.error.save' );
 								console && console.log( 'localforage error', err );

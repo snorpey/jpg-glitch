@@ -3,6 +3,7 @@ importScripts( '../lib/md5.js' );
 
 var storageKey = 'items';
 var entries = { };
+var visitCount = 0;
 
 self.addEventListener( 'message', receivedMessageEvent, false );
 
@@ -161,11 +162,17 @@ function load ( callback ) {
 			entries = loadedData && loadedData.entries ? loadedData.entries : { };
 			sendMessage( 'update', entries );
 			
+			visitCount = ( loadedData && loadedData.visitCount ) ? loadedData.visitCount : 1;
 			isFirstVisit = ( loadedData && loadedData.lastVisit ) ? false : true;
-			
+						
 			if ( isFirstVisit ) {
 				sendMessage( 'firstvisit' );
-				save();
+			}
+			
+			save();
+
+			if ( visitCount ) {
+				sendMessage( 'visits', visitCount );
 			}
 
 			if ( typeof callback === 'function' ) {
@@ -176,7 +183,7 @@ function load ( callback ) {
 }
 
 function save ( callback ) {
-	localforage.setItem( storageKey, { entries: entries, lastVisit: Date.now() }, function ( err, savedData ) {
+	localforage.setItem( storageKey, { entries: entries, lastVisit: Date.now(), visitCount: visitCount + 1 }, function ( err, savedData ) {
 		if ( err ) {
 			sendError( 'file.error.save' );
 			console && console.log( 'localforage error', err );

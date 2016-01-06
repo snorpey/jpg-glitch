@@ -72,8 +72,8 @@ require( [
 	var storageModel = StorageModel();
 	var controlsModel = ControlsModel( config.defaultControlParams );
 	var networkModel = NetworkModel();
-	var settingsModel = SettingsModel();
 	var localisationModel = LocalisationModel.sharedInstance;
+	var settingsModel = SettingsModel();
 
 	var appView = AppView( document.body );
 	var navView = NavView( appView.el );
@@ -198,6 +198,7 @@ require( [
 			.on( 'loaditem', loadEntry )
 			.on( 'statusmessage', indicatorView.showMessage )
 			.on( 'error', indicatorView.showError )
+			.on( 'visits', welcomeView.updateVisits )
 			.on( 'firstvisit', welcomeView.show );
 
 		networkModel
@@ -216,6 +217,7 @@ require( [
 		localisationModel
 			.on( 'error', indicatorView.showError )
 			.on( 'error', hideAppLoader )
+			.on( 'newlanguage', welcomeView.showLanguageHint )
 			.on( 'update', hideAppLoader );
 	}
 
@@ -230,8 +232,8 @@ require( [
 			localforage.config( config.localForage );
 
 			var driver = [
-				localforage.WEBSQL,
 				localforage.INDEXEDDB,
+				localforage.WEBSQL,
 				localforage.LOCALSTORAGE
 			];
 

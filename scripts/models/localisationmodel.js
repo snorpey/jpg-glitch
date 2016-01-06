@@ -9,7 +9,7 @@ define(
 
 			var self = this;
 
-			var publishers = addPublishers( self, 'update', 'error' );
+			var publishers = addPublishers( self, 'update', 'newlanguage', 'error' );
 			
 			var textElData = [ ];
 			var texts = '';
@@ -19,6 +19,30 @@ define(
 			var languageWasLoaded = false;
 			
 			var linkOptions = { links: { newTab: true } };
+
+			var userLanguage = ( navigator.language || navigator.userLanguage || '' ).toLowerCase();
+
+			// detect user language
+			if ( userLanguage !== '' ) {
+				var matchingLanguageWasFound = false;
+
+				if ( config.settings.language.options.indexOf( userLanguage ) > -1 ) {
+					config.settings.language.value = userLanguage;
+					matchingLanguageWasFound = true;
+				} else {
+					// en-au -> en-us
+					config.settings.language.options.forEach( function ( languageOption ) {
+						if ( userLanguage.substr( 0, 2 ) === languageOption.substr( 0, 2 ) ) {
+							config.settings.language.value = languageOption;
+							matchingLanguageWasFound = true;
+						}
+					} );
+				}
+
+				if ( ! matchingLanguageWasFound ) {
+					setTimeout( publishers.newlanguage.dispatch, 100, userLanguage );
+				}
+			}
 
 			loadLanguageFromStorage();
 

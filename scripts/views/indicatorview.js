@@ -49,8 +49,12 @@ define(
 			function addNotification ( type, params ) {
 				var notificationEl = elHelper.createEl( 'div', 'notification notification-' + type, notificationsEl );
 				
-				if ( params.data && params.data.innerHTML && params.data.args && params.data.args.length ) {
-					loc.apply( null, [ notificationEl, 'innerHTML', params.message ].concat( params.data.args ) );
+				if ( params.data && params.data.innerHTML ) {
+					if ( params.data.args && params.data.args.length ) {
+						loc.apply( null, [ notificationEl, 'innerHTML', params.message ].concat( params.data.args ) );
+					} else {
+						loc.apply( null, [ notificationEl, 'innerHTML', params.message ] );
+					}
 				} else {
 					loc( notificationEl, 'textContent', params.message );
 				}

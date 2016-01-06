@@ -131,6 +131,11 @@
 			"Welcome! Looks like this is your first time here.",
 			"To get started, you can drag the sliders below and glitch an image.",
 			"You can also import an image from your device. Just click on the OPEN button in the menu."
+		],
+		"newlanguage": [
+			"Welcome back! I hope you like the image glitcher.\n\nIt looks like you speak another language next to English.",
+			"Do you think you could help other users of this app and translate some text into another language?",
+			"Please have a look at the [Translation Tool](translation.html) if you’re interested. Thank you!"
 		]
 	}
 }
