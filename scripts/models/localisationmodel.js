@@ -182,6 +182,10 @@ define(
 					}
 				};
 
+				if ( Array.isArray( result ) ) {
+					result = result.join( '\n\n' );
+				}
+
 				if ( args && args.length ) {
 					var regex;
 
