@@ -1,8 +1,8 @@
 {
-	"lang": "en-us",
+	"lang": "de-DE",
 	"index": {
 		"title": "Image Glitch Werkzeug",
-		"description": "Mit diesem Programm kannst du ein Bild so bearbeiten, dass es kaputt aussieht. Ziehe ein Bild in das Browserfenster um loszulegen.\n\nDas Programm verändert einige Bytes in der Bilddatei. Aufgrund der Art und Weise wie der [JPEG Logarithmus](https://de.wikipedia.org/wiki/JPEG) funktioniert, wird trotz eigenlich unlesbarer Rohdaten weiterhin ein Bild erzeugt. Dieses Programm ist angelehnt an ein ähnliches Experiment von [experiment](http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator) von [soulwire](http://github.com/soulwire) in Flash.\n\nDieses Programm wurde von [Georg](http://snorpey.com/) entwickelt. Er freut sich übrigens immer, von den Nutzern seiner Programme zu hören wie sie die Programme einsetzen. Du kannst Georg bei [Twitter](https://twitter.com/snorpey) folgen oder dir den Quellcode dieses Programms bei [GitHub](https://github.com/snorpey/jpg-glitch) ansehen.\n\nFalls dir dieses Programm gefallen hat, gefallen dir vielleicht auch Georgs andere [Experimente](http://snorpey.github.io/experiments/)."
+		"description": "Mit diesem Programm kannst du ein Bild so bearbeiten, dass es kaputt aussieht. Ziehe ein Bild in das Browserfenster um loszulegen.\n\nDas Programm verändert einige Bytes in der Bilddatei. Aufgrund der Art und Weise wie der [JPEG Logarithmus](https://de.wikipedia.org/wiki/JPEG) funktioniert, wird trotz eigentlich unlesbarer Rohdaten weiterhin ein Bild erzeugt. Dieses Programm ist angelehnt an ein ähnliches Experiment von [experiment](http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator) von [soulwire](http://github.com/soulwire) in Flash.\n\nDieses Programm wurde von [Georg](http://snorpey.com/) entwickelt. Er freut sich übrigens immer, von den Nutzern seiner Programme zu hören wie sie die Programme einsetzen. Du kannst Georg bei [Twitter](https://twitter.com/snorpey) folgen oder dir den Quellcode dieses Programms bei [GitHub](https://github.com/snorpey/jpg-glitch) ansehen.\n\nFalls dir dieses Programm gefallen hat, gefallen dir vielleicht auch Georgs andere [Experimente](http://snorpey.github.io/experiments/)."
 	},
 	"settings": {
 		"settings": "Einstellungen",
@@ -11,8 +11,10 @@
 		"resizeuploadedimages": "Große Bilder verkleinen, um Fehler zu vermeiden",
 		"language": "Sprache (Language)",
 		"languageoptions": {
-			"de-de": "Deutsch DE",
-			"en-us": "Englisch (English US)"
+			"de-de": "Deutsch (German)",
+			"en-us": "English (American English)",
+			"en-gb": "English (British English)",
+			"ru-ru": "Русский (Russian)"
 		},
 		"error": {
 			"save": "Konnte die Einstellungen nicht im Browser speichern.",
@@ -93,23 +95,35 @@
 		"imagelink": "Online Link zum Bild",
 		"imagelinktitle": "Du kannst diesen Link nehmen um das Bild auf anderen Seiten zu teilen oder hochzuladen",
 		"opennewtabtitle": "Öffne das Bild in einem neuen Browsertab",
-		"imgur": "Imgur",
-		"reddit": "Reddit",
-		"twitter": "Twitter",
-		"facebook": "Facebook",
-		"pinterest": "Pinterest",
 		"recentlyshared": "Kürzlich geteilte Bilder",
 		"untitled": "Ohne Titel",
 		"openlink": "Öffne Link",
 		"openlinktitle": "Das Bild in einen neuen Browsertab öffnen",
 		"offline": "Offline nehmen",
 		"offlinetitle": "Dieses Bild von Imgur löschen und vom Netz nehmen",
+		"target": {
+			"imgur": "Imgur",
+			"reddit": "Reddit",
+			"twitter": "Twitter",
+			"facebook": "Facebook",
+			"pinterest": "Pinterest",
+			"vkontakte": "VKontakte"
+		},
+		"link": {
+			"title": "Glitch!",
+			"description": {
+				"withoutname": "Schau mal was ich mit diesem Glitch Tool gemacht habe:",
+				"withname": "Schau mal was ich mit @snorpey’s Glitch Tool gemacht habe:",
+				"edited": "Das Bild habe ich mit snorpey's Glitch Tool bearbeitet:"
+			}
+		},
 		"error": {
 			"base64": "Es gibt keine Base64-Adresse zum hochladen",
 			"upload": "Konnte das Bild nicht auf Imgur hochladen."
 		},
 		"message": {
 			"upload": "Das Bild wurde zu Imgur hochgeladen. [Bild öffnen.]({$1})",
+			"delete": "Konnte das Bild nicht von Imgur löschen.",
 			"del": "Das Bild wurde von Imgur gelöscht."
 		}
 	},

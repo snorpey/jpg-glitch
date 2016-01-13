@@ -1,13 +1,8 @@
 {
-	"lang": "en-US",
+	"lang": "en-GB",
 	"index": {
 		"title": "Image Glitch Tool",
-		"description": [
-			"With this app, you can glitch your own images by dragging an image into the browser window. You can use the sliders in the control panel to alter the glitched parameters. The image updates in real time.",
-			"This app corrupts some bytes in an image. Because of the way [JPEG encoding](https://en.wikipedia.org/wiki/JPEG) works, the corrupted file still shows a corrupted image. It was inspired by [soulwire](http://github.com/soulwire)’s [experiment](http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator) in Flash.",
-			"This tool was created by [Georg](http://snorpey.com/). He is always happy to learn about the things that people are creating with his tools. You can follow him on [Twitter](https://twitter.com/snorpey) or explore the source code of this app on [GitHub](https://github.com/snorpey/jpg-glitch).",
-			"If you like this glitch tool, you can check out some of Georg’s other [JavaScript experiments](http://snorpey.github.io/experiments/)."
-		]
+		"description": "With this app, you can glitch your own images by dragging an image into the browser window. Use the sliders in the control panel to alter the glitched parameters. The image updates in real time.\n\nThis app corrupts some bytes in an image. Because of the way [JPEG encoding](https://en.wikipedia.org/wiki/JPEG) works, the corrupted file still shows a corrupted image. It was inspired by [soulwire](http://github.com/soulwire)’s [experiment](http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator) in Flash.\n\nThis tool was created by [Georg](http://snorpey.com/). He is always happy to learn about the things that people are creating with his tools. You can follow him on [Twitter](https://twitter.com/snorpey) or explore the source code of this app on [GitHub](https://github.com/snorpey/jpg-glitch).\n\nIf you like this glitch tool, you can check out some of Georg’s other [JavaScript experiments](http://snorpey.github.io/experiments/)."
 	},
 	"settings": {
 		"settings": "Settings",
@@ -33,9 +28,9 @@
 	"controls": {
 		"controls": "Controls",
 		"controlstitle": "Show and hide controls",
-		"randomize": "Randomize",
-		"randomizetitle": "Randomize control values",
-		"center": "Center",
+		"randomize": "Randomise",
+		"randomizetitle": "Randomise control values",
+		"center": "Centre",
 		"centertitle": "Fit image to screen",
 		"original": "100%",
 		"originaltitle": "Zoom image to its original size 100%",
@@ -89,10 +84,7 @@
 	"share": {
 		"share": "Share",
 		"sharetitle": "Share your glitched image on the internet",
-		"info": [
-			"You can upload the image to [Imgur](https://imgur.com) to share it.",
-			"Please note that after uploading the image will be publicly visible on the internet and the Imgur's [terms of service](https://imgur.com/tos) apply."
-		],
+		"info": "You can upload the image to [Imgur](https://imgur.com) to share it. Please note that after uploading the image will be publicly visible on the internet and the Imgur's [terms of service](https://imgur.com/tos) apply.",
 		"openon": "Open image on {$1}",
 		"openontitle": "Open the image you shared on {$1}",
 		"shareon": "Share image on {$1}",
@@ -151,11 +143,6 @@
 			"Welcome! Looks like this is your first time here.",
 			"To get started, you can drag the sliders below and glitch an image.",
 			"You can also import an image from your device. Just click on the OPEN button in the menu."
-		],
-		"newlanguage": [
-			"Welcome back! I hope you like the image glitcher.\n\nIt looks like you speak another language next to English.",
-			"Do you think you could help other users of this app and translate some text into another language?",
-			"Please have a look at the [Translation Tool](translation.html) if you’re interested. Thank you!"
 		]
 	}
 }
