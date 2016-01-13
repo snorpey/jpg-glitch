@@ -17,8 +17,8 @@ define(
 			var isAdding = false;
 
 			var timeToFadeOut = {
-				message: 3500,
-				error: 6000,
+				message: 5000,
+				error: 7000,
 				welcome: 7000
 			};
 
