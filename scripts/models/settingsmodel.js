@@ -158,7 +158,7 @@ define(
 			}
 
 			function getValidSettings ( settings ) {
-				if ( settings&& defaultSettings && settings !== defaultSettings ) {
+				if ( settings && defaultSettings && settings !== defaultSettings ) {
 					settings = objectHelper.merge( settings, defaultSettings );
 				}
 
