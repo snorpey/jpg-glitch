@@ -70,6 +70,8 @@ define(
 
 			function save ( newSettings ) {
 				if ( useLocalForage ) {
+					newSettings = getValidSettings( newSettings );
+					
 					if ( worker ) {
 						sendMessageToWorker( 'save', newSettings );
 					} else {
@@ -142,23 +144,28 @@ define(
 				if ( newSettings ) {
 					settings = newSettings || defaultSettings;
 
-					if ( settings !== defaultSettings ) {
-						for ( var name in defaultSettings ) {
-							if ( ! settings[name] ) {
-								settings[name] = defaultSettings[name];
-							}
+					if ( objectHelper.isEqual( getValidSettings( settings ), settings ) ) {
+						for ( var name in settings ) {
+							publishers.update.dispatch( name, settings[name].value, settings[name].options );
 						}
+					} else {
+						save( getValidSettings( settings ) );
 					}
-
-					for ( var name in settings ) {
-						publishers.update.dispatch( name, settings[name].value, settings[name].options );
-					}
-
 				} else {
 					settings = defaultSettings;
 					save( settings );
 				}
 			}
+
+			function getValidSettings ( settings ) {
+				if ( settings&& defaultSettings && settings !== defaultSettings ) {
+					settings = objectHelper.merge( settings, defaultSettings );
+				}
+
+				return settings;
+			}
+
+
 
 			self.getSetting = getSetting;
 			self.getSettingValue = getSettingValue;
