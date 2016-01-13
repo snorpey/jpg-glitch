@@ -31,6 +31,8 @@ define(
 		}
 
 		function markdownLinksToHtml ( str, options ) {
+			str = str || '';
+
 			var attributes = [ ];
 			var attributeStr = '';
 
@@ -49,11 +51,12 @@ define(
 			var linkHTML = '<a href="$2"' + attributeStr + '>$1</a>';
 
 			return str
-				.replace( /\\n/gm, '\n')
+				.replace( /\\n/gm, '\n' )
 				.replace( /\[(.*?)\]\((.+?)\)/g, linkHTML );
 		}
 
 		function autop ( str, options ) {
+			str = str || '';
 			var tag = ( options && options.tag ) ? options.tag : 'p';
 			var lineBreakTag = ( options && options.linebreak ) ? '<' + options.linebreak + '>' : '<br />';
 			var startTag = '<' + tag + '>';
