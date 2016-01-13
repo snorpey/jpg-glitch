@@ -1,7 +1,7 @@
 /*global define*/
 define(
-	[ 'util/addpublishers', 'util/el' ],
-	function ( addPublishers, elHelper ) {
+	[ 'util/addpublishers', 'util/el', 'util/localizetext' ],
+	function ( addPublishers, elHelper, loc ) {
 		// the control elements are used to change the appearance of the image
 		function ControlsView ( parentEl, buttonParentEl, params ) {
 			if ( ! ( this instanceof ControlsView ) ) {
@@ -44,7 +44,8 @@ define(
 			function addControl ( key, params ) {
 				var controlEl = elHelper.createEl( 'div', 'control', controlsWrapperEl );
 				
-				elHelper.createLabel( 'controls.' + key, 'input-' + key, 'control-label', controlEl );
+				var labelEl = elHelper.createLabel( 'controls.' + key, 'input-' + key, 'control-label', controlEl );
+				loc( labelEl, 'title', 'controls.' + key );
 				
 				var inputEl = elHelper.createEl( 'input', 'control-input', controlEl );
 				inputEl.setAttribute( 'data-key', key );

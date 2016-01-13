@@ -57,7 +57,7 @@ define(
 			buttonEl.addEventListener( 'click', toggle, false );
 
 			var headlineEl = elHelper.createEl( 'h1', 'nav-headline', el );
-			headlineEl.textContent = document.title;
+			loc( headlineEl, 'textContent', 'index.title' );
 
 			var navBreakPoint = 600;
 			var navWidth = 300;

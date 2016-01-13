@@ -282,7 +282,7 @@
 		margin-left: 15px;
 	}
 
-.has-touch .share-dialog.is-active {
+.share-dialog.is-active {
 	max-height: calc(100vh - 270px);
     overflow: auto;
 }

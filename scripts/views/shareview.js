@@ -1,7 +1,7 @@
 /*global define*/
 define(
-	[ 'util/addpublishers', 'views/dialog', 'util/el', 'util/browser', 'util/time', 'util/localizetext' ],
-	function ( addPublishers, Dialog, elHelper, browser, timeHelper, loc ) {
+	[ 'config', 'util/addpublishers', 'views/dialog', 'util/el', 'util/browser', 'util/time', 'util/string', 'util/localizetext' ],
+	function ( config, addPublishers, Dialog, elHelper, browser, timeHelper, strHelper, loc ) {
 		// shareview lets users upload their glitched image to imgur and
 		// share links on social media
 		function ShareView ( parentEl ) {
@@ -39,24 +39,28 @@ define(
 			imgLinkEl.id = 'img-link-input';
 
 			var imgurLinkEl = elHelper.createLink( null, null, null, blankTargetStr, 'imgur-link button' );
-			loc( imgurLinkEl, 'textContent', 'share.openon', 'Imgur' );
-			loc( imgurLinkEl, 'title', 'share.openontitle', 'Imgur' );
+			loc( imgurLinkEl, 'textContent', 'share.openon', getLocFn( 'share.target.imgur' ) );
+			loc( imgurLinkEl, 'title', 'share.openontitle', getLocFn( 'share.target.imgur' ) );
 
 			var redditShareLinkEl = elHelper.createLink( null, null, null, blankTargetStr, 'reddit-link button' );
-			loc( redditShareLinkEl, 'textContent', 'share.shareon', 'Reddit' );
-			loc( redditShareLinkEl, 'title', 'share.shareontitle', 'Reddit' );
+			loc( redditShareLinkEl, 'textContent', 'share.shareon', getLocFn( 'share.target.reddit' ) );
+			loc( redditShareLinkEl, 'title', 'share.shareontitle', getLocFn( 'share.target.reddit' ) );
 
 			var twitterShareLinkEl = elHelper.createLink( null, null, null, blankTargetStr, 'twitter-link button' );
-			loc( twitterShareLinkEl, 'textContent', 'share.shareon', 'Twitter' );
-			loc( twitterShareLinkEl, 'title', 'share.shareontitle', 'Twitter' );
+			loc( twitterShareLinkEl, 'textContent', 'share.shareon', getLocFn( 'share.target.twitter' ) );
+			loc( twitterShareLinkEl, 'title', 'share.shareontitle', getLocFn( 'share.target.twitter' ) );
 
 			var facebookShareLinkEl = elHelper.createLink( null, null, null, blankTargetStr, 'facebook-link button' );
-			loc( facebookShareLinkEl, 'textContent', 'share.shareon', 'Facebook' );
-			loc( facebookShareLinkEl, 'title', 'share.shareontitle', 'Facebook' );
+			loc( facebookShareLinkEl, 'textContent', 'share.shareon', getLocFn( 'share.target.facebook' ) );
+			loc( facebookShareLinkEl, 'title', 'share.shareontitle', getLocFn( 'share.target.facebook' ) );
 
 			var pinterestShareLinkEl = elHelper.createLink( null, null, null, blankTargetStr, 'pinterest-link button' );
-			loc( pinterestShareLinkEl, 'textContent', 'share.shareon', 'Pinterest' );
-			loc( pinterestShareLinkEl, 'title', 'share.shareontitle', 'Pinterest' );
+			loc( pinterestShareLinkEl, 'textContent', 'share.shareon', getLocFn( 'share.target.pinterest' ) );
+			loc( pinterestShareLinkEl, 'title', 'share.shareontitle', getLocFn( 'share.target.pinterest' ) );
+
+			var vkontakteShareLinkEl = elHelper.createLink( null, null, null, blankTargetStr, 'vkontakte-link button' );
+			loc( vkontakteShareLinkEl, 'textContent', 'share.shareon', getLocFn( 'share.target.vkontakte' ) );
+			loc( vkontakteShareLinkEl, 'title', 'share.shareontitle', getLocFn( 'share.target.vkontakte' ) );
 
 			var sharedListEl;
 
@@ -69,7 +73,8 @@ define(
 				.add( isOnlineCssClass, redditShareLinkEl )
 				.add( isOnlineCssClass, twitterShareLinkEl )
 				.add( isOnlineCssClass, facebookShareLinkEl )
-				.add( isOnlineCssClass, pinterestShareLinkEl );
+				.add( isOnlineCssClass, pinterestShareLinkEl )
+				.add( isOnlineCssClass, vkontakteShareLinkEl );
 
 			if ( browser.test( 'localforage' ) ) {
 				sharedListEl = elHelper.createEl( 'ul', 'shared-list dialog-list' );
@@ -89,16 +94,19 @@ define(
 			function updateShareUrl ( imgUrl, imgId ) {
 				clearTimeout( clearTimeoutId );
 
+				var imgurLink = 'https://imgur.com/' + imgId;
+
 				dialog.el.classList.add( 'has-links' );
 				imgLinkEl.textContent = imgUrl;
 				imgLinkEl.href = imgUrl;
 				imgLinkEl.setAttribute( 'data-imgurid', imgId );
-				imgurLinkEl.href = 'https://imgur.com/' + imgId;
+				imgurLinkEl.href = imgurLink;
 
-				redditShareLinkEl.href = getRedditShareUrl( imgUrl );
-				twitterShareLinkEl.href = getTwitterShareUrl( imgUrl );
-				facebookShareLinkEl.href = getFacebookShareUrl( imgUrl );
-				pinterestShareLinkEl.href = getPinterestShareUrl( imgUrl );
+				redditShareLinkEl.href = getShareUrl( 'reddit', imgUrl, imgurLink );
+				twitterShareLinkEl.href = getShareUrl( 'twitter', imgUrl, imgurLink );
+				facebookShareLinkEl.href = getShareUrl( 'facebook', imgUrl, imgurLink );
+				pinterestShareLinkEl.href = getShareUrl( 'pinterest', imgUrl, imgurLink );
+				vkontakteShareLinkEl.href = getShareUrl( 'vkontakte', imgUrl, imgurLink );
 			}
 
 			function clearShareUrl () {
@@ -286,39 +294,48 @@ define(
 				}
 			}
 
-			function getShareDescription ( imgUrl ) {
-				return 'Check out what I made with @snorpey’s glitch tool: ' + imgUrl + ' https://snorpey.github.io/jpg-glitch';
+			// https://gist.github.com/dr-dimitru/7164862
+			function getShareUrl ( service, imgUrl, imgurLink ) {
+				var description = loc( 'share.link.description.edited' );
+				var title = loc( 'share.link.title' );
+				var params = { };
+
+				if ( [ 'reddit', 'vkontakte' ].indexOf( service ) !== -1 ) {
+					params.title = title;
+				}
+
+				if ( [ 'pinterest', 'vkontakte' ].indexOf( service ) !== -1 ) {
+					params.description = description + ' ' + config.share.appURL;
+					params.url = config.appURL;
+				}
+
+				if ( service === 'pinterest' ) {
+					params.media = imgUrl;
+				}
+
+				if ( service === 'vkontakte' ) {
+					params.image = imgUrl;
+				}
+				
+				if ( service === 'reddit' ) {
+					params.url = imgUrl;
+				}
+				
+				if ( service === 'facebook' ) {
+					params.u = imgurLink;
+				}
+				
+				if ( service === 'twitter' ) {
+					params.text = loc( 'share.link.description.withname' ) + ' ' + imgUrl + ' ' + config.share.appURL;
+				}
+
+				return config.share.sharer[service] + '?' + strHelper.objToQueryStr( params );
 			}
-
-			function getTwitterShareUrl ( imgUrl ) {
-				return 'https://twitter.com/intent/tweet?text=' + encodeURIComponent( getShareDescription( imgUrl ) );
-			}
-
-			function getRedditShareUrl ( imgUrl ) {
-				return 'https://www.reddit.com/submit?url=' + encodeURIComponent( imgUrl ) + '&title=Glitch!';
-			}
-
-			// http://ar.zu.my/how-to-really-customize-the-deprecated-facebook-sharer-dot-php/
-			function getFacebookShareUrl ( imgUrl ) {
-				var text = 'Check out what I made with this glitch tool: https://snorpey.github.io/jpg-glitch';
-				var shareUrl = 'https://www.facebook.com/sharer/sharer.php?s=100';
-				shareUrl += '&p[url]=' + imgUrl;
-				shareUrl += '&p[title]=Glitch!';
-				shareUrl += '&p[images][0]=' + imgUrl;
-				shareUrl += '&p[summary]=' + encodeURIComponent( text );
-
-				return shareUrl;
-			}
-
-			function getPinterestShareUrl ( imgUrl ) {
-				var text = 'I made this with snorpey\'s glitch tool: https://snorpey.github.io/jpg-glitch';
-				var link = 'https://snorpey.github.io/jpg-glitch';
-				var shareUrl = 'https://pinterest.com/pin/create/button/';
-				shareUrl += '?url=' + encodeURIComponent( link );
-				shareUrl += '&media=' + encodeURIComponent( imgUrl );
-				shareUrl += '&description=' + encodeURIComponent( text );
-
-				return shareUrl;
+			
+			function getLocFn ( key ) {
+				return function () {
+					return loc( key );
+				}
 			}
 
 			self.showUpload = showUpload;

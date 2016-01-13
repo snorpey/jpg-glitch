@@ -36,13 +36,23 @@ define(
 			settings: {
 				canZoomWithPointer: { value: true },
 				resizeUploadedImages: { value: true },
-				language: { value: 'en-us', options: [ 'en-us', 'en-gb', 'de-de' ] }
+				language: { value: 'en-us', options: [ 'en-us', 'en-gb', 'de-de', 'ru-ru' ] }
 			},
 			localForage: {
 				name      : 'glitchtool',
 				storeName : 'keyvaluepairs'
 			},
-			origin: location.protocol + '//' + location.host + ( location.port !== '' ? ':' + location.port : '' )
+			origin: location.protocol + '//' + location.host + ( location.port !== '' ? ':' + location.port : '' ),
+			share: {
+				appURL: 'https://snorpey.github.io/jpg-glitch',
+				sharer: {
+					facebook: 'https://www.facebook.com/sharer/sharer.php',
+					twitter: 'https://twitter.com/intent/tweet',
+					reddit: 'https://www.reddit.com/submit',
+					pinterest: 'https://pinterest.com/pin/create/button/',
+					vkontakte: 'http://vk.com/share.php'
+				}
+			}
 		};
 	}
 );

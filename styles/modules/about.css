@@ -1,6 +1,6 @@
 .about-content {
 	max-width: 300px;
-	max-height: calc(100vh - 270px);
+	max-height: calc(100vh - 355px);
 	overflow: auto;
 	padding-bottom: 15px;
 }

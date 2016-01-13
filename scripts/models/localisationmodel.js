@@ -77,9 +77,8 @@ define(
 				if ( el && attribute && key ) {
 					textElData.push( { el: el, attribute: attribute, key: key, wasUpdated: false, args: getArgs( arguments ) } );
 				} else {
-					if ( typeof el === 'string' ) {
-						return getTextForKey( el, getArgs( arguments, 1 ) );
-					}
+					var args = getArgs( arguments, 1 );
+					return getTextForKey( el, getArgs( arguments, 1 ) );
 				}
 
 				updateAllTexts();
@@ -117,7 +116,7 @@ define(
 				currentLanguage = newLanguageName;
 				languageWasLoaded = true;
 				texts = newLanguage;
-				
+
 				saveLanguage( newLanguage );
 				resetAllTexts();
 				updateAllTexts();
@@ -191,7 +190,14 @@ define(
 
 					args.forEach( function ( arg, index ) {
 						regex = new RegExp( '{\\$' + ( index + 1 ) + '}' );
-						result = result.replace( regex, arg );
+						
+						if ( typeof arg === 'string' ) {
+							result = result.replace( regex, arg );
+						} else {
+							if ( typeof arg === 'function' ) {
+								result = result.replace( regex, arg() );
+							}
+						}
 					} );
 				}
 

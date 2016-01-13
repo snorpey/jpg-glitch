@@ -11,9 +11,10 @@
 		"resizeuploadedimages": "Große Bilder verkleinen, um Fehler zu vermeiden",
 		"language": "Sprache (Language)",
 		"languageoptions": {
-			"de-DE": "Deutsch DE",
-			"en-US": "English US",
-			"en-GB": "English GB"
+			"de-de": "Deutsch (German)",
+			"en-us": "English (American English)",
+			"en-gb": "English (British English)",
+			"ru-ru": "Русский (Russian)"
 		},
 		"error": {
 			"save": "Konnte die Einstellungen nicht im Browser speichern.",
@@ -94,23 +95,35 @@
 		"imagelink": "Online Link zum Bild",
 		"imagelinktitle": "Du kannst diesen Link nehmen um das Bild auf anderen Seiten zu teilen oder hochzuladen",
 		"opennewtabtitle": "Öffne das Bild in einem neuen Browsertab",
-		"imgur": "Imgur",
-		"reddit": "Reddit",
-		"twitter": "Twitter",
-		"facebook": "Facebook",
-		"pinterest": "Pinterest",
 		"recentlyshared": "Kürzlich geteilte Bilder",
 		"untitled": "Ohne Titel",
 		"openlink": "Öffne Link",
 		"openlinktitle": "Das Bild in einen neuen Browsertab öffnen",
 		"offline": "Offline nehmen",
 		"offlinetitle": "Dieses Bild von Imgur löschen und vom Netz nehmen",
+		"target": {
+			"imgur": "Imgur",
+			"reddit": "Reddit",
+			"twitter": "Twitter",
+			"facebook": "Facebook",
+			"pinterest": "Pinterest",
+			"vkontakte": "VKontakte"
+		},
+		"link": {
+			"title": "Glitch!",
+			"description": {
+				"withoutname": "Schau mal was ich mit diesem Glitch Tool gemacht habe:",
+				"withname": "Schau mal was ich mit @snorpey’s Glitch Tool gemacht habe:",
+				"edited": "Das Bild habe ich mit snorpey's Glitch Tool bearbeitet:"
+			}
+		},
 		"error": {
 			"base64": "Es gibt keine Base64-Adresse zum hochladen",
 			"upload": "Konnte das Bild nicht auf Imgur hochladen."
 		},
 		"message": {
 			"upload": "Das Bild wurde zu Imgur hochgeladen. [Bild öffnen.]({$1})",
+			"delete": "Konnte das Bild nicht von Imgur löschen.",
 			"del": "Das Bild wurde von Imgur gelöscht."
 		}
 	},

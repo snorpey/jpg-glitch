@@ -40,7 +40,7 @@ define(
 							optionEl.value = option;
 							
 							loc( optionEl, 'textContent', 'settings.' + name + 'options.' + option );
-
+							
 							if ( option === value ) {
 								optionEl.selected = true
 							}

@@ -69,11 +69,26 @@ define(
 			endTag;
 		}
 
+		// http://stackoverflow.com/a/1714899/229189
+		function objToQueryStr ( obj, prefix ) {
+			var str = [ ];
+			
+			for ( var p in obj ) {
+				if ( obj.hasOwnProperty( p ) ) {
+					var k = prefix ? prefix + '[' + p + ']' : p, v = obj[p];
+					str.push( typeof v === 'object' ? objToQueryStr( v, k ) : encodeURIComponent( k ) + '=' + encodeURIComponent( v ) );
+				}
+			}
+			
+			return str.join( '&' );
+		}
+
 		return {
 			toCamelCase: toCamelCase,
 			autop: autop,
 			markdownToHtml: markdownToHtml,
-			markdownLinksToHtml: markdownLinksToHtml
+			markdownLinksToHtml: markdownLinksToHtml,
+			objToQueryStr: objToQueryStr
 		};
 	}
 )

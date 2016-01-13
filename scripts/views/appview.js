@@ -1,7 +1,7 @@
 /*global define*/
 define(
-	[ 'util/el' ],
-	function ( elHelper ) {
+	[ 'util/el', 'util/localizetext' ],
+	function ( elHelper, loc ) {
 		// the app view, wrapping element of the app
 		// also updates the html element classes
 		function AppView ( parentEl ) {
@@ -12,6 +12,9 @@ define(
 			var self = this;
 			var el = elHelper.createEl( 'div', 'app', parentEl );
 
+			loc( document.title, 'textContent', 'index.title' );
+			loc( document.documentElement, 'lang', 'lang' );
+			
 			function showOnlineOptions () {
 				document.documentElement.classList.add( 'is-online' );
 

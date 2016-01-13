@@ -10,9 +10,10 @@
 		"canzoomwithpointer": "Enable zooming with mousewheel and touch gestures",
 		"language": "Language",
 		"languageoptions": {
-			"de-DE": "Deutsch DE",
-			"en-US": "English US",
-			"en-GB": "English GB"
+			"de-de": "Deutsch (German)",
+			"en-us": "English (American English)",
+			"en-gb": "English (British English)",
+			"ru-ru": "Русский (Russian)"
 		},
 		"resizeuploadedimages": "Resize big images to avoid errors",
 		"error": {
@@ -94,17 +95,28 @@
 		"imagelink": "Online link to image",
 		"imagelinktitle": "You can use this link to share the image or embed it on other sites",
 		"opennewtabtitle": "Open the image in a new browser tab",
-		"imgur": "Imgur",
-		"reddit": "Reddit",
-		"twitter": "Twitter",
-		"facebook": "Facebook",
-		"pinterest": "Pinterest",
 		"recentlyshared": "Recently shared images",
 		"untitled": "Untitled",
 		"openlink": "Open Link",
 		"openlinktitle": "Open the online link of this image in a new browser tab",
 		"offline": "Take Offline",
 		"offlinetitle": "Delete this image from Imgur",
+		"target": {
+			"imgur": "Imgur",
+			"reddit": "Reddit",
+			"twitter": "Twitter",
+			"facebook": "Facebook",
+			"pinterest": "Pinterest",
+			"vkontakte": "VKontakte"
+		},
+		"link": {
+			"title": "Glitch!",
+			"description": {
+				"withoutname": "Check out what I made with this glitch tool:",
+				"withname": "Check out what I made with @snorpey’s glitch tool:",
+				"edited": "I made this with snorpey’s glitch tool:"
+			}
+		},
 		"error": {
 			"base64": "No base64 URL to upload.",
 			"upload": "Could not upload file to Imgur.",
@@ -121,7 +133,7 @@
 		"webcamlabel": "Take a Picture",
 		"trigger": "Take Picture",
 		"triggertitle": "Click to take a picture with your webcam",
-		"picture": "'Webcam Picture {$1}",
+		"picture": "Webcam Picture {$1}",
 		"error": {
 			"access": "Could not access your webcam."
 		}
