@@ -32,17 +32,17 @@ define(
 
 			function showLanguageHint ( languageName ) {
 				if ( visitCount % 4 === 1 ) {
-					var messages = [
-						'welcome.newlanguage.0',
-						'welcome.newlanguage.1',
-						'welcome.newlanguage.2'
-					];
+					// var messages = [
+					// 	'welcome.newlanguage.0',
+					// 	'welcome.newlanguage.1',
+					// 	'welcome.newlanguage.2'
+					// ];
 					
-					messages.forEach( function ( message, index ) {
-						setTimeout( function () {
-							publishers.message.dispatch( message, { innerHTML: true }, index < 2 ? 4000 : 6000 );
-						}, index * 2600 );
-					} );
+					// messages.forEach( function ( message, index ) {
+					// 	setTimeout( function () {
+					// 		publishers.message.dispatch( message, { innerHTML: true }, index < 2 ? 4000 : 6000 );
+					// 	}, index * 2600 );
+					// } );
 				}
 			}
 
