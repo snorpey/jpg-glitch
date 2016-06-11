@@ -52,11 +52,7 @@
 			( testCanvas.getContext && testCanvas.getContext( '2d' ) )
 		) {
 			if ( 'serviceWorker' in navigator ) {
-				if ( location.protocol !== 'https:' && location.host !== 'localhost' ) {
-					location.protocol = 'https:';
-				} else {
-					navigator.serviceWorker.register( 'serviceworker.js' );
-				}
+				navigator.serviceWorker.register( 'serviceworker.js' );
 			}
 
 			var loaderEl = document.createElement( 'div' );
