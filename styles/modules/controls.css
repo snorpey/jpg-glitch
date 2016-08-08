@@ -219,8 +219,7 @@ input[type=range]:focus {
 	outline: none;
 }
 
-input[type='range']:not(*:root) {
-	overflow: hidden;
+input[type='range'] {
 	background-color: transparent;
 }
 
