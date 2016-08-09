@@ -386,3 +386,7 @@ html:not(.has-touch) .shared-list .item-offline-button {
 .setting-checkbox {
 	margin-top: 3px;
 }
+
+.setting-select {
+	max-width: 100px;
+}
