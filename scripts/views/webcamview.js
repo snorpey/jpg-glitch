@@ -73,7 +73,10 @@ define(
 
 				if ( itWorked ) {
 					dialog.show();
-					videoEl.play();
+					try {
+						videoEl.play();
+					} catch ( err ) { }
+					
 					updateVideoSize();
 					
 					isRecording = true;
