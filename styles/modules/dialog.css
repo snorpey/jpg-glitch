@@ -167,7 +167,6 @@
 	padding-right: 20px;
 	width: calc(100% + 40px);
 	max-height: calc(100vh - 355px);
-	/* overflow: scroll; */
 	overflow: auto;
 	overflow-x: none;
 	overflow-y: auto;
