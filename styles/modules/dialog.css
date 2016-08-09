@@ -132,10 +132,10 @@
 	width: 100%;
 	background-color: #000;
 	overflow: hidden;
-	object-fit: cover;
 	display: block;
 	cursor: pointer;
 	opacity: 0.8;
+	object-fit: contain;
 }
 
 .dialog-item video:hover {
@@ -162,12 +162,14 @@
 }
 
 .dialog-list {
-	overflow: scroll;
 	margin-left: -20px;
 	padding-left: 20px;
 	padding-right: 20px;
 	width: calc(100% + 40px);
 	max-height: calc(100vh - 355px);
+	overflow: auto;
+	overflow-x: none;
+	overflow-y: auto;
 }
 
 .has-touch .dialog-list {
@@ -385,4 +387,8 @@ html:not(.has-touch) .shared-list .item-offline-button {
 
 .setting-checkbox {
 	margin-top: 3px;
+}
+
+.setting-select {
+	max-width: 100px;
 }
