@@ -89,8 +89,8 @@ require( [
 	var saveView = SaveView( navView.el );
 	var webcamView = WebCamView( navView.el );
 	var shareView = ShareView( navView.el );
-	var aboutView = AboutView( navView.el );
 	var settingsView = SettingsView( navView.el );
+	var aboutView = AboutView( navView.el );
 	var fullscreenView = FullscreenView( workspaceView.el );
 	var downloadView = DownloadView( workspaceView.el );
 	var dragAndDropView = DragAndDropView( canvasView.el );
