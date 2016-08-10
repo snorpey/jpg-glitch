@@ -16,8 +16,8 @@ if you're a developer and just interested in the code for the glitch effect, the
 third party code used in this experiment
 ---
 * [localforage](https://github.com/mozilla/localForage) by [mozilla](https://github.com/mozilla), Apache License 2.0
-* [requirejs](http://requirejs.org/), by [jrburke](jrburke), BSD & MIT license
-* [almond](https://github.com/jrburke/almond), by [jrburke](jrburke), BSD & MIT license
+* [requirejs](http://requirejs.org/), by [jrburke](https://github.com/jrburke), BSD & MIT license
+* [almond](https://github.com/jrburke/almond), by [jrburke](https://github.com/jrburke), BSD & MIT license
 * [javascript-md5](https://blueimp.github.io/JavaScript-MD5/), by [blueimp](https://github.com/blueimp), MIT license
 * [reqwest](https://github.com/ded/reqwest/), by [ded](https://github.com/ded), MIT license
 * [glitch-canvas](https://github.com/snorpey/glitch-canvas/), by [snorpey](https://github.com/snorpey), MIT license
