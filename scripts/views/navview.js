@@ -162,10 +162,20 @@ define(
 					var dx = touchPos.x - touchStartPos.x;
 
 					if ( translateX > -navWidth && translateX < 0 && Math.abs( dx ) > 0 ) {
-						if ( translateX < -navWidth / 2 ) {
-							deactivate();
+						if ( dx > 0 ) {
+							// swiped in
+							if ( translateX < -navWidth * 0.75 ) {
+								deactivate();
+							} else {
+								activate();
+							}
 						} else {
-							activate();
+							// swiped out
+							if ( translateX < -navWidth * 0.25 ) {
+								deactivate();
+							} else {
+								activate();
+							}
 						}
 					}
 				}
