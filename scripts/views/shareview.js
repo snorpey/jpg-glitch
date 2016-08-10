@@ -69,12 +69,12 @@ define(
 				.add( isOnlineCssClass, uploadButtonEl )
 				.add( isOnlineCssClass, 'loader', statusEl )
 				.add( isOnlineCssClass, imgLinkLabel, imgLinkEl )
-				.add( isOnlineCssClass, imgurLinkEl )
-				.add( isOnlineCssClass, redditShareLinkEl )
 				.add( isOnlineCssClass, twitterShareLinkEl )
 				.add( isOnlineCssClass, facebookShareLinkEl )
-				.add( isOnlineCssClass, pinterestShareLinkEl )
-				.add( isOnlineCssClass, vkontakteShareLinkEl );
+				.add( isOnlineCssClass, imgurLinkEl )
+				.add( isOnlineCssClass, redditShareLinkEl )
+				.add( isOnlineCssClass, vkontakteShareLinkEl )
+				.add( isOnlineCssClass, pinterestShareLinkEl );
 
 			if ( browser.test( 'localforage' ) ) {
 				sharedListEl = elHelper.createEl( 'ul', 'shared-list dialog-list' );
@@ -326,7 +326,7 @@ define(
 				}
 				
 				if ( service === 'twitter' ) {
-					params.text = loc( 'share.link.description.withname' ) + ' ' + imgUrl + ' ' + config.share.appURL;
+					params.text = loc( 'share.link.description.withname' ) + ' ' + imgurLink + ' ' + config.share.appURL;
 				}
 
 				return config.share.sharer[service] + '?' + strHelper.objToQueryStr( params );
