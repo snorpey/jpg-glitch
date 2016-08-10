@@ -82,7 +82,8 @@ input.scale-slider {
 	float: left;
 }
 
-.fullscreen-button {
+.fullscreen-button,
+.download-button {
 	display: block;
 	position: absolute;
 	top: 10px;
@@ -100,6 +101,11 @@ input.scale-slider {
 	cursor: pointer;
 	transition: all 0.3s ease-out;
 	opacity: 1;
+}
+
+.download-button {
+	top: 60px;
+	background-image: url(../../images/icon/download.svg);
 }
 
 html:not(.has-touch) .fullscreen-button {

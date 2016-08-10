@@ -289,6 +289,16 @@
     overflow: auto;
 }
 
+.has-touch .share-dialog .dialog-item .button {
+	width: 100%;
+    text-align: center;
+}
+
+.has-touch .share-dialog .entry-button-wrapper .button {
+	width: auto;
+	text-align: left;
+}
+
 /*pulse keyframe animation is inlined in html*/
 
 .dialog .loader {
