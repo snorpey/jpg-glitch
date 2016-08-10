@@ -90,8 +90,10 @@ define(
 			function userMediaFailed () {
 				if ( stream ) {
 					stopStream();
-					publishers.error.dispatch( 'webcam.error.access' );
 				}
+				
+				closeVideo();
+				publishers.error.dispatch( 'webcam.error.access' );
 			}
 
 			function closeVideo () {
