@@ -3,3 +3,7 @@
 	display: table;
 	clear: both;
 }
+
+a, button {
+	-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
+}
