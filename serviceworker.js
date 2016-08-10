@@ -25,6 +25,7 @@ function updateStaticCache () {
 					'images/icon/open-in-app.svg',
 					'images/icon/share-variant.svg',
 					'images/icon/settings.svg',
+					'images/icon/download.svg',
 					'lang/en-us.json'
 				] );
 			// These items must be cached for the Service Worker to complete installation

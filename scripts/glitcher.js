@@ -25,6 +25,7 @@ require( [
 	'views/workspaceview',
 	'views/welcomeview',
 	'views/settingsview',
+	'views/downloadview',
 	'models/controlsmodel',
 	'models/imagemodel',
 	'models/glitchmodel',
@@ -54,6 +55,7 @@ require( [
 	WorkspaceView,
 	WelcomeView,
 	SettingsView,
+	DownloadView,
 	ControlsModel,
 	ImageModel,
 	GlitchModel,
@@ -90,6 +92,7 @@ require( [
 	var aboutView = AboutView( navView.el );
 	var settingsView = SettingsView( navView.el );
 	var fullscreenView = FullscreenView( workspaceView.el );
+	var downloadView = DownloadView( workspaceView.el );
 	var dragAndDropView = DragAndDropView( canvasView.el );
 	var welcomeView = WelcomeView();
 	
@@ -318,13 +321,12 @@ require( [
 	var downloadLinkTimeoutId = NaN;
 
 	function updateDownloadLink () {
-		if ( saveView.getActive() ) {
-			clearTimeout( downloadLinkTimeoutId );
+		clearTimeout( downloadLinkTimeoutId );
 
-			downloadLinkTimeoutId = setTimeout( function () {
-				glitchModel.getImageGenerationFn( saveView.updateDownloadLink, 'original' )( imageModel.getLastFileName() )
-			}, 200 );				
-		}
+		downloadLinkTimeoutId = setTimeout( function () {
+			glitchModel.getImageGenerationFn( saveView.updateDownloadLink, 'original' )( imageModel.getLastFileName() );
+			glitchModel.getImageGenerationFn( downloadView.updateDownloadLink, 'original' )( imageModel.getLastFileName() );
+		}, 200 );				
 	}
 
 	function hideAppLoader () {
