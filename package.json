@@ -1,0 +1,36 @@
+{
+	"name": "jpg-glitch",
+	"version": "1.0.1",
+	"devDependencies": {
+		"grunt": "^1.0.1",
+		"grunt-contrib-copy": "^1.0.0",
+		"grunt-contrib-cssmin": "^1.0.1",
+		"grunt-contrib-htmlmin": "^2.0.0",
+		"grunt-contrib-imagemin": "^1.0.1",
+		"grunt-contrib-requirejs": "^1.0.0",
+		"grunt-contrib-uglify": "^2.0.0",
+		"grunt-svgmin": "^3.3.0"
+	},
+	"scripts": {
+		"build": "grunt"
+	},
+	"description": "glitch images with jpg encoding",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/snorpey/jpg-glitch.git"
+	},
+	"keywords": [
+		"glitch",
+		"jpg",
+		"image manipulation",
+		"image processing",
+		"image",
+		"jpeg"
+	],
+	"author": "georg fischer",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/snorpey/jpg-glitch/issues"
+	},
+	"homepage": "http://snorpey.github.io/jpg-glitch/"
+}

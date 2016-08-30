@@ -45,8 +45,19 @@ build script
 ---
 the build script takes care of concatenating and minifying all scripts and styles. it uses [gruntjs](http://gruntjs.com/).
 
-please make sure that both [nodejs](http://nodejs.org/) and grunt-cli are [set up properly](http://gruntjs.com/getting-started) on your machine.
+please make sure that both [nodejs](http://nodejs.org/) and [npm](http://npmjs.com) are set up properly] on your machine.
 
-run ```npm install``` from within the ```build/``` folder to install the dependencies of the build script.
+run ```npm install``` to install the dependencies of the build script.
 
-to build, run ```grunt production``` from within the ```build/``` folder. the optimized files will get copied to the ```production/``` folder.
+to build, run ```npm run build``` the optimized files will get copied to the ```production/``` folder.
+
+missing somehing?
+---
+
+found a bug? missing a feature? instructions unclear? are you using this tool in an interesting project? maybe have a look at the [issues](../../issues), open a pull request and let me know. thanks!
+
+most importantly
+---
+
+thank you for taking a look at this repo. have a great day :)
+
