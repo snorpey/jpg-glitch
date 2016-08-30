@@ -16,8 +16,8 @@ if you're a developer and just interested in the code for the glitch effect, the
 third party code used in this experiment
 ---
 * [localforage](https://github.com/mozilla/localForage) by [mozilla](https://github.com/mozilla), Apache License 2.0
-* [requirejs](http://requirejs.org/), by [jrburke](jrburke), BSD & MIT license
-* [almond](https://github.com/jrburke/almond), by [jrburke](jrburke), BSD & MIT license
+* [requirejs](http://requirejs.org/), by [jrburke](https://github.com/jrburke), BSD & MIT license
+* [almond](https://github.com/jrburke/almond), by [jrburke](https://github.com/jrburke), BSD & MIT license
 * [javascript-md5](https://blueimp.github.io/JavaScript-MD5/), by [blueimp](https://github.com/blueimp), MIT license
 * [reqwest](https://github.com/ded/reqwest/), by [ded](https://github.com/ded), MIT license
 * [glitch-canvas](https://github.com/snorpey/glitch-canvas/), by [snorpey](https://github.com/snorpey), MIT license
@@ -45,8 +45,19 @@ build script
 ---
 the build script takes care of concatenating and minifying all scripts and styles. it uses [gruntjs](http://gruntjs.com/).
 
-please make sure that both [nodejs](http://nodejs.org/) and grunt-cli are [set up properly](http://gruntjs.com/getting-started) on your machine.
+please make sure that both [nodejs](http://nodejs.org/) and [npm](http://npmjs.com) are set up properly] on your machine.
 
-run ```npm install``` from within the ```build/``` folder to install the dependencies of the build script.
+run ```npm install``` to install the dependencies of the build script.
 
-to build, run ```grunt production``` from within the ```build/``` folder. the optimized files will get copied to the ```production/``` folder.
+to build, run ```npm run build``` the optimized files will get copied to the ```production/``` folder.
+
+missing somehing?
+---
+
+found a bug? missing a feature? instructions unclear? are you using this tool in an interesting project? maybe have a look at the [issues](../../issues), open a pull request and let me know. thanks!
+
+most importantly
+---
+
+thank you for taking a look at this repo. have a great day :)
+
