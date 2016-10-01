@@ -29,9 +29,14 @@ define(
 
 			var publishers = addPublishers( self, publisherNames );
 
-			storageKey = config.keys.storage;
+			var storageKey = config.keys.storage;
 
-			if ( useLocalForage && browser.test( 'webworker' ) && browser.test( 'browserdb' ) && ! browser.test( 'safari' ) ) {
+			if (
+				useLocalForage &&
+				browser.test( 'webworker' ) &&
+				browser.test( 'browserdb' ) &&
+				! browser.test( 'safari' )
+			) {
 				worker = new Worker( config.workers.storage );
 				worker.addEventListener( 'message', workerResponded, false );
 				sendMessageToWorker( 'setStorageKey', storageKey );
@@ -175,7 +180,7 @@ define(
 								save();
 
 								if ( visitCount ) {
-									publishers.visitCount.dispatch( visitCount );
+									publishers.visits.dispatch( visitCount );
 								}
 
 								if ( typeof callback === 'function' ) {
@@ -194,7 +199,11 @@ define(
 					if ( worker ) {
 						sendMessageToWorker( 'save' );
 					} else {
-						localforage.setItem( storageKey, { entries: entries, lastVisit: Date.now(), visitCount: visitCount + 1 }, function ( err, savedData ) {
+						localforage.setItem( storageKey, {
+							entries: entries,
+							lastVisit: Date.now(),
+							visitCount: visitCount + 1
+						}, function ( err, savedData ) {
 							if ( err ) {
 								publishers.error.dispatch( 'file.error.save' );
 								console && console.log( 'localforage error', err );
