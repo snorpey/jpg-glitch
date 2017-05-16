@@ -4,12 +4,12 @@
 	"devDependencies": {
 		"grunt": "^1.0.1",
 		"grunt-contrib-copy": "^1.0.0",
-		"grunt-contrib-cssmin": "^1.0.1",
+		"grunt-contrib-cssmin": "^2.2.0",
 		"grunt-contrib-htmlmin": "^2.0.0",
 		"grunt-contrib-imagemin": "^1.0.1",
 		"grunt-contrib-requirejs": "^1.0.0",
-		"grunt-contrib-uglify": "^2.0.0",
-		"grunt-svgmin": "^3.3.0"
+		"grunt-contrib-uglify": "^3.0.0",
+		"grunt-svgmin": "^4.0.0"
 	},
 	"scripts": {
 		"build": "grunt"
