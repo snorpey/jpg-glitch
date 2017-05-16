@@ -1,6 +1,8 @@
 image glitch experiment
 ===
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/snorpey/jpg-glitch.svg)](https://greenkeeper.io/)
+
 this is an experiment for the web browser. it corrupts jpg images so that they appear "glitched".
 
 [![glitch experiment screen shot](images/screenshot.png)](http://snorpey.github.io/jpg-glitch/)
