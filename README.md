@@ -9,6 +9,8 @@ this is an experiment for the web browser. it corrupts jpg images so that they a
 
 this experiment is very much based on the [smack my glitch up js](https://github.com/Hugosslade/smackmyglitchupjs) script.
 
+a desktop app of the jpg-glitcher is also available. you can download it [here](https://snorpey.github.io/jpg-glitch-electron/).
+
 glitch effect code
 ---
 if you're a developer and just interested in the code for the glitch effect, there's a separate repository for that: [glitch-canvas](https://github.com/snorpey/glitch-canvas).
@@ -51,7 +53,7 @@ run ```npm install``` to install the dependencies of the build script.
 
 to build, run ```npm run build``` the optimized files will get copied to the ```production/``` folder.
 
-missing somehing?
+missing something?
 ---
 
 found a bug? missing a feature? instructions unclear? are you using this tool in an interesting project? maybe have a look at the [issues](../../issues), open a pull request and let me know. thanks!
