@@ -2,7 +2,7 @@
 	"lang": "de-DE",
 	"index": {
 		"title": "Image Glitch Werkzeug",
-		"description": "Mit diesem Programm kannst du ein Bild so bearbeiten, dass es kaputt aussieht. Ziehe ein Bild in das Browserfenster um loszulegen.\n\nDas Programm verändert einige Bytes in der Bilddatei. Aufgrund der Art und Weise wie das [JPEG-Format](https://de.wikipedia.org/wiki/JPEG) funktioniert, wird trotz eigentlich unlesbarer Rohdaten weiterhin ein Bild erzeugt. Dieses Programm ist angelehnt an ein ähnliches Experiment von [experiment](http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator) von [soulwire](http://github.com/soulwire) in Flash.\n\nDieses Programm wurde von [Georg](http://snorpey.com/) entwickelt. Er freut sich übrigens immer, von den Nutzern seiner Programme zu hören wie sie die Programme einsetzen. Du kannst Georg bei [Twitter](https://twitter.com/snorpey) folgen oder dir den Quellcode dieses Programms bei [GitHub](https://github.com/snorpey/jpg-glitch) ansehen.\n\nFalls dir dieses Programm gefallen hat, gefallen dir vielleicht auch Georgs andere [Experimente](http://snorpey.github.io/experiments/)."
+		"description": "Mit diesem Programm kannst du ein Bild so bearbeiten, dass es kaputt aussieht. Ziehe ein Bild in das Browserfenster um loszulegen.\n\nDas Programm verändert einige Bytes in der Bilddatei. Aufgrund der Art und Weise wie das [JPEG-Format](https://de.wikipedia.org/wiki/JPEG) funktioniert, wird trotz eigentlich unlesbarer Rohdaten weiterhin ein Bild erzeugt. Dieses Programm ist angelehnt an ein ähnliches Experiment von [experiment](http://blog.soulwire.co.uk/laboratory/flash/as3-bitmapdata-glitch-generator) von [soulwire](http://github.com/soulwire) in Flash.\n\nEine Desktop-Version des Glitch-Tools zum herunterladen und installieren ist [hier](https://snorpey.github.io/jpg-glitch-electron/) zu finden. \n\nDieses Programm wurde von [Georg](http://snorpey.com/) entwickelt. Er freut sich übrigens immer, von den Nutzern seiner Programme zu hören wie sie die Programme einsetzen. Du kannst Georg bei [Twitter](https://twitter.com/snorpey) folgen oder dir den Quellcode dieses Programms bei [GitHub](https://github.com/snorpey/jpg-glitch) ansehen.\n\nFalls dir dieses Programm gefallen hat, gefallen dir vielleicht auch Georgs andere [Experimente](http://snorpey.github.io/experiments/)."
 	},
 	"settings": {
 		"settings": "Einstellungen",
@@ -65,7 +65,7 @@
 		"save": "Speichern",
 		"savetitle": "Aktuelles Bild für spätere Sitzungen speichern",
 		"download": "Herunterladen",
-		"downloadtitle": "Lade das bearbeitete Bild auf herunter",
+		"downloadtitle": "Lade das bearbeitete Bild herunter",
 		"saveinbrowser": "Speichern",
 		"saveinbrowsertitle": "Speichere das Bild im Speicher deines Browsers",
 		"error": {
