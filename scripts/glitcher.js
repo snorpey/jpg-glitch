@@ -106,6 +106,7 @@ require( [
 			setUpLocalForage( function () {
 				storageModel.load();
 				settingsModel.load();
+				loadInitialItem();
 			} );
 		} else {
 			settingsModel.load();
