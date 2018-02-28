@@ -107,6 +107,8 @@ define(
 					if ( ! err ) {
 						if ( loadedLanguage && loadedLanguage.lang ) {
 							languageLoaded( loadedLanguage.lang, loadedLanguage );
+						} else {
+							loadLanguageFile( config.language.preset );
 						}
 					}
 				} );
@@ -156,9 +158,11 @@ define(
 								textElData.splice( i, 1 );
 							}
 						}
-
+						
 						publishers.update.dispatch();
 					} );
+				} else {
+
 				}
 			}
 
